@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0E1A24">
-<title>DPMS — Digital Procurement for SMEs</title>
+<title>DPMS - Digital Procurement for SMEs</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -56,10 +56,24 @@ input,select{font-family:var(--font-body);}
 @keyframes gridDrift{to{background-position:44px 44px, 44px 44px;}}
 @keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(30px,-24px) scale(1.08);}}
 @keyframes barSlide{from{width:0;}to{width:26px;}}
+@keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
 
-/* ═══════════════════════════════════════════════════════
-   LANDING SCREEN — mobile-first hero
-   ═══════════════════════════════════════════════════════ */
+/* Skeleton loaders */
+.skeleton{
+  background:linear-gradient(90deg, var(--paper-2) 25%, var(--line-soft) 50%, var(--paper-2) 75%);
+  background-size:200% 100%;
+  animation:shimmer 1.4s infinite linear;
+  border-radius:6px;
+}
+.skeleton-line{height:12px;margin-bottom:8px;}
+.skeleton-line.w-60{width:60%;}
+.skeleton-line.w-40{width:40%;}
+.skeleton-line.w-80{width:80%;}
+.skeleton-block{height:60px;margin-bottom:10px;border-radius:10px;}
+.skeleton-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;}
+.skeleton-stat{height:78px;border-radius:12px;}
+
+/* ---------- LANDING ---------- */
 #landing-screen{
   min-height:100vh; min-height:100dvh;
   background:linear-gradient(180deg,#0E1A24 0%, #16293A 55%, #1E3A50 100%);
@@ -85,7 +99,6 @@ input,select{font-family:var(--font-body);}
 .landing-orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0;}
 .landing-orb.a{width:400px;height:400px;background:#BD8329;opacity:.28;top:-120px;right:-120px;animation:orbFloat 18s ease-in-out infinite;}
 .landing-orb.b{width:340px;height:340px;background:#2C6C5D;opacity:.32;bottom:15%;left:-140px;animation:orbFloat 22s ease-in-out infinite reverse;}
-
 .landing-nav{
   max-width:520px;margin:0 auto;
   padding:22px 0 0;
@@ -109,7 +122,6 @@ input,select{font-family:var(--font-body);}
   transition:background .18s;
 }
 .landing-signin:hover{background:rgba(255,255,255,.14);}
-
 .landing-hero{
   max-width:520px;margin:0 auto;
   padding:56px 0 24px;
@@ -155,7 +167,6 @@ input,select{font-family:var(--font-body);}
 .landing-cta:active{transform:scale(.97);}
 .landing-cta svg{width:16px;height:16px;transition:transform .2s var(--ease);}
 .landing-cta:hover svg{transform:translateX(4px);}
-
 .landing-features{
   max-width:520px;margin:32px auto 0;
   display:grid;gap:12px;
@@ -185,7 +196,6 @@ input,select{font-family:var(--font-body);}
 .feature-ico svg{width:18px;height:18px;stroke-width:1.8;}
 .feature-title{font-size:14px;font-weight:600;color:#fff;margin-bottom:4px;}
 .feature-text{font-size:12.5px;color:#8492A0;line-height:1.55;}
-
 .landing-foot{
   max-width:520px;margin:44px auto 0;
   padding-top:24px;
@@ -199,9 +209,7 @@ input,select{font-family:var(--font-body);}
 .landing-foot-dots span{width:6px;height:6px;border-radius:50%;background:#2C3F50;}
 .landing-foot-dots span:first-child{background:var(--gold-2);}
 
-/* ═══════════════════════════════════════════════════════
-   LOGIN SCREEN
-   ═══════════════════════════════════════════════════════ */
+/* ---------- LOGIN ---------- */
 #login-screen{
   min-height:100vh; min-height:100dvh;
   display:none; grid-template-columns:1.08fr 1fr;
@@ -286,7 +294,6 @@ input,select{font-family:var(--font-body);}
 .login-sub{font-size:12.5px;color:#5B6875;margin-bottom:26px;line-height:1.5;}
 .login-error{font-size:12.5px;color:#AE4A3D;margin-top:10px;display:none;align-items:center;gap:7px;background:#F5E1DD;padding:9px 12px;border-radius:7px;}
 .login-error.show{display:flex;animation:popIn .35s var(--ease);}
-@keyframes shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-6px);}40%{transform:translateX(6px);}60%{transform:translateX(-4px);}80%{transform:translateX(4px);}}
 .login-hint{font-size:11.5px;color:#5B6875;margin-top:22px;border-top:1px solid #E4DFCE;padding-top:16px;line-height:1.65;}
 .login-hint strong{color:#0E1A24;font-weight:600;}
 .login-card .field label{color:#5B6875;}
@@ -311,9 +318,7 @@ input,select{font-family:var(--font-body);}
 @media (max-width:900px){#login-screen.active{grid-template-columns:1fr;}.login-panel{display:none;}.login-side{border-left:none;padding:24px;}}
 @media (max-width:560px){.landing-h1{font-size:36px;}.landing-hero{padding:40px 0 20px;}.landing-lede{font-size:14.5px;}.login-card{padding:32px 24px 26px;}}
 
-/* ═══════════════════════════════════════════════════════
-   APP SHELL
-   ═══════════════════════════════════════════════════════ */
+/* ---------- APP SHELL ---------- */
 #app{display:none;}
 #app.active{display:block;animation:fadeIn .5s var(--ease-out);}
 .topnav{
@@ -350,6 +355,69 @@ input,select{font-family:var(--font-body);}
 .nav-icon-btn:active{transform:scale(.94);}
 .nav-icon-btn svg{width:16px;height:16px;}
 
+/* ---------- BOTTOM NAV ---------- */
+.bottom-nav{
+  position:fixed;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:560px;
+  z-index:40;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+  border-top:1px solid var(--line);
+  padding:6px 4px;
+  padding-bottom:calc(6px + env(safe-area-inset-bottom, 0px));
+  box-shadow:0 -4px 22px rgba(14,26,36,.06);
+  display:none;
+}
+.bottom-nav.show{display:flex;}
+
+.bn-btn{
+  flex:1 1 0;
+  min-width:0;
+  background:transparent;
+  border:0;
+  outline:0;
+  -webkit-appearance:none;
+  appearance:none;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:3px;
+  padding:9px 4px 7px;
+  color:var(--ink-soft);
+  font-size:10.5px;
+  font-weight:600;
+  font-family:var(--font-body);
+  position:relative;
+  transition:color .2s var(--ease);
+  -webkit-tap-highlight-color:transparent;
+  cursor:pointer;
+}
+.bn-btn svg{
+  width:22px;
+  height:22px;
+  stroke-width:1.8;
+  transition:transform .22s var(--ease);
+}
+.bn-btn:active svg{transform:scale(.88);}
+.bn-btn.active{color:var(--gold);}
+.bn-btn.active svg{transform:translateY(-1px);}
+.bn-btn.active::before{
+  content:"";
+  position:absolute;
+  top:-6px;
+  left:50%;
+  transform:translateX(-50%);
+  height:3px;
+  border-radius:0 0 3px 3px;
+  background:var(--gold);
+  animation:barSlide .3s var(--ease-out) forwards;
+}
+
 main{max-width:520px;margin:0 auto;padding:20px 16px 110px;}
 .view{display:none;}
 .view.active{display:block;animation:riseIn .45s var(--ease-out);}
@@ -362,48 +430,34 @@ main{max-width:520px;margin:0 auto;padding:20px 16px 110px;}
 }
 .back-btn:hover{color:var(--ink);transform:translateX(-2px);}
 
-/* ═══════════════════════════════════════════════════════
-   BOTTOM NAV (mobile-first)
-   ═══════════════════════════════════════════════════════ */
-.bottom-nav{
-  position:fixed;left:0;right:0;bottom:0;z-index:40;
-  background:rgba(255,255,255,.96);
-  backdrop-filter:blur(22px);
-  -webkit-backdrop-filter:blur(22px);
-  border-top:1px solid var(--line);
-  padding:6px 4px;
-  padding-bottom:calc(6px + env(safe-area-inset-bottom, 0px));
-  box-shadow:0 -4px 22px rgba(14,26,36,.06);
-  display:none;
-  max-width:560px;
-  margin:0 auto;
+/* ---------- ONBOARDING ---------- */
+.onb-step{display:none;}
+.onb-step.active{display:block;animation:riseIn .5s var(--ease-out);}
+.onb-progress{
+  display:flex;align-items:center;gap:6px;
+  margin-bottom:18px;
 }
-.bottom-nav.show{display:flex;}
-.bn-btn{
-  flex:1;background:none;border:none;
-  display:flex;flex-direction:column;align-items:center;gap:3px;
-  padding:9px 4px 7px;
-  color:var(--ink-soft);
-  font-size:10.5px;font-weight:600;
-  position:relative;
-  transition:color .2s var(--ease);
-  -webkit-tap-highlight-color:transparent;
+.onb-progress span{
+  flex:1;height:4px;border-radius:2px;background:var(--line);
+  transition:background .3s;
 }
-.bn-btn svg{width:22px;height:22px;stroke-width:1.8;transition:transform .22s var(--ease);}
-.bn-btn:active svg{transform:scale(.88);}
-.bn-btn.active{color:var(--gold);}
-.bn-btn.active svg{transform:translateY(-1px);}
-.bn-btn.active::before{
-  content:"";position:absolute;top:-6px;left:50%;
-  transform:translateX(-50%);
-  height:3px;border-radius:0 0 3px 3px;
-  background:var(--gold);
-  animation:barSlide .3s var(--ease-out) forwards;
+.onb-progress span.active{background:var(--gold);}
+.onb-progress span.done{background:var(--teal);}
+.tour-icon{
+  width:80px;height:80px;border-radius:22px;
+  background:linear-gradient(140deg,var(--gold-soft), var(--paper));
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 22px;
+  box-shadow:0 10px 28px rgba(189,131,41,.18);
+  animation:popIn .55s var(--ease-out) both .1s;
 }
+.tour-icon svg{width:34px;height:34px;color:var(--gold);stroke-width:1.6;}
+.tour-icon.teal{background:linear-gradient(140deg,var(--teal-soft), var(--paper));box-shadow:0 10px 28px rgba(44,108,93,.16);}
+.tour-icon.teal svg{color:var(--teal);}
+.tour-icon.ink{background:linear-gradient(140deg, var(--paper-2), var(--paper));box-shadow:0 10px 28px rgba(30,58,80,.14);}
+.tour-icon.ink svg{color:var(--ink-3);}
 
-/* ═══════════════════════════════════════════════════════
-   CARDS
-   ═══════════════════════════════════════════════════════ */
+/* ---------- CARDS ---------- */
 .card{
   background:var(--panel);
   border:1px solid var(--line);
@@ -417,9 +471,7 @@ main{max-width:520px;margin:0 auto;padding:20px 16px 110px;}
 .card h2{font-size:19px;margin-bottom:4px;letter-spacing:-.01em;}
 .muted{color:var(--ink-soft);font-size:12.5px;margin:0 0 14px;}
 
-/* ═══════════════════════════════════════════════════════
-   GREETING + STATS
-   ═══════════════════════════════════════════════════════ */
+/* ---------- GREETING + STATS ---------- */
 .greeting{
   display:flex;align-items:center;justify-content:space-between;gap:12px;
   margin-bottom:14px;
@@ -435,7 +487,6 @@ main{max-width:520px;margin:0 auto;padding:20px 16px 110px;}
   display:flex;align-items:center;gap:6px;
 }
 .greeting-date::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 3px var(--teal-soft);}
-
 .stats-row{
   display:grid;grid-template-columns:repeat(3,1fr);
   gap:8px;margin-bottom:16px;
@@ -469,9 +520,7 @@ main{max-width:520px;margin:0 auto;padding:20px 16px 110px;}
 .stat-card.t--teal .stat-num{color:var(--teal);}
 .stat-lbl{font-size:10.5px;color:var(--ink-soft);font-weight:500;margin-top:4px;letter-spacing:.005em;}
 
-/* ═══════════════════════════════════════════════════════
-   ITEMS
-   ═══════════════════════════════════════════════════════ */
+/* ---------- ITEMS ---------- */
 .item-row{padding:14px 0;border-bottom:1px solid var(--line-soft);}
 .item-row:first-child{padding-top:0;}
 .item-row:last-child{border-bottom:none;padding-bottom:0;}
@@ -479,6 +528,7 @@ main{max-width:520px;margin:0 auto;padding:20px 16px 110px;}
 .item-name .left{display:flex;align-items:center;gap:8px;min-width:0;}
 .item-meta{font-size:11.5px;color:var(--ink-soft);margin:0 0 8px;font-variant-numeric:tabular-nums;}
 .item-meta strong{color:var(--ink);font-weight:600;}
+.spark-wrap{margin:2px 0 10px;opacity:.85;}
 .tick{
   width:18px;height:18px;border-radius:50%;
   border:1.5px solid var(--line);
@@ -497,7 +547,7 @@ main{max-width:520px;margin:0 auto;padding:20px 16px 110px;}
 .tap-btn:active{transform:scale(.94);}
 .tap-btn.sel{border-color:var(--gold);background:var(--gold-soft);color:var(--gold);}
 .tap-btn.sel.warn{border-color:var(--rust);background:var(--rust-soft);color:var(--rust);}
-.item-actions{display:flex;gap:14px;margin-top:8px;}
+.item-actions{display:flex;gap:14px;margin-top:8px;flex-wrap:wrap;}
 .item-actions button{
   background:none;border:none;color:var(--ink-soft);
   font-size:11.5px;padding:0;
@@ -510,9 +560,29 @@ main{max-width:520px;margin:0 auto;padding:20px 16px 110px;}
 .coverage-pill.partial{background:var(--gold-soft);color:var(--gold);}
 .coverage-pill.none{background:var(--paper);color:var(--ink-soft);}
 
-/* ═══════════════════════════════════════════════════════
-   NUDGES
-   ═══════════════════════════════════════════════════════ */
+/* ---------- PULL TO REFRESH ---------- */
+.ptr-indicator{
+  position:fixed;
+  top:60px;
+  left:50%;
+  transform:translate(-50%,-60px);
+  width:42px;height:42px;
+  border-radius:50%;
+  background:var(--panel);
+  border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:var(--shadow-md);
+  z-index:15;
+  opacity:0;
+  transition:transform .2s var(--ease), opacity .2s;
+  pointer-events:none;
+}
+.ptr-indicator.pulling{transition:none;}
+.ptr-indicator.visible{transform:translate(-50%,0);opacity:1;}
+.ptr-indicator svg{width:18px;height:18px;color:var(--gold);transition:transform .2s;}
+.ptr-indicator.refreshing svg{animation:spin .8s linear infinite;}
+
+/* ---------- NUDGES ---------- */
 .nudge{
   border:2px solid var(--gold);
   background:linear-gradient(140deg,var(--gold-soft) 0%, rgba(245,231,200,.65) 100%);
@@ -547,10 +617,23 @@ main{max-width:520px;margin:0 auto;padding:20px 16px 110px;}
 }
 .nudge .why-box.show{display:block;}
 .nudge .why-box strong{color:var(--ink);}
+.nudge-actions{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:8px;}
+.nudge-share{
+  background:rgba(255,255,255,.85);
+  border:1px solid var(--line);
+  border-radius:9px;
+  padding:0 16px;
+  font-size:14px;font-weight:600;
+  color:var(--teal);
+  display:flex;align-items:center;gap:8px;
+  transition:background .15s, transform .12s;
+  white-space:nowrap;
+}
+.nudge-share:hover{background:#fff;}
+.nudge-share:active{transform:scale(.97);}
+.nudge-share svg{width:16px;height:16px;}
 
-/* ═══════════════════════════════════════════════════════
-   CHECK PROGRESS
-   ═══════════════════════════════════════════════════════ */
+/* ---------- CHECK PROGRESS ---------- */
 .check-progress{
   background:var(--panel);border:1px solid var(--line);border-radius:12px;
   padding:14px 16px;margin-bottom:14px;
@@ -572,9 +655,7 @@ main{max-width:520px;margin:0 auto;padding:20px 16px 110px;}
   font-variant-numeric:tabular-nums;
 }
 
-/* ═══════════════════════════════════════════════════════
-   SUPPLIER OPTIONS
-   ═══════════════════════════════════════════════════════ */
+/* ---------- SUPPLIER OPTIONS ---------- */
 .supplier-opt{
   background:var(--panel);border:1px solid var(--line);border-radius:10px;
   padding:12px;margin-bottom:8px;
@@ -589,9 +670,7 @@ main{max-width:520px;margin:0 auto;padding:20px 16px 110px;}
 .badge.special{background:var(--teal);}
 .supplier-opt .note{font-size:12.5px;color:var(--ink-soft);margin-top:5px;}
 
-/* ═══════════════════════════════════════════════════════
-   BUTTONS
-   ═══════════════════════════════════════════════════════ */
+/* ---------- BUTTONS ---------- */
 .btn-primary{
   width:100%;padding:13px;
   background:linear-gradient(150deg,var(--ink-2),var(--ink));
@@ -632,9 +711,7 @@ main{max-width:520px;margin:0 auto;padding:20px 16px 110px;}
 }
 .btn-small:hover{background:var(--paper);color:var(--ink);border-color:#D6D0BC;}
 
-/* ═══════════════════════════════════════════════════════
-   BATCH
-   ═══════════════════════════════════════════════════════ */
+/* ---------- BATCH ---------- */
 .batch-box{text-align:center;background:rgba(255,255,255,.72);border-radius:12px;padding:18px;margin:12px 0;}
 .batch-box .num{
   font-family:var(--font-head);font-size:38px;font-weight:600;
@@ -652,9 +729,7 @@ main{max-width:520px;margin:0 auto;padding:20px 16px 110px;}
 .stepper-row button:hover{background:var(--paper);border-color:#D6D0BC;}
 .stepper-row button:active{transform:scale(.94);}
 
-/* ═══════════════════════════════════════════════════════
-   FORMS
-   ═══════════════════════════════════════════════════════ */
+/* ---------- FORMS ---------- */
 .field{margin-bottom:14px;}
 .field label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margin-bottom:5px;}
 .field input,.field select{
@@ -672,7 +747,6 @@ main{max-width:520px;margin:0 auto;padding:20px 16px 110px;}
 .range-row{display:flex;align-items:center;gap:10px;}
 .range-row input[type=range]{flex:1;accent-color:var(--gold);}
 .range-val{font-family:var(--font-head);font-weight:600;font-size:18px;min-width:44px;text-align:right;font-variant-numeric:tabular-nums;}
-
 .rate-block{margin-top:12px;border-top:1px dashed var(--line);padding-top:12px;}
 .rate-grid{display:grid;gap:8px;margin-top:8px;}
 .rate-row{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:10px;}
@@ -681,6 +755,7 @@ main{max-width:520px;margin:0 auto;padding:20px 16px 110px;}
 .rate-field label{display:block;font-size:10px;color:var(--ink-soft);font-weight:600;margin-bottom:2px;text-transform:uppercase;letter-spacing:.03em;}
 .rate-field input{width:100%;padding:7px 8px;font-size:13px;border:1px solid var(--line);border-radius:6px;background:#fff;}
 .rate-field input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 2.5px rgba(189,131,41,.12);}
+.autosuggest-note{font-size:10.5px;color:var(--teal);font-style:italic;margin-top:3px;}
 
 .seg-toggle{display:flex;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:3px;margin-top:6px;}
 .seg-toggle button{
@@ -690,9 +765,7 @@ main{max-width:520px;margin:0 auto;padding:20px 16px 110px;}
 }
 .seg-toggle button.active{background:var(--panel);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.06);}
 
-/* ═══════════════════════════════════════════════════════
-   iOS-STYLE MENU (More view)
-   ═══════════════════════════════════════════════════════ */
+/* ---------- MENU ---------- */
 .profile-card{
   background:linear-gradient(150deg,#16293A 0%, #0E1A24 100%);
   color:#fff;border-radius:16px;
@@ -769,9 +842,7 @@ main{max-width:520px;margin:0 auto;padding:20px 16px 110px;}
 .mi-chev{color:var(--ink-soft);flex-shrink:0;transition:transform .2s var(--ease), color .2s;}
 .menu-item-new:hover .mi-chev{transform:translateX(2px);color:var(--gold);}
 
-/* ═══════════════════════════════════════════════════════
-   KPIs
-   ═══════════════════════════════════════════════════════ */
+/* ---------- KPIs ---------- */
 .kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
 .kpi{
   background:var(--panel);border:1px solid var(--line);
@@ -782,9 +853,7 @@ main{max-width:520px;margin:0 auto;padding:20px 16px 110px;}
 .kpi .l{font-size:11px;color:var(--ink-soft);}
 .kpi .v{font-family:var(--font-head);font-size:19px;font-weight:600;font-variant-numeric:tabular-nums;}
 
-/* ═══════════════════════════════════════════════════════
-   BARS / TABLES / COVERAGE
-   ═══════════════════════════════════════════════════════ */
+/* ---------- BARS / TABLES / COVERAGE ---------- */
 .bar-row{display:grid;grid-template-columns:110px 1fr 70px;align-items:center;gap:8px;margin-bottom:8px;font-size:12.5px;}
 .bar-track{background:var(--gold-soft);border-radius:4px;height:10px;overflow:hidden;}
 .bar-fill{background:linear-gradient(90deg,var(--gold-2),var(--gold));height:100%;transition:width .7s var(--ease-out);border-radius:4px;}
@@ -803,9 +872,51 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
 .cov-cell.def{background:var(--paper);color:var(--ink-soft);font-style:italic;}
 .cov-cell.win{outline:2px solid var(--gold);outline-offset:1px;}
 
-/* ═══════════════════════════════════════════════════════
-   ACTIVITY
-   ═══════════════════════════════════════════════════════ */
+/* ---------- BULK MATRIX ---------- */
+.matrix-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:8px;padding-bottom:8px;}
+.matrix-table{border-collapse:separate;border-spacing:6px;font-size:12px;}
+.matrix-table th{
+  font-size:10.5px;color:var(--ink-soft);text-transform:uppercase;
+  font-weight:700;padding:6px 8px;text-align:left;white-space:nowrap;
+  border:none;
+}
+.matrix-table td{padding:0;border:none;}
+.matrix-table td.row-head{
+  font-weight:600;color:var(--ink);font-size:12.5px;
+  padding:6px 10px 6px 0;white-space:nowrap;max-width:130px;
+  overflow:hidden;text-overflow:ellipsis;
+}
+.matrix-cell{
+  min-width:76px;
+  padding:8px 10px;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:8px;
+  font-size:12px;font-weight:600;
+  text-align:center;
+  cursor:pointer;
+  transition:all .15s var(--ease);
+  font-variant-numeric:tabular-nums;
+  display:block;
+  width:100%;
+  color:var(--ink-soft);
+  font-family:var(--font-body);
+}
+.matrix-cell:hover{background:var(--gold-soft);border-color:var(--gold);}
+.matrix-cell.set{background:var(--teal-soft);color:var(--teal);border-color:transparent;}
+.matrix-cell.win{outline:2px solid var(--gold);outline-offset:0;}
+.matrix-cell.editing{
+  background:#fff;border-color:var(--gold);
+  padding:6px;
+}
+.matrix-cell input{
+  width:100%;padding:4px;text-align:center;font-size:12px;
+  border:none;background:transparent;outline:none;
+  font-weight:600;color:var(--ink);font-family:var(--font-body);
+}
+.matrix-hint{font-size:11px;color:var(--ink-soft);margin-top:10px;line-height:1.5;}
+
+/* ---------- ACTIVITY ---------- */
 .activity-item{padding:10px 0;border-bottom:1px solid var(--line-soft);font-size:13px;animation:fadeIn .35s var(--ease-out);}
 .activity-item:last-child{border-bottom:none;}
 .activity-time{font-size:11px;color:var(--ink-soft);margin-left:6px;}
@@ -865,16 +976,14 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
 </head>
 <body>
 
-<!-- ═══════════════════ LANDING ═══════════════════ -->
+<!-- LANDING -->
 <div id="landing-screen">
   <div class="landing-orb a"></div>
   <div class="landing-orb b"></div>
-
   <div class="landing-nav">
     <div class="landing-brand"><span class="mark">DP</span>DPMS</div>
     <button class="landing-signin" onclick="showLogin()">Sign in</button>
   </div>
-
   <div class="landing-hero">
     <div class="landing-eyebrow">Value Engineering · SME Edition</div>
     <h1 class="landing-h1">
@@ -884,52 +993,43 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
       <span class="w"><em>value.</em></span>
     </h1>
     <p class="landing-lede">
-      DPMS turns the daily routines of small businesses — checking stock, ordering from suppliers,
-      deciding how much to make — into measurable function-for-cost decisions.
+      DPMS turns the daily routines of small businesses into measurable function-for-cost decisions: checking stock, ordering from suppliers, and deciding how much to make.
     </p>
     <button class="landing-cta" onclick="showLogin()">
       Open the system
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
     </button>
   </div>
-
   <div class="landing-features">
     <div class="feature-card">
-      <div class="feature-ico">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><polyline points="7 14 12 9 16 13 21 6"/></svg>
-      </div>
+      <div class="feature-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><polyline points="7 14 12 9 16 13 21 6"/></svg></div>
       <div>
         <div class="feature-title">Know when to restock</div>
-        <div class="feature-text">Tracks your real daily usage and warns you before you run out — not after.</div>
+        <div class="feature-text">Tracks your real daily usage and warns you before you run out, not after.</div>
       </div>
     </div>
     <div class="feature-card">
-      <div class="feature-ico">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7l9 5 9-5-9-5z"/><path d="M3 17l9 5 9-5"/><path d="M3 12l9 5 9-5"/></svg>
-      </div>
+      <div class="feature-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7l9 5 9-5-9-5z"/><path d="M3 17l9 5 9-5"/><path d="M3 12l9 5 9-5"/></svg></div>
       <div>
         <div class="feature-title">Pick the best supplier</div>
-        <div class="feature-text">Value Engineering ranks suppliers by function ÷ cost — per item, not just overall.</div>
+        <div class="feature-text">Value Engineering ranks suppliers by function divided by cost, per item, not just overall.</div>
       </div>
     </div>
     <div class="feature-card">
-      <div class="feature-ico">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-      </div>
+      <div class="feature-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
       <div>
         <div class="feature-title">Know how much to make</div>
         <div class="feature-text">Newsvendor model tells bakers and makers how many units to produce today.</div>
       </div>
     </div>
   </div>
-
   <div class="landing-foot">
     <span>© 2026 DPMS · Final-year coursework demo</span>
     <div class="landing-foot-dots"><span></span><span></span><span></span></div>
   </div>
 </div>
 
-<!-- ═══════════════════ LOGIN ═══════════════════ -->
+<!-- LOGIN -->
 <div id="login-screen">
   <section class="login-panel">
     <div class="brand">
@@ -939,7 +1039,6 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
         <div class="brand-sub">Value Engineering prototype</div>
       </div>
     </div>
-
     <div class="panel-hero">
       <div class="panel-eyebrow">Applying VE to SME Procurement</div>
       <h1 class="panel-headline">Smarter sourcing,<br>measured <em>value</em>.</h1>
@@ -952,13 +1051,11 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
         <div class="panel-stat"><div class="num">VE</div><div class="lbl">Function ÷ Cost</div></div>
       </div>
     </div>
-
     <div class="panel-foot">
       <span>© 2026 DPMS</span>
       <div class="panel-foot-dots"><span></span><span></span><span></span></div>
     </div>
   </section>
-
   <section class="login-side">
     <div class="login-card">
       <button class="login-back" onclick="showLanding()">← Back to home</button>
@@ -984,14 +1081,14 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
         </div>
       </form>
       <div class="login-hint">
-        Demo credentials — Username: <strong>admin</strong> · Password: <strong>dpms2026</strong><br>
+        Demo credentials. Username: <strong>admin</strong> · Password: <strong>dpms2026</strong><br>
         Front-end prototype. Your data stays in this browser only.
       </div>
     </div>
   </section>
 </div>
 
-<!-- ═══════════════════ APP ═══════════════════ -->
+<!-- APP -->
 <div id="app">
   <div class="topnav">
     <div class="brand"><span class="mark">DP</span>DPMS</div>
@@ -1003,35 +1100,115 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
     </button>
   </div>
 
+  <!-- Pull to refresh indicator -->
+  <div class="ptr-indicator" id="ptr-indicator">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+  </div>
+
   <main>
-    <!-- Onboarding -->
+    <!-- ONBOARDING -->
     <section class="view" id="view-onboarding">
-      <div class="card">
-        <p class="muted" style="margin:0 0 4px;">Step 1 of 1 · takes 10 seconds</p>
-        <h2 style="font-size:22px;margin-bottom:20px;">What does your business do?</h2>
-        <button class="btn-secondary" style="padding:16px;text-align:left;font-size:15px;display:flex;gap:12px;align-items:center;" onclick="chooseType('reseller')">
-          <span style="font-size:22px;">🛍️</span>
-          <span><strong>I buy and sell</strong><br><span style="color:var(--ink-soft);font-size:12.5px;font-weight:400;">Like a shop or trader</span></span>
-        </button>
-        <button class="btn-secondary" style="padding:16px;text-align:left;font-size:15px;display:flex;gap:12px;align-items:center;" onclick="chooseType('manufacturer')">
-          <span style="font-size:22px;">🥐</span>
-          <span><strong>I make what I sell</strong><br><span style="color:var(--ink-soft);font-size:12.5px;font-weight:400;">Like baking or cooking</span></span>
-        </button>
-        <p class="hint" style="margin-top:16px;text-align:center;">You can change this later in Settings.</p>
+      <div class="onb-progress">
+        <span class="active" data-step="1"></span>
+        <span data-step="2"></span>
+        <span data-step="3"></span>
+        <span data-step="4"></span>
+        <span data-step="5"></span>
+      </div>
+
+      <div class="onb-step active" id="onb-name">
+        <div class="card">
+          <p class="muted" style="margin:0 0 4px;">Welcome to DPMS</p>
+          <h2 style="font-size:22px;margin-bottom:8px;">What should we call your business?</h2>
+          <p class="muted" style="margin-bottom:20px;">This shows up on your dashboard and reports. You can change it later.</p>
+          <div class="field">
+            <label>Business name</label>
+            <input type="text" id="onb-name-input" placeholder="e.g. Adewale General Stores" autocomplete="organization" autofocus>
+          </div>
+          <button class="btn-primary" id="onb-name-next">Continue</button>
+        </div>
+      </div>
+
+      <div class="onb-step" id="onb-type">
+        <div class="card">
+          <p class="muted" style="margin:0 0 4px;">One more thing</p>
+          <h2 style="font-size:22px;margin-bottom:20px;">What does your business do?</h2>
+          <button class="btn-secondary" style="padding:16px;text-align:left;font-size:15px;display:flex;gap:12px;align-items:center;" onclick="chooseType('reseller')">
+            <span style="font-size:22px;">🛍️</span>
+            <span><strong>I buy and sell</strong><br><span style="color:var(--ink-soft);font-size:12.5px;font-weight:400;">Like a shop or trader</span></span>
+          </button>
+          <button class="btn-secondary" style="padding:16px;text-align:left;font-size:15px;display:flex;gap:12px;align-items:center;" onclick="chooseType('manufacturer')">
+            <span style="font-size:22px;">🥐</span>
+            <span><strong>I make what I sell</strong><br><span style="color:var(--ink-soft);font-size:12.5px;font-weight:400;">Like baking or cooking</span></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="onb-step" id="onb-tour-1">
+        <div class="card" style="text-align:center;padding:30px 20px 20px;">
+          <div class="tour-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <h2 style="font-size:22px;margin-bottom:10px;">Your daily check</h2>
+          <p style="font-size:14px;color:var(--ink-soft);line-height:1.65;margin:0 0 24px;max-width:320px;margin-left:auto;margin-right:auto;">
+            Walk your storeroom, tap what you see. When you tap Done, DPMS tells you what needs restocking.
+          </p>
+          <button class="btn-primary" onclick="advanceOnboarding(4)">Next</button>
+          <button class="btn-secondary" onclick="skipTour()" style="background:transparent;border:none;color:var(--ink-soft);">Skip the tour</button>
+        </div>
+      </div>
+
+      <div class="onb-step" id="onb-tour-2">
+        <div class="card" style="text-align:center;padding:30px 20px 20px;">
+          <div class="tour-icon teal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="14" height="12" rx="1.5"/><path d="M15 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>
+          </div>
+          <h2 style="font-size:22px;margin-bottom:10px;">Better value, per item</h2>
+          <p style="font-size:14px;color:var(--ink-soft);line-height:1.65;margin:0 0 24px;max-width:320px;margin-left:auto;margin-right:auto;">
+            Rate each supplier. DPMS compares them on cost and quality, so the best value wins, not just the cheapest.
+          </p>
+          <button class="btn-primary" onclick="advanceOnboarding(5)">Next</button>
+          <button class="btn-secondary" onclick="skipTour()" style="background:transparent;border:none;color:var(--ink-soft);">Skip the tour</button>
+        </div>
+      </div>
+
+      <div class="onb-step" id="onb-tour-3">
+        <div class="card" style="text-align:center;padding:30px 20px 20px;">
+          <div class="tour-icon ink">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
+          </div>
+          <h2 style="font-size:22px;margin-bottom:10px;">Reports and settings</h2>
+          <p style="font-size:14px;color:var(--ink-soft);line-height:1.65;margin:0 0 24px;max-width:320px;margin-left:auto;margin-right:auto;">
+            See your numbers, review what you've done, and tune how DPMS calculates restock warnings. All from the More tab.
+          </p>
+          <button class="btn-primary" onclick="finishOnboarding()">Get started</button>
+        </div>
       </div>
     </section>
 
     <!-- TODAY -->
     <section class="view active" id="view-today">
       <div id="greeting-slot"></div>
-      <div id="stats-slot"></div>
+      <div id="stats-slot">
+        <div class="skeleton-stats">
+          <div class="skeleton skeleton-stat"></div>
+          <div class="skeleton skeleton-stat"></div>
+          <div class="skeleton skeleton-stat"></div>
+        </div>
+      </div>
       <div id="production-nudge"></div>
       <div id="restock-nudges"></div>
       <div id="check-progress-slot"></div>
       <div class="card" id="stock-card">
         <h2>Today's check</h2>
         <p class="muted">Tap what you see for each item. When you're done, review what needs restocking.</p>
-        <div id="stock-items"></div>
+        <div id="stock-items">
+          <div class="skeleton skeleton-line w-60"></div>
+          <div class="skeleton skeleton-line w-40"></div>
+          <div class="skeleton skeleton-block"></div>
+          <div class="skeleton skeleton-line w-80"></div>
+          <div class="skeleton skeleton-block"></div>
+        </div>
         <button class="btn-primary" id="done-btn" style="margin-top:14px;" onclick="completeCheck()">Done for today</button>
         <button class="btn-secondary" onclick="openAddItem()">+ Add an item to track</button>
       </div>
@@ -1053,9 +1230,9 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
       <div class="card">
         <h2 id="sup-form-title">Add a supplier</h2>
         <div class="field"><label>Who do you buy from?</label><input type="text" id="sup-name" placeholder="e.g. Adewale Stores"></div>
-        <div class="field"><label>Typical order cost — default (₦)</label><input type="number" id="sup-cost" placeholder="e.g. 210000"><p class="hint">Used when this supplier has no special rate for a particular item.</p></div>
-        <div class="field"><label>Typical delivery time — default</label><div class="range-row"><input type="range" id="sup-lead" min="1" max="14" value="3" oninput="document.getElementById('sup-lead-val').textContent=this.value+'d'"><span class="range-val" id="sup-lead-val">3d</span></div></div>
-        <div class="field"><label>Overall quality — default (1–10)</label><div class="range-row"><input type="range" id="sup-fn" min="1" max="10" value="7" oninput="document.getElementById('sup-fn-val').textContent=this.value"><span class="range-val" id="sup-fn-val">7</span></div></div>
+        <div class="field"><label>Typical order cost, default (₦)</label><input type="number" id="sup-cost" placeholder="e.g. 210000"><p class="hint">Used when this supplier has no special rate for a particular item.</p></div>
+        <div class="field"><label>Typical delivery time, default</label><div class="range-row"><input type="range" id="sup-lead" min="1" max="14" value="3" oninput="document.getElementById('sup-lead-val').textContent=this.value+'d'"><span class="range-val" id="sup-lead-val">3d</span></div></div>
+        <div class="field"><label>Overall quality, default (1 to 10)</label><div class="range-row"><input type="range" id="sup-fn" min="1" max="10" value="7" oninput="document.getElementById('sup-fn-val').textContent=this.value"><span class="range-val" id="sup-fn-val">7</span></div></div>
         <div class="field"><label>Any notes?</label><input type="text" id="sup-note" placeholder="e.g. Fast, but cash only"></div>
         <div class="rate-block">
           <label style="font-size:12.5px;font-weight:600;color:var(--ink-soft);">Special rates for specific items (optional)</label>
@@ -1072,7 +1249,7 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
       <button class="back-btn" onclick="showTab('today')">← Back to today</button>
       <div class="card">
         <h2 id="item-form-title">Add an item to track</h2>
-        <div class="field"><label>What do you want to track?</label><input type="text" id="it-name" placeholder="e.g. Rice, 50kg bags"></div>
+        <div class="field"><label>What do you want to track?</label><input type="text" id="it-name" placeholder="e.g. Rice, 50kg bags" oninput="onItemNameInput()"><p class="hint" id="it-autosuggest-hint" style="display:none;"></p></div>
         <div class="field"><label>How many days from order to delivery?</label><div class="range-row"><input type="range" id="it-lead" min="1" max="14" value="3" oninput="document.getElementById('it-lead-val').textContent=this.value+'d'"><span class="range-val" id="it-lead-val">3d</span></div></div>
         <div class="field" id="safety-field"><label>Safety buffer (days)</label><div class="range-row"><input type="range" id="it-safety" min="0" max="7" value="2" oninput="document.getElementById('it-safety-val').textContent=this.value+'d'"><span class="range-val" id="it-safety-val">2d</span></div><p class="hint">Extra days of cover in case delivery is late. Used in Simple mode only.</p></div>
         <p class="muted" style="margin-top:16px;">Define what each stock level looks like for you.</p>
@@ -1091,9 +1268,9 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
     <!-- MORE -->
     <section class="view" id="view-more">
       <div class="profile-card">
-        <div class="profile-avatar">AD</div>
+        <div class="profile-avatar" id="profile-avatar">AD</div>
         <div class="profile-info">
-          <div class="profile-name" id="profile-name">Adewale General Stores</div>
+          <div class="profile-name" id="profile-name">Your business</div>
           <div class="profile-role">Signed in as admin</div>
         </div>
         <button class="profile-signout" onclick="signOut()">Sign out</button>
@@ -1109,7 +1286,7 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
           </button>
           <button class="menu-item-new teal" onclick="showMoreSub('orders')">
             <span class="mi-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
-            <span class="mi-body"><span class="mi-title">Orders &amp; approvals</span><span class="mi-sub">History of everything you ordered</span></span>
+            <span class="mi-body"><span class="mi-title">Orders and approvals</span><span class="mi-sub">History of everything you ordered</span></span>
             <span class="mi-chev">›</span>
           </button>
         </div>
@@ -1121,6 +1298,11 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
           <button class="menu-item-new ink" onclick="showMoreSub('ve')">
             <span class="mi-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="13"/><line x1="12" y1="21" x2="12" y2="11"/><line x1="20" y1="21" x2="20" y2="15"/></svg></span>
             <span class="mi-body"><span class="mi-title">How we calculate this</span><span class="mi-sub">Reorder point, VE ranking, coverage</span></span>
+            <span class="mi-chev">›</span>
+          </button>
+          <button class="menu-item-new ink" onclick="showMoreSub('matrix')">
+            <span class="mi-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
+            <span class="mi-body"><span class="mi-title">Rate matrix</span><span class="mi-sub">Edit every supplier rate in one grid</span></span>
             <span class="mi-chev">›</span>
           </button>
         </div>
@@ -1176,7 +1358,7 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
         <button class="back-btn" onclick="showMoreMenu()">← Back</button>
         <div class="card">
           <h2 style="font-size:16px;">How we pick the best supplier</h2>
-          <p class="muted">Value index = function score ÷ cost (in ₦'000).</p>
+          <p class="muted">Value index = function score divided by cost (in thousands of naira).</p>
           <div class="field" style="margin-bottom:10px;">
             <label style="font-size:12px;">Show ranking for</label>
             <select id="ve-scope" onchange="renderVE()"></select>
@@ -1199,6 +1381,16 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
         </div>
       </div>
 
+      <div class="subview" id="sub-matrix">
+        <button class="back-btn" onclick="showMoreMenu()">← Back</button>
+        <div class="card">
+          <h2 style="font-size:16px;">Rate matrix</h2>
+          <p class="muted">Tap any cell to edit. Teal means a special rate. Empty means the supplier's default.</p>
+          <div class="matrix-wrap" id="matrix-wrap"></div>
+          <p class="matrix-hint">Tip: tap a cell and type the price in naira. Press Enter or tap elsewhere to save. Leave empty to fall back to the supplier default.</p>
+        </div>
+      </div>
+
       <div class="subview" id="sub-activity">
         <button class="back-btn" onclick="showMoreMenu()">← Back</button>
         <div class="card">
@@ -1209,10 +1401,9 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
 
       <div class="subview" id="sub-settings">
         <button class="back-btn" onclick="showMoreMenu()">← Back</button>
-
         <div class="card">
           <h2 style="font-size:16px;">Business</h2>
-          <div class="field"><label>Business name</label><input type="text" id="s-org" placeholder="e.g. Adewale General Stores"></div>
+          <div class="field"><label>Business name</label><input type="text" id="s-org" placeholder="Your business name"></div>
           <div class="field"><label>Business type</label>
             <select id="s-type" onchange="requestTypeChange(this.value)">
               <option value="reseller">I buy and sell</option>
@@ -1220,7 +1411,6 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
             </select>
           </div>
         </div>
-
         <div class="card">
           <h2 style="font-size:16px;">Restock warnings</h2>
           <p class="muted">Choose how we calculate the point at which we warn you.</p>
@@ -1238,7 +1428,6 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
             </select>
           </div>
         </div>
-
         <div class="card" id="products-card" style="display:none;">
           <h2 style="font-size:16px;">Products you make</h2>
           <p class="muted">Used for the daily production suggestion.</p>
@@ -1252,7 +1441,6 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
             <button class="btn-primary" onclick="saveProduct()">Save product</button>
           </div>
         </div>
-
         <div class="card">
           <h2 style="font-size:16px;">Data</h2>
           <p class="muted">Your data is saved on this device only.</p>
@@ -1260,7 +1448,6 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
           <button class="btn-danger" onclick="confirmReset()">Reset all data</button>
           <p class="hint" style="margin-top:10px;" id="data-info"></p>
         </div>
-
         <div class="card">
           <h2 style="font-size:16px;">Session</h2>
           <p class="muted">Signed in as admin. This ends your session.</p>
@@ -1270,7 +1457,6 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
     </section>
   </main>
 
-  <!-- BOTTOM NAV -->
   <nav class="bottom-nav" id="bottom-nav">
     <button class="bn-btn active" data-tab="today" onclick="showTab('today')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -1325,10 +1511,10 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
 </div>
 
 <script>
-/* ═══════════════════════════════════════════════════════════════
-   DPMS — v5 + landing + mobile polish
-   All state keys unchanged for Netlify continuity.
-   ═══════════════════════════════════════════════════════════════ */
+/* =================================================================
+   DPMS v6 - onboarding, sparklines, pull-to-refresh, rate matrix
+   State key unchanged so existing Netlify data persists.
+   ================================================================= */
 
 const STATE_KEY = 'dpms-state-v4';
 const LEGACY_KEYS = ['dpms-state-v3'];
@@ -1382,7 +1568,8 @@ function buildItemsFromCatalog(type) {
 function freshState(type = null) {
   return {
     v: SCHEMA, businessType: type, createdAt: Date.now(), lastSaved: null,
-    orgName: 'Adewale General Stores',
+    orgName: '',
+    onboardingComplete: false,
     ropMode: 'simple', serviceLevel: '0.95',
     stockItems: type ? buildItemsFromCatalog(type) : [],
     suppliers: [
@@ -1410,10 +1597,15 @@ function migrate(raw) {
     raw.ropMode = raw.ropMode || 'simple';
     raw.serviceLevel = raw.serviceLevel || '0.95';
     raw.suppliers = (raw.suppliers || []).map(s => ({ ...s, itemRates: s.itemRates || {} }));
+    raw.onboardingComplete = true;
     return raw;
   }
   if (raw.v === SCHEMA) {
     raw.suppliers = (raw.suppliers || []).map(s => ({ ...s, itemRates: s.itemRates || {} }));
+    // Older v4 sessions before onboarding existed: treat as complete if they already picked a type.
+    if (raw.onboardingComplete === undefined) {
+      raw.onboardingComplete = !!raw.businessType;
+    }
     return raw;
   }
   return null;
@@ -1440,14 +1632,14 @@ function saveState() {
     STATE.lastSaved = Date.now();
     localStorage.setItem(STATE_KEY, JSON.stringify(STATE));
     flashSaveIndicator();
-  } catch (e) { toast('Could not save — storage full'); }
+  } catch (e) { toast('Could not save, storage is full'); }
 }
 function flashSaveIndicator() {
   const el = document.getElementById('save-status');
   const txt = document.getElementById('save-text');
   if(!el || !txt) return;
   el.classList.add('saving');
-  txt.textContent = 'Saving…';
+  txt.textContent = 'Saving...';
   clearTimeout(_saveTimer);
   _saveTimer = setTimeout(() => {
     el.classList.remove('saving');
@@ -1547,8 +1739,44 @@ function logActivity(text){
   if(STATE.activity.length > 100) STATE.activity = STATE.activity.slice(0, 100);
   saveState();
 }
+function initialsOf(name){
+  if (!name) return 'BI';
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (!parts.length) return 'BI';
+  if (parts.length === 1) return parts[0].slice(0,2).toUpperCase();
+  return (parts[0][0] + parts[parts.length-1][0]).toUpperCase();
+}
 
-/* ═══════════════ SCREEN ROUTING ═══════════════ */
+/* ---------- SPARKLINE ---------- */
+function renderSparkline(item) {
+  const h = (item.history || []).slice(-10);
+  if (h.length < 2) return '';
+  const w = 100, ht = 22;
+  const qs = h.map(p => p.q);
+  const minQ = Math.min(...qs);
+  const maxQ = Math.max(...qs);
+  const range = maxQ - minQ || 1;
+  const step = w / (h.length - 1);
+  const pts = qs.map((q, i) => {
+    const x = i * step;
+    const y = ht - ((q - minQ) / range) * (ht - 4) - 2;
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ');
+  const fillPts = `${pts} ${w},${ht} 0,${ht}`;
+  const gid = 'spark-grad-' + item.id;
+  return `<svg class="spark-wrap" viewBox="0 0 ${w} ${ht}" preserveAspectRatio="none" style="width:100%;height:22px;display:block;">
+    <defs>
+      <linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#BD8329" stop-opacity="0.22"/>
+        <stop offset="100%" stop-color="#BD8329" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <polygon fill="url(#${gid})" points="${fillPts}"/>
+    <polyline points="${pts}" fill="none" stroke="#BD8329" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>`;
+}
+
+/* ---------- SCREEN ROUTING ---------- */
 function isLoggedIn(){
   try { return localStorage.getItem(SESSION_KEY) === 'active'; } catch(e){ return false; }
 }
@@ -1576,20 +1804,83 @@ function showApp(){
   document.getElementById('landing-screen').classList.remove('active');
   document.getElementById('login-screen').classList.remove('active');
   document.getElementById('app').classList.add('active');
-  if(!STATE.businessType){
-    showOnboarding();
+  if(!STATE.onboardingComplete){
+    showOnboardingStep(STATE.businessType ? 'tour-1' : (STATE.orgName ? 'type' : 'name'));
+    if(!STATE.businessType) showOnboardingStep(STATE.orgName ? 'type' : 'name');
   } else {
     renderAll();
     showTab('today');
+    // Show a quick skeleton on first paint, then reveal real content
+    revealSkeleton();
   }
 }
-function showOnboarding(){
+function revealSkeleton(){
+  // Content already rendered; the skeleton is only visible if the render
+  // took less than ~40ms. This keeps the transition feeling smooth without
+  // artificially delaying anything on fast devices.
+  setTimeout(() => {
+    const slot = document.getElementById('stats-slot');
+    const stock = document.getElementById('stock-items');
+    if (slot && slot.querySelector('.skeleton')) renderStats();
+    if (stock && stock.querySelector('.skeleton')) renderStock();
+  }, 40);
+}
+
+/* ---------- ONBOARDING ---------- */
+const ONB_STEPS = ['name','type','tour-1','tour-2','tour-3'];
+function updateOnbProgress(stepKey){
+  const idx = ONB_STEPS.indexOf(stepKey);
+  document.querySelectorAll('.onb-progress span').forEach((el, i) => {
+    el.classList.toggle('active', i === idx);
+    el.classList.toggle('done', i < idx);
+  });
+}
+function showOnboardingStep(stepKey){
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById('view-onboarding').classList.add('active');
   document.getElementById('bottom-nav').classList.remove('show');
+  document.querySelectorAll('.onb-step').forEach(s => s.classList.remove('active'));
+  const target = document.getElementById('onb-' + stepKey);
+  if (target) target.classList.add('active');
+  updateOnbProgress(stepKey);
+  if (stepKey === 'name') {
+    setTimeout(() => {
+      const inp = document.getElementById('onb-name-input');
+      if (inp) { inp.value = STATE.orgName || ''; inp.focus(); }
+    }, 200);
+  }
+}
+function advanceOnboarding(stepNumber){
+  const key = ONB_STEPS[stepNumber - 1];
+  if (key) showOnboardingStep(key);
+}
+document.getElementById('onb-name-next').addEventListener('click', () => {
+  const v = document.getElementById('onb-name-input').value.trim();
+  if (!v) { toast('Please enter a name'); return; }
+  STATE.orgName = v;
+  saveState();
+  showOnboardingStep('type');
+});
+document.getElementById('onb-name-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('onb-name-next').click();
+});
+function skipTour(){
+  STATE.onboardingComplete = true;
+  saveState();
+  logActivity('Completed onboarding');
+  renderAll();
+  showTab('today');
+}
+function finishOnboarding(){
+  STATE.onboardingComplete = true;
+  saveState();
+  logActivity('Completed onboarding tour');
+  renderAll();
+  showTab('today');
+  toast('Welcome to DPMS');
 }
 
-/* ═══════════════ LOGIN ═══════════════ */
+/* ---------- LOGIN ---------- */
 document.getElementById('login-form').addEventListener('submit', function(e){
   e.preventDefault();
   const user = document.getElementById('l-user').value.trim();
@@ -1597,12 +1888,10 @@ document.getElementById('login-form').addEventListener('submit', function(e){
   const errorEl = document.getElementById('login-error');
   const btn = document.getElementById('login-btn');
   const lbl = document.getElementById('login-btn-label');
-
   errorEl.classList.remove('show');
   btn.classList.add('loading');
   btn.disabled = true;
-  lbl.textContent = 'Signing in…';
-
+  lbl.textContent = 'Signing in...';
   setTimeout(() => {
     if(user === 'admin' && pass === 'dpms2026'){
       setSession(true);
@@ -1612,7 +1901,7 @@ document.getElementById('login-form').addEventListener('submit', function(e){
       showApp();
       const hour = new Date().getHours();
       const greet = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
-      toast(`${greet}, admin`);
+      toast(greet + ', admin');
     } else {
       btn.classList.remove('loading');
       btn.disabled = false;
@@ -1628,12 +1917,19 @@ function signOut(){
   setTimeout(() => showLogin(), 100);
 }
 
-/* ═══════════════ FLOW ═══════════════ */
+/* ---------- FLOW ---------- */
 function chooseType(type){
   STATE.businessType = type;
   if(!STATE.stockItems.length) STATE.stockItems = buildItemsFromCatalog(type);
   localStorage.setItem(LEGACY_TYPE_KEY, type);
   saveState();
+  if (!STATE.onboardingComplete) {
+    showOnboardingStep('tour-1');
+  } else {
+    finishEnterApp();
+  }
+}
+function finishEnterApp(){
   document.getElementById('s-org').value = STATE.orgName || '';
   document.getElementById('s-type').value = STATE.businessType || 'reseller';
   document.getElementById('products-card').style.display = STATE.businessType === 'manufacturer' ? 'block' : 'none';
@@ -1644,8 +1940,8 @@ function requestTypeChange(newType){
   if(newType === STATE.businessType) return;
   const hasOnlySeeds = STATE.stockItems.every(i => i.isSeed);
   const msg = hasOnlySeeds
-    ? `You're switching to "${newType === 'manufacturer' ? 'I make what I sell' : 'I buy and sell'}". We'll swap your starter items to match.`
-    : `You're switching to "${newType === 'manufacturer' ? 'I make what I sell' : 'I buy and sell'}". You have custom items — keep them, or replace with a starter list?`;
+    ? 'You are switching to "' + (newType === 'manufacturer' ? 'I make what I sell' : 'I buy and sell') + '". We will swap your starter items to match.'
+    : 'You are switching to "' + (newType === 'manufacturer' ? 'I make what I sell' : 'I buy and sell') + '". You have custom items. Keep them, or replace with a starter list?';
   document.getElementById('type-modal-msg').textContent = msg;
   document.getElementById('type-swap-btn').onclick = () => applyTypeChange(newType, true);
   document.getElementById('type-keep-btn').onclick = () => applyTypeChange(newType, false);
@@ -1662,9 +1958,9 @@ function applyTypeChange(newType, swapItems){
     STATE.stockItems = buildItemsFromCatalog(newType);
     STATE.dailyCheck = { date: null, completedAt: null };
     STATE.suppliers.forEach(s => { s.itemRates = {}; });
-    logActivity(`Switched to ${newType} — items swapped`);
+    logActivity('Switched to ' + newType + ', items swapped');
   } else {
-    logActivity(`Switched to ${newType} — kept items`);
+    logActivity('Switched to ' + newType + ', kept items');
   }
   document.getElementById('products-card').style.display = newType === 'manufacturer' ? 'block' : 'none';
   document.getElementById('s-type').value = newType;
@@ -1677,9 +1973,9 @@ function setRopMode(mode){
   if(mode === STATE.ropMode) return;
   STATE.ropMode = mode;
   saveState();
-  logActivity(`Changed restock mode to ${mode}`);
+  logActivity('Changed restock mode to ' + mode);
   renderSettings(); renderStock(); renderNudges(); renderVE();
-  toast(`Switched to ${mode} mode`);
+  toast('Switched to ' + mode + ' mode');
 }
 function setServiceLevel(val){
   STATE.serviceLevel = val;
@@ -1687,15 +1983,15 @@ function setServiceLevel(val){
   renderStock(); renderNudges(); renderVE();
 }
 
-/* ═══════════════ TABS ═══════════════ */
+/* ---------- TABS ---------- */
 const TAB_TO_VIEW = {
   today:'view-today', suppliers:'view-suppliers', more:'view-more',
   'add-supplier':'view-add-supplier', 'add-item':'view-add-item'
 };
 const TABS_WITH_BOTTOMNAV = ['today','suppliers','more'];
-
 function showTab(tab){
-  if(!STATE.businessType) return;
+  if(!STATE.businessType){ showOnboardingStep('type'); return; }
+  if(!STATE.onboardingComplete){ showOnboardingStep('tour-1'); return; }
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   const el = document.getElementById(TAB_TO_VIEW[tab]);
   if(el) el.classList.add('active');
@@ -1709,7 +2005,6 @@ function showTab(tab){
 }
 function showMoreMenu(){
   document.querySelectorAll('.subview').forEach(s => s.classList.remove('active'));
-  // Ensure menu top visible when returning from a subview
   const profile = document.querySelector('.profile-card');
   if(profile) profile.style.display = '';
   document.querySelectorAll('.menu-section').forEach(s => s.style.display = '');
@@ -1724,9 +2019,10 @@ function showMoreSub(name){
   if(name === 'orders')   renderOrders();
   if(name === 'activity') renderActivity();
   if(name === 'settings') renderSettings();
+  if(name === 'matrix')   renderMatrix();
 }
 
-/* ═══════════════ GREETING + STATS ═══════════════ */
+/* ---------- GREETING / STATS ---------- */
 function renderGreeting(){
   const el = document.getElementById('greeting-slot');
   if(!el) return;
@@ -1742,9 +2038,10 @@ function renderGreeting(){
       </div>
       <div class="greeting-date">${date}</div>
     </div>`;
-  // update profile card name too
   const pn = document.getElementById('profile-name');
   if(pn) pn.textContent = name;
+  const pa = document.getElementById('profile-avatar');
+  if(pa) pa.textContent = initialsOf(name);
 }
 function renderStats(){
   const el = document.getElementById('stats-slot');
@@ -1775,7 +2072,7 @@ function renderStats(){
     </div>`;
 }
 
-/* ═══════════════ TAP LOOP ═══════════════ */
+/* ---------- TAP LOOP ---------- */
 function recordTap(itemId, level){
   const item = STATE.stockItems.find(i => i.id === itemId);
   if(!item) return;
@@ -1793,11 +2090,11 @@ function recordTap(itemId, level){
 }
 function isCheckedToday(){ return STATE.dailyCheck.date === todayKey(); }
 
-/* ═══════════════ STOCK ═══════════════ */
+/* ---------- STOCK ---------- */
 function renderStock(){
   const el = document.getElementById('stock-items');
   if(!STATE.stockItems.length){
-    el.innerHTML = `<div class="empty"><strong>No items yet</strong>Add what you track to get restock alerts.</div>`;
+    el.innerHTML = '<div class="empty"><strong>No items yet</strong>Add what you track to get restock alerts.</div>';
     document.getElementById('done-btn').style.display = 'none';
     return;
   }
@@ -1809,21 +2106,22 @@ function renderStock(){
     const checked = item.lastTapDate === todayKey();
     const metaBits = [];
     if(avg > 0){
-      const sdBit = mode === 'advanced' && sd > 0 ? ` (±${sd})` : '';
-      metaBits.push(`uses ~<strong>${avg}${sdBit}/day</strong>`);
+      const sdBit = mode === 'advanced' && sd > 0 ? ' (±' + sd + ')' : '';
+      metaBits.push('uses ~<strong>' + avg + sdBit + '/day</strong>');
     }
-    if(daysLeft !== null) metaBits.push(`~<strong>${daysLeft}</strong> days left`);
+    if(daysLeft !== null) metaBits.push('~<strong>' + daysLeft + '</strong> days left');
     if(avg > 0){
-      const ropBit = mode === 'advanced' && serviceLabel ? ` at ${serviceLabel}` : '';
-      metaBits.push(`reorder at <strong>${rop}</strong>${ropBit}`);
+      const ropBit = mode === 'advanced' && serviceLabel ? ' at ' + serviceLabel : '';
+      metaBits.push('reorder at <strong>' + rop + '</strong>' + ropBit);
     }
     const cov = coverageStats(item.id);
     let covPill = '';
     if(cov.total > 0){
       const cls = cov.withRate === 0 ? 'none' : cov.withRate === cov.total ? 'full' : 'partial';
-      const label = cov.withRate === 0 ? 'No rates' : `${cov.withRate}/${cov.total} rates`;
-      covPill = `<span class="coverage-pill ${cls}">${label}</span>`;
+      const label = cov.withRate === 0 ? 'No rates' : cov.withRate + '/' + cov.total + ' rates';
+      covPill = '<span class="coverage-pill ' + cls + '">' + label + '</span>';
     }
+    const spark = renderSparkline(item);
     return `
       <div class="item-row">
         <p class="item-name">
@@ -1831,11 +2129,12 @@ function renderStock(){
           <span class="tick ${checked ? 'done' : ''}">✓</span>
         </p>
         <p class="item-meta">${metaBits.join(' · ') || 'Tap below to start tracking'} ${covPill}</p>
+        ${spark}
         <div class="tap-grid">
           ${['full','half','low','out'].map(s => {
             const sel = item.status === s;
             const warn = sel && (s === 'low' || s === 'out');
-            return `<button class="tap-btn ${sel?'sel':''} ${warn?'warn':''}" onclick="recordTap('${item.id}','${s}')">${s[0].toUpperCase()+s.slice(1)}</button>`;
+            return '<button class="tap-btn ' + (sel?'sel':'') + ' ' + (warn?'warn':'') + '" onclick="recordTap(\'' + item.id + '\',\'' + s + '\')">' + s[0].toUpperCase()+s.slice(1) + '</button>';
           }).join('')}
         </div>
         <div class="item-actions">
@@ -1846,7 +2145,6 @@ function renderStock(){
   }).join('');
   renderCheckProgress();
 }
-
 function renderCheckProgress(){
   const slot = document.getElementById('check-progress-slot');
   if(!STATE.stockItems.length){ slot.innerHTML=''; return; }
@@ -1855,13 +2153,12 @@ function renderCheckProgress(){
   const pct = total ? Math.round(checkedCount/total*100) : 0;
   const allChecked = checkedCount === total;
   const done = isCheckedToday();
-
   if(done && allChecked){
-    slot.innerHTML = `<div class="check-progress" style="border-color:var(--teal);background:var(--teal-soft);"><div class="info"><strong>Checked ✓</strong><small>All ${total} items reviewed today.</small></div></div>`;
+    slot.innerHTML = '<div class="check-progress" style="border-color:var(--teal);background:var(--teal-soft);"><div class="info"><strong>Checked</strong><small>All ' + total + ' items reviewed today.</small></div></div>';
     return;
   }
   if(done && !allChecked){
-    slot.innerHTML = `<div class="check-progress"><div class="info"><strong>Check updated</strong><small>You changed something — tap Done again to refresh.</small></div></div>`;
+    slot.innerHTML = '<div class="check-progress"><div class="info"><strong>Check updated</strong><small>You changed something. Tap Done again to refresh.</small></div></div>';
     return;
   }
   const dash = 113;
@@ -1870,7 +2167,7 @@ function renderCheckProgress(){
     <div class="check-progress">
       <div class="info">
         <strong>${checkedCount} of ${total} items checked</strong>
-        <small>${allChecked ? 'Ready — tap Done for your restock list.' : 'Tap each item to record what you see.'}</small>
+        <small>${allChecked ? 'Ready. Tap Done for your restock list.' : 'Tap each item to record what you see.'}</small>
       </div>
       <div class="ring">
         <svg viewBox="0 0 44 44">
@@ -1881,20 +2178,19 @@ function renderCheckProgress(){
       </div>
     </div>`;
 }
-
 function completeCheck(){
   if(!STATE.stockItems.length){ toast('Add items first'); return; }
   const checked = STATE.stockItems.filter(i => i.lastTapDate === todayKey());
   if(!checked.length){ toast('Tap at least one item first'); return; }
   STATE.dailyCheck = { date: todayKey(), completedAt: Date.now() };
   saveState();
-  logActivity(`Completed today's check — ${checked.length} item${checked.length>1?'s':''}`);
+  logActivity('Completed today\'s check, ' + checked.length + ' item' + (checked.length>1?'s':''));
   renderNudges(); renderCheckProgress(); renderStats();
   const el = document.getElementById('restock-nudges');
   if(el && el.firstElementChild) el.scrollIntoView({behavior:'smooth', block:'start'});
 }
 
-/* ═══════════════ NUDGES ═══════════════ */
+/* ---------- NUDGES ---------- */
 function renderNudges(){
   renderRestockNudges();
   renderProductionNudge();
@@ -1909,7 +2205,7 @@ function renderRestockNudges(){
     return q <= rop;
   });
   if(!due.length){
-    el.innerHTML = `<div class="nudge ok"><p class="tag">All good</p><h2>Nothing to restock</h2><p class="muted" style="margin:0;">Every item is above its reorder point.</p></div>`;
+    el.innerHTML = '<div class="nudge ok"><p class="tag">All good</p><h2>Nothing to restock</h2><p class="muted" style="margin:0;">Every item is above its reorder point.</p></div>';
     return;
   }
   el.innerHTML = due.map(item => renderOneRestockNudge(item)).join('');
@@ -1936,30 +2232,37 @@ function renderOneRestockNudge(item){
         <span class="note">${fmtN(s.resolved.cost)} · ~${s.resolved.leadTime}d · rated ${s.resolved.fn}/10</span>
         <span class="vi">VI ${s.vi.toFixed(2)}</span>
       </div>
-    </div>`).join('') : `<p class="muted">Add a supplier so we can recommend one.</p>`;
+    </div>`).join('') : '<p class="muted">Add a supplier so we can recommend one.</p>';
   let whyHtml;
   if(mode === 'advanced'){
-    whyHtml = `<strong>Advanced mode</strong> — safety stock from daily use variability.<br><br>
-      Average daily use: <strong>${avg}/day</strong> (±${sd})<br>
-      Delivery takes ${item.leadTime} days, so lead-time demand is ${avg} × ${item.leadTime} = ${Math.round(avg*item.leadTime)} units.<br>
-      Safety stock = z × σ × √lead = ${z} × ${sd} × √${item.leadTime} = <strong>${safetyStock} units</strong><br>
-      Reorder point = ${Math.round(avg*item.leadTime)} + ${safetyStock} = <strong>${rop} units</strong> (at ${serviceLabel} service level)`;
+    whyHtml = '<strong>Advanced mode</strong>, safety stock from daily use variability.<br><br>' +
+      'Average daily use: <strong>' + avg + '/day</strong> (±' + sd + ')<br>' +
+      'Delivery takes ' + item.leadTime + ' days, so lead-time demand is ' + avg + ' × ' + item.leadTime + ' = ' + Math.round(avg*item.leadTime) + ' units.<br>' +
+      'Safety stock = z × σ × √lead = ' + z + ' × ' + sd + ' × √' + item.leadTime + ' = <strong>' + safetyStock + ' units</strong><br>' +
+      'Reorder point = ' + Math.round(avg*item.leadTime) + ' + ' + safetyStock + ' = <strong>' + rop + ' units</strong> (at ' + serviceLabel + ' service level)';
   } else {
-    whyHtml = `Reorder point = (daily use × delivery days) + (daily use × safety days)<br>
-      For this item: (${avg} × ${item.leadTime}) + (${avg} × ${item.safetyDays}) = <strong>${rop} units</strong>.<br>
-      Your tap (${qty}) is at or below this, so we recommend ordering now.`;
+    whyHtml = 'Reorder point = (daily use × delivery days) + (daily use × safety days)<br>' +
+      'For this item: (' + avg + ' × ' + item.leadTime + ') + (' + avg + ' × ' + item.safetyDays + ') = <strong>' + rop + ' units</strong>.<br>' +
+      'Your tap (' + qty + ') is at or below this, so we recommend ordering now.';
   }
   return `
     <div class="nudge">
       <p class="tag">Time to restock</p>
       <h2>${item.name}</h2>
       <p class="muted" style="margin-bottom:10px;">
-        ${avg > 0 ? `You use about ${avg}/day — roughly ${daysLeft} days left.` : 'Running low.'}
+        ${avg > 0 ? 'You use about ' + avg + '/day, so roughly ' + daysLeft + ' days left.' : 'Running low.'}
       </p>
-      <button class="why-toggle" onclick="toggleWhy(this)">Why now? ▾</button>
+      <button class="why-toggle" onclick="toggleWhy(this)">Why now?</button>
       <div class="why-box">${whyHtml}</div>
       <div style="margin-top:12px;">${suppHtml}</div>
-      ${best ? `<button class="btn-primary" style="margin-top:8px;" onclick="confirmOrder('${item.id}')">Order from ${best.name} · ${fmtN(best.resolved.cost)}</button>` : ''}
+      ${best ? `
+        <div class="nudge-actions">
+          <button class="btn-primary" onclick="confirmOrder('${item.id}')">Order from ${best.name} · ${fmtN(best.resolved.cost)}</button>
+          <button class="nudge-share" onclick="shareNudge('${item.id}')" title="Share on WhatsApp" aria-label="Share on WhatsApp">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            Share
+          </button>
+        </div>` : ''}
     </div>`;
 }
 function renderProductionNudge(){
@@ -1976,10 +2279,10 @@ function renderProductionNudge(){
         <div class="num" id="batch-num">${b.qty}</div>
         <div class="lbl">Suggested batch size</div>
       </div>
-      <button class="why-toggle" onclick="toggleWhy(this)">Why this number? ▾</button>
+      <button class="why-toggle" onclick="toggleWhy(this)">Why this number?</button>
       <div class="why-box">
         <strong>Newsvendor model</strong>: balances lost sales vs wasted stock.<br><br>
-        Critical ratio = (₦${p.price} − ₦${p.cost}) ÷ [(₦${p.price} − ₦${p.cost}) + (₦${p.cost} − ₦${p.salvage})] = ${b.ratio}<br>
+        Critical ratio = (₦${p.price} - ₦${p.cost}) ÷ [(₦${p.price} - ₦${p.cost}) + (₦${p.cost} - ₦${p.salvage})] = ${b.ratio}<br>
         Batch = average demand + (safety factor × variability) = <strong>${b.qty}</strong>
       </div>
       <div class="stepper-row">
@@ -2003,7 +2306,7 @@ function adjustBatch(delta){
 }
 function confirmBatch(){
   const n = document.getElementById('batch-num').textContent;
-  logActivity(`Confirmed batch of ${n} ${STATE.products[0]?.name?.toLowerCase() || 'units'}`);
+  logActivity('Confirmed batch of ' + n + ' ' + (STATE.products[0]?.name?.toLowerCase() || 'units'));
   toast('Batch confirmed: ' + n);
 }
 function confirmOrder(itemId){
@@ -2024,18 +2327,81 @@ function confirmOrder(itemId){
   item.status = 'full';
   item.history.push({ t: Date.now(), q: item.levels.full });
   if(item.history.length > 30) item.history = item.history.slice(-30);
-  logActivity(`Ordered ${item.name} from ${best.name} at ${fmtN(best.resolved.cost)}`);
+  logActivity('Ordered ' + item.name + ' from ' + best.name + ' at ' + fmtN(best.resolved.cost));
   saveState();
   renderStock(); renderNudges(); renderStats();
-  toast(`Order placed with ${best.name}`);
+  toast('Order placed with ' + best.name);
 }
 
-/* ═══════════════ ITEM CRUD ═══════════════ */
+/* ---------- SHARE NUDGE (WhatsApp) ---------- */
+function shareNudge(itemId){
+  const item = STATE.stockItems.find(i => i.id === itemId);
+  if(!item) return;
+  const ranked = STATE.suppliers.map(s => {
+    const r = resolveSupplierRate(s, item.id);
+    return { ...s, resolved: r, vi: valueIndex(s, item.id) };
+  }).sort((a,b) => b.vi - a.vi);
+  const best = ranked[0];
+  const biz = STATE.orgName || 'my business';
+  let msg;
+  if (best) {
+    msg = 'Hello ' + best.name + ', this is ' + biz + '. I would like to reorder ' + item.name + '. Can you confirm your current price and delivery time?';
+  } else {
+    msg = 'Hello, this is ' + biz + '. I would like to reorder ' + item.name + '. Can you confirm your current price and delivery time?';
+  }
+  const url = 'https://wa.me/?text=' + encodeURIComponent(msg);
+  window.open(url, '_blank');
+  logActivity('Shared reorder message for ' + item.name + (best ? ' with ' + best.name : ''));
+}
+
+/* ---------- AUTO-SUGGEST RATES ---------- */
+function suggestRatesForNewItem(itemName, supplier) {
+  if (!itemName || !supplier || !supplier.itemRates) return null;
+  const newTokens = itemName.toLowerCase().split(/[\s,]+/).filter(t => t.length > 3);
+  if (!newTokens.length) return null;
+  const matches = [];
+  Object.entries(supplier.itemRates).forEach(([itemId, rate]) => {
+    const existing = STATE.stockItems.find(i => i.id === itemId);
+    if (!existing) return;
+    const exTokens = existing.name.toLowerCase().split(/[\s,]+/);
+    const overlap = newTokens.filter(t => exTokens.some(et => et.includes(t) || t.includes(et)));
+    if (overlap.length) matches.push(rate);
+  });
+  if (!matches.length) return null;
+  const avgOf = (arr) => {
+    const vals = arr.map(x => Number(x) || 0).filter(Boolean);
+    return vals.length ? Math.round(vals.reduce((s,v) => s+v, 0) / vals.length) : null;
+  };
+  return {
+    cost: avgOf(matches.map(m => m.cost)),
+    leadTime: avgOf(matches.map(m => m.leadTime)),
+    fn: avgOf(matches.map(m => m.fn)),
+    matchCount: matches.length
+  };
+}
+function onItemNameInput(){
+  const name = document.getElementById('it-name').value.trim();
+  const hint = document.getElementById('it-autosuggest-hint');
+  if (!name || name.length < 3) { hint.style.display = 'none'; return; }
+  let matches = 0;
+  STATE.suppliers.forEach(s => {
+    if (suggestRatesForNewItem(name, s)) matches++;
+  });
+  if (matches > 0) {
+    hint.style.display = '';
+    hint.textContent = 'We can suggest rates from ' + matches + ' supplier' + (matches>1?'s':'') + ' who already sell similar items.';
+  } else {
+    hint.style.display = 'none';
+  }
+}
+
+/* ---------- ITEM CRUD ---------- */
 let _editingItemId = null;
 function openAddItem(){
   _editingItemId = null;
   document.getElementById('item-form-title').textContent = 'Add an item to track';
   document.getElementById('it-name').value = '';
+  document.getElementById('it-autosuggest-hint').style.display = 'none';
   document.getElementById('it-lead').value = 3;
   document.getElementById('it-lead-val').textContent = '3d';
   document.getElementById('it-safety').value = 2;
@@ -2055,6 +2421,7 @@ function openEditItem(id){
   _editingItemId = id;
   document.getElementById('item-form-title').textContent = 'Edit item';
   document.getElementById('it-name').value = it.name;
+  document.getElementById('it-autosuggest-hint').style.display = 'none';
   document.getElementById('it-lead').value = it.leadTime;
   document.getElementById('it-lead-val').textContent = it.leadTime + 'd';
   document.getElementById('it-safety').value = it.safetyDays;
@@ -2082,14 +2449,14 @@ function saveItem(){
   const out    = parseInt(document.getElementById('it-out').value, 10) || 0;
   if(!name){ toast('Give the item a name'); return; }
   if([full, half, low].some(v => isNaN(v))){ toast('Fill in full, half and low levels'); return; }
-  if(!(full > half && half > low && low > out)){ toast('Levels must go full > half > low > out'); return; }
+  if(!(full > half && half > low && low > out)){ toast('Levels must go full, then half, then low, then out'); return; }
   let newId = null;
   if(_editingItemId){
     const it = STATE.stockItems.find(i => i.id === _editingItemId);
     if(it){
       it.name = name; it.leadTime = lead; it.safetyDays = safety; it.levels = { full, half, low, out };
       it.isSeed = false;
-      logActivity(`Edited item ${name}`);
+      logActivity('Edited item ' + name);
     }
   } else {
     newId = uid();
@@ -2097,7 +2464,7 @@ function saveItem(){
       id: newId, name, status: null, leadTime: lead, safetyDays: safety,
       levels: { full, half, low, out }, history: [], lastTapDate: null, isSeed: false
     });
-    logActivity(`Added item ${name}`);
+    logActivity('Added item ' + name);
   }
   saveState();
   renderStock(); renderNudges(); renderVE(); renderOverview(); renderSuppliers(); renderStats();
@@ -2115,7 +2482,7 @@ function confirmDeleteItem(){
   _confirmAction = () => {
     STATE.stockItems = STATE.stockItems.filter(i => i.id !== _editingItemId);
     STATE.suppliers.forEach(s => { if(s.itemRates) delete s.itemRates[_editingItemId]; });
-    logActivity(`Deleted item ${it.name}`);
+    logActivity('Deleted item ' + it.name);
     saveState();
     renderStock(); renderNudges(); renderVE(); renderOverview(); renderSuppliers(); renderStats();
     showTab('today');
@@ -2123,17 +2490,17 @@ function confirmDeleteItem(){
     toast('Item deleted');
   };
   document.getElementById('confirm-title').textContent = 'Delete this item?';
-  document.getElementById('confirm-msg').textContent = `"${it.name}" and its usage history will be removed. This can't be undone.`;
+  document.getElementById('confirm-msg').textContent = '"' + it.name + '" and its usage history will be removed. This cannot be undone.';
   document.getElementById('confirm-btn').textContent = 'Yes, delete';
   document.getElementById('confirm-btn').className = 'confirm';
   document.getElementById('confirm-modal').classList.add('show');
 }
 
-/* ═══════════════ SUPPLIER CRUD ═══════════════ */
+/* ---------- SUPPLIER CRUD ---------- */
 function renderSuppliers(){
   const el = document.getElementById('supplier-list');
   if(!STATE.suppliers.length){
-    el.innerHTML = `<div class="empty"><strong>No suppliers yet</strong>Add the shops you buy from.</div>`;
+    el.innerHTML = '<div class="empty"><strong>No suppliers yet</strong>Add the shops you buy from.</div>';
     return;
   }
   const ranked = STATE.suppliers.map(s => ({ ...s, vi: valueIndex(s) }))
@@ -2146,7 +2513,7 @@ function renderSuppliers(){
         <div class="row">
           <span class="name">${s.name}</span>
           <span>
-            ${specialCount ? `<span class="badge special" style="margin-right:4px;">${specialCount} rate${specialCount>1?'s':''}</span>` : ''}
+            ${specialCount ? '<span class="badge special" style="margin-right:4px;">' + specialCount + ' rate' + (specialCount>1?'s':'') + '</span>' : ''}
             ${i===0?'<span class="badge">Best overall</span>':''}
           </span>
         </div>
@@ -2164,13 +2531,13 @@ let _draftItemRates = {};
 function renderSupplierItemRates(){
   const el = document.getElementById('sup-item-rates');
   if(!STATE.stockItems.length){
-    el.innerHTML = `<p class="hint">Add some items first — then you can set special rates for them here.</p>`;
+    el.innerHTML = '<p class="hint">Add some items first, then you can set special rates for them here.</p>';
     return;
   }
   el.innerHTML = STATE.stockItems.map(item => {
     const r = _draftItemRates[item.id] || {};
-    const defLead = document.getElementById('sup-lead').value || '—';
-    const defFn   = document.getElementById('sup-fn').value || '—';
+    const defLead = document.getElementById('sup-lead').value || 'default';
+    const defFn   = document.getElementById('sup-fn').value || 'default';
     return `
       <div class="rate-row">
         <div class="rate-row-name">${item.name}</div>
@@ -2248,12 +2615,12 @@ function saveSupplier(){
     const s = STATE.suppliers.find(x => x.id === _editingSupplierId);
     if(s){
       Object.assign(s, { name, cost, leadTime: lead, fn, note, itemRates: _draftItemRates });
-      logActivity(`Updated supplier ${name}`);
+      logActivity('Updated supplier ' + name);
     }
   } else {
     newId = uid();
     STATE.suppliers.push({ id: newId, name, cost, leadTime: lead, fn, note, itemRates: _draftItemRates });
-    logActivity(`Added supplier ${name}`);
+    logActivity('Added supplier ' + name);
   }
   saveState();
   renderSuppliers(); renderRestockNudges(); renderVE(); renderStock(); renderOverview(); renderStats();
@@ -2270,11 +2637,11 @@ function confirmDeleteSupplier(){
   if(!s) return;
   const orderCount = STATE.orders.filter(o => o.supplierId === _editingSupplierId).length;
   const warn = orderCount
-    ? ` This supplier appears in ${orderCount} past order${orderCount>1?'s':''}. Those orders will be kept, but the supplier and their rates will be removed.`
+    ? ' This supplier appears in ' + orderCount + ' past order' + (orderCount>1?'s':'') + '. Those orders will be kept, but the supplier and their rates will be removed.'
     : ' Any special rates set for this supplier will also be removed.';
   _confirmAction = () => {
     STATE.suppliers = STATE.suppliers.filter(x => x.id !== _editingSupplierId);
-    logActivity(`Deleted supplier ${s.name}`);
+    logActivity('Deleted supplier ' + s.name);
     saveState();
     renderSuppliers(); renderRestockNudges(); renderVE(); renderStock(); renderOverview(); renderStats();
     showTab('suppliers');
@@ -2282,13 +2649,13 @@ function confirmDeleteSupplier(){
     toast('Supplier deleted');
   };
   document.getElementById('confirm-title').textContent = 'Delete this supplier?';
-  document.getElementById('confirm-msg').textContent = `"${s.name}" will be removed.${warn}`;
+  document.getElementById('confirm-msg').textContent = '"' + s.name + '" will be removed.' + warn;
   document.getElementById('confirm-btn').textContent = 'Yes, delete';
   document.getElementById('confirm-btn').className = 'confirm';
   document.getElementById('confirm-modal').classList.add('show');
 }
 
-/* ═══════════════ RATE MODAL ═══════════════ */
+/* ---------- RATE MODAL ---------- */
 let _rateModalContext = null;
 let _rateModalTargetId = null;
 let _rateModalDraft = {};
@@ -2302,8 +2669,18 @@ function openSetRatesForItem(itemId){
   STATE.suppliers.forEach(s => {
     const r = (s.itemRates && s.itemRates[itemId]) || null;
     if(r) _rateModalDraft[s.id] = { ...r };
+    // Auto-suggest for new items that have no rate yet
+    if(!r || !Object.keys(r).length){
+      const sugg = suggestRatesForNewItem(item.name, s);
+      if(sugg){
+        _rateModalDraft[s.id] = _rateModalDraft[s.id] || {};
+        if(sugg.cost)     _rateModalDraft[s.id].cost     = sugg.cost;
+        if(sugg.leadTime) _rateModalDraft[s.id].leadTime = sugg.leadTime;
+        if(sugg.fn)       _rateModalDraft[s.id].fn       = sugg.fn;
+      }
+    }
   });
-  document.getElementById('rate-modal-title').textContent = `Set rates for ${item.name}`;
+  document.getElementById('rate-modal-title').textContent = 'Set rates for ' + item.name;
   document.getElementById('rate-modal-sub').textContent = 'Optional: set a special cost, delivery days and quality score for this item at each supplier. Leave blank to use their default.';
   renderRateModal();
   document.getElementById('rate-modal').classList.add('show');
@@ -2314,7 +2691,7 @@ function openSetRatesForSupplier(supplierId){
   _rateModalContext = 'supplier';
   _rateModalTargetId = supplierId;
   _rateModalDraft = JSON.parse(JSON.stringify(s.itemRates || {}));
-  document.getElementById('rate-modal-title').textContent = `Set rates for ${s.name}`;
+  document.getElementById('rate-modal-title').textContent = 'Set rates for ' + s.name;
   document.getElementById('rate-modal-sub').textContent = 'Optional: set a special cost, delivery days and quality score for any items where this supplier is different from their default.';
   renderRateModal();
   document.getElementById('rate-modal').classList.add('show');
@@ -2327,6 +2704,10 @@ function renderRateModal(){
     if(!STATE.suppliers.length){ el.innerHTML = '<p class="hint">No suppliers yet.</p>'; return; }
     el.innerHTML = STATE.suppliers.map(s => {
       const r = _rateModalDraft[s.id] || {};
+      const sugg = suggestRatesForNewItem((STATE.stockItems.find(i => i.id === _rateModalTargetId) || {}).name || '', s);
+      const note = sugg && r.cost && Math.abs((r.cost||0) - (sugg.cost||0)) < 5000
+        ? '<div class="autosuggest-note">Suggested from ' + sugg.matchCount + ' similar item' + (sugg.matchCount>1?'s':'') + '</div>'
+        : '';
       return `
         <div class="rate-row">
           <div class="rate-row-name">${s.name}</div>
@@ -2335,6 +2716,7 @@ function renderRateModal(){
             <div class="rate-field"><label>Days</label><input type="number" placeholder="${s.leadTime}" data-key="${s.id}" data-field="leadTime" value="${r.leadTime || ''}" oninput="updateRateDraft(this)"></div>
             <div class="rate-field"><label>Score</label><input type="number" min="1" max="10" placeholder="${s.fn}" data-key="${s.id}" data-field="fn" value="${r.fn || ''}" oninput="updateRateDraft(this)"></div>
           </div>
+          ${note}
         </div>`;
     }).join('');
   } else if(_rateModalContext === 'supplier'){
@@ -2376,7 +2758,7 @@ function saveRateModal(){
       else delete s.itemRates[itemId];
     });
     const item = STATE.stockItems.find(i => i.id === itemId);
-    logActivity(`Set special rates for ${item ? item.name : 'item'}`);
+    logActivity('Set special rates for ' + (item ? item.name : 'item'));
   } else if(_rateModalContext === 'supplier'){
     const s = STATE.suppliers.find(x => x.id === _rateModalTargetId);
     if(s){
@@ -2385,7 +2767,7 @@ function saveRateModal(){
         const r = _rateModalDraft[itemId];
         if(r && Object.keys(r).length) s.itemRates[itemId] = r;
       });
-      logActivity(`Set special item rates for ${s.name}`);
+      logActivity('Set special item rates for ' + s.name);
     }
   }
   saveState();
@@ -2403,7 +2785,7 @@ function closeRateModal(){
   _rateModalDraft = {};
 }
 
-/* ═══════════════ PRODUCTS ═══════════════ */
+/* ---------- PRODUCTS ---------- */
 function showAddProduct(){ document.getElementById('add-product-form').style.display = 'block'; }
 function saveProduct(){
   const name    = document.getElementById('p-name').value.trim();
@@ -2416,7 +2798,7 @@ function saveProduct(){
   const seed = Math.max(10, Math.round((price / (cost || 1)) * 20));
   const history = [seed-8, seed+5, seed+12, seed-3, seed+4, seed-6, seed+15, seed-2, seed+1, seed+7].map(v => Math.max(1, v));
   STATE.products.push({ id: uid(), name, cost, price, salvage, demandHistory: history });
-  logActivity(`Added product ${name}`);
+  logActivity('Added product ' + name);
   saveState();
   renderProducts(); renderProductionNudge();
   document.getElementById('add-product-form').style.display = 'none';
@@ -2426,7 +2808,7 @@ function saveProduct(){
 function renderProducts(){
   const el = document.getElementById('products-list');
   if(!STATE.products.length){
-    el.innerHTML = `<div class="empty"><strong>No products yet</strong>Add what you make to get a daily batch suggestion.</div>`;
+    el.innerHTML = '<div class="empty"><strong>No products yet</strong>Add what you make to get a daily batch suggestion.</div>';
     return;
   }
   el.innerHTML = STATE.products.map(p => `
@@ -2436,7 +2818,7 @@ function renderProducts(){
     </div>`).join('');
 }
 
-/* ═══════════════ OVERVIEW / VE / ACTIVITY / SETTINGS ═══════════════ */
+/* ---------- OVERVIEW / VE / ACTIVITY / SETTINGS ---------- */
 function renderOverview(){
   const cutoff = Date.now() - 30*86400000;
   const recent = STATE.orders.filter(o => o.placedAt >= cutoff);
@@ -2465,12 +2847,12 @@ function renderOverview(){
           <div class="bar-track"><div class="bar-fill" style="width:${(amt/max*100)}%"></div></div>
           <span>${fmtN(amt)}</span>
         </div>`).join('')
-    : `<div class="empty"><strong>No orders yet</strong>Place an order from Today to see this fill up.</div>`;
+    : '<div class="empty"><strong>No orders yet</strong>Place an order from Today to see this fill up.</div>';
 }
 function renderOrders(){
   const el = document.getElementById('orders-list');
   if(!STATE.orders.length){
-    el.innerHTML = `<div class="empty"><strong>No orders yet</strong>Orders you place will show here.</div>`;
+    el.innerHTML = '<div class="empty"><strong>No orders yet</strong>Orders you place will show here.</div>';
     return;
   }
   el.innerHTML = `
@@ -2489,8 +2871,8 @@ function renderOrders(){
 function renderVE(){
   const scopeSel = document.getElementById('ve-scope');
   const currentScope = scopeSel.value || 'overall';
-  scopeSel.innerHTML = `<option value="overall">Overall (default rates)</option>` +
-    STATE.stockItems.map(it => `<option value="${it.id}">${it.name}</option>`).join('');
+  scopeSel.innerHTML = '<option value="overall">Overall (default rates)</option>' +
+    STATE.stockItems.map(it => '<option value="' + it.id + '">' + it.name + '</option>').join('');
   if([...scopeSel.options].some(o => o.value === currentScope)) scopeSel.value = currentScope;
   const scopeId = scopeSel.value === 'overall' ? null : scopeSel.value;
   const ranked = STATE.suppliers.map(s => {
@@ -2509,31 +2891,31 @@ function renderVE(){
         </tr>`).join('')}
       </tbody>
     </table>
-    <p class="hint" style="margin-top:10px;">VI = function score ÷ (cost ÷ 1000). ${scopeId ? 'Showing rates for the selected item.' : 'Showing each supplier\'s default rates.'}</p>
-  ` : `<div class="empty"><strong>No suppliers rated yet</strong>Add and rate suppliers.</div>`;
+    <p class="hint" style="margin-top:10px;">VI = function score divided by cost in thousands. ${scopeId ? 'Showing rates for the selected item.' : 'Showing each supplier\'s default rates.'}</p>
+  ` : '<div class="empty"><strong>No suppliers rated yet</strong>Add and rate suppliers.</div>';
   renderCoverageMatrix();
   const mode = STATE.ropMode || 'simple';
   document.getElementById('rop-mode-hint').textContent =
     mode === 'advanced'
-      ? `Advanced mode — safety stock from daily use variability.`
-      : `Simple mode — safety buffer as a fixed number of days.`;
+      ? 'Advanced mode, safety stock from daily use variability.'
+      : 'Simple mode, safety buffer as a fixed number of days.';
   const ropEl = document.getElementById('rop-breakdown');
   ropEl.innerHTML = STATE.stockItems.length ? STATE.stockItems.map(it => {
     const { avg, sd, rop, mode, z, serviceLabel, safetyStock, samples } = computeROP(it);
     let mathHtml;
     if(mode === 'advanced'){
-      mathHtml = `Average daily use: <strong>${avg}/day</strong> (±${sd}, ${samples} sample${samples===1?'':'s'})<br>
-        Safety stock: z × σ × √lead = ${z} × ${sd} × √${it.leadTime} = ${safetyStock}<br>
-        <strong>ROP = ${rop} units</strong> · service level ${serviceLabel}`;
+      mathHtml = 'Average daily use: <strong>' + avg + '/day</strong> (±' + sd + ', ' + samples + ' sample' + (samples===1?'':'s') + ')<br>' +
+        'Safety stock: z × σ × √lead = ' + z + ' × ' + sd + ' × √' + it.leadTime + ' = ' + safetyStock + '<br>' +
+        '<strong>ROP = ' + rop + ' units</strong> · service level ' + serviceLabel;
     } else {
-      mathHtml = `Average daily use: <strong>${avg}/day</strong><br>
-        ROP = (${avg} × ${it.leadTime}) + (${avg} × ${it.safetyDays}) = <strong>${rop} units</strong>`;
+      mathHtml = 'Average daily use: <strong>' + avg + '/day</strong><br>' +
+        'ROP = (' + avg + ' × ' + it.leadTime + ') + (' + avg + ' × ' + it.safetyDays + ') = <strong>' + rop + ' units</strong>';
     }
     return `<div style="padding:12px 0;border-bottom:1px solid var(--line);">
       <p style="font-weight:600;margin:0 0 4px;">${it.name}</p>
       <p class="note" style="margin:0;font-size:12px;color:var(--ink-soft);line-height:1.6;">${mathHtml}</p>
     </div>`;
-  }).join('') : `<div class="empty"><strong>No items tracked</strong></div>`;
+  }).join('') : '<div class="empty"><strong>No items tracked</strong></div>';
   const nvCard = document.getElementById('newsvendor-card');
   if(STATE.businessType === 'manufacturer' && STATE.products.length){
     nvCard.style.display = 'block';
@@ -2555,10 +2937,10 @@ function renderVE(){
 function renderCoverageMatrix(){
   const el = document.getElementById('coverage-matrix');
   if(!STATE.stockItems.length || !STATE.suppliers.length){
-    el.innerHTML = `<div class="empty"><strong>Nothing to cover yet</strong>Add items and suppliers.</div>`;
+    el.innerHTML = '<div class="empty"><strong>Nothing to cover yet</strong>Add items and suppliers.</div>';
     return;
   }
-  const header = `<tr><th class="item-col">Item</th>${STATE.suppliers.map(s => `<th>${s.name.length > 14 ? s.name.slice(0,12)+'…' : s.name}</th>`).join('')}</tr>`;
+  const header = '<tr><th class="item-col">Item</th>' + STATE.suppliers.map(s => '<th>' + (s.name.length > 14 ? s.name.slice(0,12)+'...' : s.name) + '</th>').join('') + '</tr>';
   const rows = STATE.stockItems.map(it => {
     const ranked = STATE.suppliers.map(s => ({ id: s.id, vi: valueIndex(s, it.id) })).sort((a,b) => b.vi - a.vi);
     const winnerId = ranked[0] ? ranked[0].id : null;
@@ -2568,19 +2950,100 @@ function renderCoverageMatrix(){
       const isWinner = s.id === winnerId;
       if(hasRate){
         const cost = Number(r.cost) > 0 ? Number(r.cost) : s.cost;
-        return `<td><span class="cov-cell set ${isWinner?'win':''}">${Math.round(cost/1000)}k</span></td>`;
+        return '<td><span class="cov-cell set ' + (isWinner?'win':'') + '">' + Math.round(cost/1000) + 'k</span></td>';
       }
-      return `<td><span class="cov-cell def ${isWinner?'win':''}">${Math.round(s.cost/1000)}k</span></td>`;
+      return '<td><span class="cov-cell def ' + (isWinner?'win':'') + '">' + Math.round(s.cost/1000) + 'k</span></td>';
     }).join('');
-    return `<tr><td class="item-name-cell">${it.name}</td>${cells}</tr>`;
+    return '<tr><td class="item-name-cell">' + it.name + '</td>' + cells + '</tr>';
   }).join('');
-  el.innerHTML = `<table class="cov-table"><thead>${header}</thead><tbody>${rows}</tbody></table>
-    <p class="hint" style="margin-top:10px;">Teal = special rate. Italic = supplier default. Gold outline = current winner.</p>`;
+  el.innerHTML = '<table class="cov-table"><thead>' + header + '</thead><tbody>' + rows + '</tbody></table>' +
+    '<p class="hint" style="margin-top:10px;">Teal = special rate. Italic = supplier default. Gold outline = current winner.</p>';
 }
+
+/* ---------- BULK MATRIX ---------- */
+function renderMatrix(){
+  const el = document.getElementById('matrix-wrap');
+  if(!STATE.stockItems.length || !STATE.suppliers.length){
+    el.innerHTML = '<div class="empty"><strong>Nothing to edit yet</strong>Add items and suppliers first.</div>';
+    return;
+  }
+  const thead = '<tr><th></th>' + STATE.suppliers.map(s =>
+    '<th>' + (s.name.length > 12 ? s.name.slice(0,10)+'...' : s.name) + '</th>'
+  ).join('') + '</tr>';
+  const tbody = STATE.stockItems.map(it => {
+    const ranked = STATE.suppliers.map(s => ({ id: s.id, vi: valueIndex(s, it.id) })).sort((a,b) => b.vi - a.vi);
+    const winnerId = ranked[0] ? ranked[0].id : null;
+    const cells = STATE.suppliers.map(s => {
+      const r = (s.itemRates && s.itemRates[it.id]) || null;
+      const hasOverride = r && Number(r.cost) > 0;
+      const cost = hasOverride ? Number(r.cost) : s.cost;
+      const cls = (hasOverride ? 'set' : '') + (s.id === winnerId ? ' win' : '');
+      return '<td>' +
+        '<button class="matrix-cell ' + cls + '" ' +
+        'data-item="' + it.id + '" data-supplier="' + s.id + '" data-default="' + s.cost + '" ' +
+        'onclick="startEditMatrixCell(this)">' + Math.round(cost/1000) + 'k</button>' +
+      '</td>';
+    }).join('');
+    return '<tr><td class="row-head">' + it.name + '</td>' + cells + '</tr>';
+  }).join('');
+  el.innerHTML = '<table class="matrix-table"><thead>' + thead + '</thead><tbody>' + tbody + '</tbody></table>';
+}
+function startEditMatrixCell(btn){
+  if (btn.classList.contains('editing')) return;
+  const itemId = btn.dataset.item;
+  const supplierId = btn.dataset.supplier;
+  const defCost = Number(btn.dataset.default);
+  const supplier = STATE.suppliers.find(s => s.id === supplierId);
+  const current = (supplier?.itemRates?.[itemId]?.cost) || '';
+  btn.classList.add('editing');
+  const original = btn.innerHTML;
+  btn.innerHTML = '<input type="number" inputmode="numeric" placeholder="' + defCost + '" value="' + current + '">';
+  const input = btn.querySelector('input');
+  input.focus();
+  input.select();
+  let committed = false;
+  const commit = (save) => {
+    if (committed) return;
+    committed = true;
+    if (save) {
+      const v = input.value.trim();
+      const supplier = STATE.suppliers.find(s => s.id === supplierId);
+      if (supplier) {
+        if (!supplier.itemRates) supplier.itemRates = {};
+        if (v === '') {
+          if (supplier.itemRates[itemId]) {
+            delete supplier.itemRates[itemId].cost;
+            if (!Object.keys(supplier.itemRates[itemId]).length) delete supplier.itemRates[itemId];
+          }
+        } else {
+          const n = Number(v);
+          if (!isNaN(n) && n > 0) {
+            supplier.itemRates[itemId] = supplier.itemRates[itemId] || {};
+            supplier.itemRates[itemId].cost = n;
+          }
+        }
+        saveState();
+        logActivity('Edited rate for item via matrix');
+      }
+    }
+    btn.classList.remove('editing');
+    renderMatrix();
+    renderCoverageMatrix();
+    renderVE();
+    renderStock();
+  };
+  input.addEventListener('blur', () => commit(true));
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); commit(true); }
+    if (e.key === 'Escape') { e.preventDefault(); commit(false); }
+  });
+  input.addEventListener('click', e => e.stopPropagation());
+}
+
 function renderActivity(){
   const el = document.getElementById('activity-list');
   if(!STATE.activity.length){
-    el.innerHTML = `<div class="empty"><strong>Nothing here yet</strong>Actions you take will be logged.</div>`;
+    el.innerHTML = '<div class="empty"><strong>Nothing here yet</strong>Actions you take will be logged.</div>';
     return;
   }
   el.innerHTML = STATE.activity.map(a => `
@@ -2595,7 +3058,7 @@ function renderSettings(){
   advBtn.classList.toggle('active', STATE.ropMode === 'advanced');
   const explain = document.getElementById('rop-explain');
   if(STATE.ropMode === 'advanced'){
-    explain.textContent = 'Advanced uses how much your daily usage swings — accounts for unpredictability.';
+    explain.textContent = 'Advanced uses how much your daily usage swings. It accounts for unpredictability.';
     document.getElementById('service-level-block').style.display = '';
     document.getElementById('s-service').value = STATE.serviceLevel || '0.95';
   } else {
@@ -2605,7 +3068,7 @@ function renderSettings(){
   const info = document.getElementById('data-info');
   const size = (() => { try { return (localStorage.getItem(STATE_KEY) || '').length; } catch(e){ return 0; } })();
   info.textContent = STATE.lastSaved
-    ? `Last saved ${timeAgo(STATE.lastSaved)} · ${Math.round(size/1024)} KB used`
+    ? 'Last saved ' + timeAgo(STATE.lastSaved) + ' · ' + Math.round(size/1024) + ' KB used'
     : 'Not saved yet';
 }
 document.getElementById('s-org')?.addEventListener('input', function(){
@@ -2618,7 +3081,7 @@ function exportData(){
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   const stamp = new Date().toISOString().slice(0,10);
-  a.href = url; a.download = `dpms-backup-${stamp}.json`;
+  a.href = url; a.download = 'dpms-backup-' + stamp + '.json';
   document.body.appendChild(a); a.click();
   document.body.removeChild(a);
   setTimeout(() => URL.revokeObjectURL(url), 1000);
@@ -2636,10 +3099,10 @@ function confirmReset(){
     STATE = freshState();
     closeConfirm();
     toast('All data reset');
-    showOnboarding();
+    showOnboardingStep('name');
   };
   document.getElementById('confirm-title').textContent = 'Reset all data?';
-  document.getElementById('confirm-msg').textContent = 'This deletes everything — items, suppliers, orders, activity — from this device. It cannot be undone.';
+  document.getElementById('confirm-msg').textContent = 'This deletes everything, including items, suppliers, orders and activity, from this device. It cannot be undone.';
   document.getElementById('confirm-btn').textContent = 'Yes, reset';
   document.getElementById('confirm-btn').className = 'confirm';
   document.getElementById('confirm-modal').classList.add('show');
@@ -2653,7 +3116,55 @@ document.getElementById('confirm-btn').addEventListener('click', () => {
   else closeConfirm();
 });
 
-/* ═══════════════ RIPPLE ═══════════════ */
+/* ---------- PULL TO REFRESH ---------- */
+let ptrStart = null;
+document.addEventListener('touchstart', e => {
+  const todayView = document.getElementById('view-today');
+  if (!todayView || !todayView.classList.contains('active')) return;
+  if (window.scrollY > 4) return;
+  if (e.touches.length !== 1) return;
+  ptrStart = e.touches[0].clientY;
+}, { passive: true });
+document.addEventListener('touchmove', e => {
+  if (ptrStart === null) return;
+  const dy = e.touches[0].clientY - ptrStart;
+  if (dy <= 0) return;
+  const indicator = document.getElementById('ptr-indicator');
+  if (!indicator) return;
+  indicator.classList.add('pulling');
+  const y = Math.min(dy * 0.55 - 10, 60);
+  indicator.style.transform = 'translate(-50%, ' + y + 'px)';
+  indicator.style.opacity = Math.min(dy / 90, 1);
+}, { passive: true });
+document.addEventListener('touchend', () => {
+  if (ptrStart === null) return;
+  const indicator = document.getElementById('ptr-indicator');
+  ptrStart = null;
+  if (!indicator) return;
+  const opacity = parseFloat(indicator.style.opacity) || 0;
+  indicator.classList.remove('pulling');
+  indicator.style.transform = '';
+  if (opacity > 0.55) {
+    indicator.classList.add('visible', 'refreshing');
+    indicator.style.opacity = 1;
+    setTimeout(() => {
+      refreshToday();
+      indicator.classList.remove('visible', 'refreshing');
+      indicator.style.opacity = 0;
+    }, 700);
+  } else {
+    indicator.style.opacity = 0;
+  }
+}, { passive: true });
+function refreshToday(){
+  renderGreeting();
+  renderStats();
+  renderStock();
+  renderNudges();
+  toast('Up to date');
+}
+
+/* ---------- RIPPLE ---------- */
 document.addEventListener('pointerdown', e => {
   const btn = e.target.closest('.btn-primary, .login-btn, .landing-cta');
   if(!btn) return;
@@ -2662,7 +3173,7 @@ document.addEventListener('pointerdown', e => {
   btn.style.setProperty('--ry', ((e.clientY - r.top)/r.height*100) + '%');
 });
 
-/* ═══════════════ RENDER ALL / BOOT ═══════════════ */
+/* ---------- RENDER ALL / BOOT ---------- */
 function renderAll(){
   renderGreeting();
   renderStats();
@@ -2675,11 +3186,11 @@ function renderAll(){
   renderVE();
   renderActivity();
   renderSettings();
+  if (document.getElementById('sub-matrix')?.classList.contains('active')) renderMatrix();
 }
 
 STATE = loadState();
 
-// Boot: if session active → app, else landing
 if(isLoggedIn()){
   showApp();
 } else {
