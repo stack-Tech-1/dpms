@@ -56,6 +56,9 @@ input,select{font-family:var(--font-body);}
 @keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(30px,-24px) scale(1.08);}}
 @keyframes barSlide{from{width:0;}to{width:26px;}}
 @keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+@keyframes slideUpSheet{from{transform:translateY(100%);}to{transform:translateY(0);}}
+@keyframes typingDot{0%,60%,100%{transform:translateY(0);opacity:.4;}30%{transform:translateY(-4px);opacity:1;}}
+@keyframes messageIn{from{opacity:0;transform:translateY(8px) scale(.96);}to{opacity:1;transform:none;}}
 
 .skeleton{background:linear-gradient(90deg, var(--paper-2) 25%, var(--line-soft) 50%, var(--paper-2) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite linear;border-radius:6px;}
 .skeleton-line{height:12px;margin-bottom:8px;}
@@ -67,24 +70,9 @@ input,select{font-family:var(--font-body);}
 .skeleton-stat{height:78px;border-radius:12px;}
 
 /* LANDING */
-#landing-screen{
-  min-height:100vh; min-height:100dvh;
-  background:linear-gradient(180deg,#0E1A24 0%, #16293A 55%, #1E3A50 100%);
-  color:#fff; position:relative; overflow-x:hidden;
-  padding:0 22px 60px; display:none; animation:fadeIn .5s var(--ease-out);
-}
+#landing-screen{min-height:100vh;min-height:100dvh;background:linear-gradient(180deg,#0E1A24 0%, #16293A 55%, #1E3A50 100%);color:#fff;position:relative;overflow-x:hidden;padding:0 22px 60px;display:none;animation:fadeIn .5s var(--ease-out);}
 #landing-screen.active{display:block;}
-#landing-screen::before{
-  content:""; position:absolute; inset:0;
-  background-image:
-    linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
-  background-size:44px 44px;
-  mask-image:radial-gradient(ellipse at top, #000 30%, transparent 70%);
-  -webkit-mask-image:radial-gradient(ellipse at top, #000 30%, transparent 70%);
-  animation:gridDrift 30s linear infinite;
-  pointer-events:none; z-index:0;
-}
+#landing-screen::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);background-size:44px 44px;mask-image:radial-gradient(ellipse at top, #000 30%, transparent 70%);-webkit-mask-image:radial-gradient(ellipse at top, #000 30%, transparent 70%);animation:gridDrift 30s linear infinite;pointer-events:none;z-index:0;}
 .landing-orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0;}
 .landing-orb.a{width:400px;height:400px;background:#BD8329;opacity:.28;top:-120px;right:-120px;animation:orbFloat 18s ease-in-out infinite;}
 .landing-orb.b{width:340px;height:340px;background:#2C6C5D;opacity:.32;bottom:15%;left:-140px;animation:orbFloat 22s ease-in-out infinite reverse;}
@@ -219,6 +207,22 @@ main{max-width:520px;margin:0 auto;padding:20px 16px 110px;}
 .tour-icon.ink{background:linear-gradient(140deg, var(--paper-2), var(--paper));box-shadow:0 10px 28px rgba(30,58,80,.14);}
 .tour-icon.ink svg{color:var(--ink-3);}
 
+/* Category grid */
+.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
+.cat-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 12px;text-align:center;cursor:pointer;transition:border-color .2s, transform .2s, box-shadow .2s;animation:popIn .4s var(--ease-out) both;}
+.cat-card:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:var(--shadow-md);}
+.cat-card:active{transform:scale(.97);}
+.cat-card.sel{border-color:var(--gold);background:linear-gradient(140deg, rgba(245,231,200,.35), var(--panel) 70%);}
+.cat-icon{font-size:26px;margin-bottom:6px;}
+.cat-name{font-size:12.5px;font-weight:600;color:var(--ink);line-height:1.25;}
+
+/* Chip multiselect */
+.chip-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+.chip-opt{padding:9px 14px;border-radius:20px;background:var(--paper);border:1px solid var(--line);color:var(--ink-soft);font-size:12.5px;font-weight:600;cursor:pointer;transition:all .18s var(--ease);-webkit-tap-highlight-color:transparent;}
+.chip-opt:active{transform:scale(.95);}
+.chip-opt.sel{background:linear-gradient(150deg,var(--gold-2),var(--gold));border-color:var(--gold);color:#1B140A;}
+.chip-count{font-size:12px;color:var(--ink-soft);margin-top:14px;text-align:center;}
+
 /* CARDS */
 .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow-sm);margin-bottom:14px;transition:box-shadow .28s var(--ease), border-color .28s var(--ease);}
 .card:hover{box-shadow:var(--shadow-md);border-color:#DAD3BE;}
@@ -281,8 +285,10 @@ main{max-width:520px;margin:0 auto;padding:20px 16px 110px;}
 .nudge{border:2px solid var(--gold);background:linear-gradient(140deg,var(--gold-soft) 0%, rgba(245,231,200,.65) 100%);border-radius:14px;padding:16px;margin-bottom:14px;animation:popIn .55s var(--ease-out) both;box-shadow:0 4px 18px rgba(189,131,41,.14);}
 .nudge.teal{border-color:var(--teal);background:linear-gradient(140deg,var(--teal-soft) 0%, rgba(220,234,228,.65) 100%);box-shadow:0 4px 18px rgba(44,108,93,.14);}
 .nudge.ok{border-color:var(--teal);background:linear-gradient(140deg,var(--teal-soft) 0%, rgba(220,234,228,.65) 100%);box-shadow:0 4px 18px rgba(44,108,93,.14);}
+.nudge.market{border-color:var(--ink-3);background:linear-gradient(140deg, rgba(30,58,80,.12), rgba(30,58,80,.06));box-shadow:0 4px 18px rgba(30,58,80,.10);}
 .nudge .tag{font-size:11.5px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.04em;}
 .nudge.teal .tag,.nudge.ok .tag{color:var(--teal);}
+.nudge.market .tag{color:var(--ink-3);}
 .nudge h2{font-size:18px;margin:4px 0 8px;letter-spacing:-.01em;}
 .nudge .why-toggle{background:none;border:none;color:var(--ink-soft);font-size:11.5px;padding:4px 0;font-weight:600;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px;}
 .nudge .why-box{display:none;background:rgba(255,255,255,.72);border:1px dashed var(--line);border-radius:8px;padding:10px 12px;margin-top:8px;font-size:12px;color:var(--ink-soft);line-height:1.6;animation:fadeIn .3s var(--ease-out);}
@@ -319,7 +325,7 @@ main{max-width:520px;margin:0 auto;padding:20px 16px 110px;}
 .badge.new{background:var(--ink-3);}
 .supplier-opt .note{font-size:12.5px;color:var(--ink-soft);margin-top:5px;}
 
-/* Supplier list (new: card-style tappable) */
+/* Supplier list */
 .supplier-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px;cursor:pointer;transition:border-color .22s var(--ease), transform .18s var(--ease), box-shadow .22s var(--ease);-webkit-tap-highlight-color:transparent;}
 .supplier-card:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:var(--shadow-md);}
 .supplier-card:active{transform:scale(.99);}
@@ -335,7 +341,7 @@ main{max-width:520px;margin:0 auto;padding:20px 16px 110px;}
 .supplier-card-meta strong{color:var(--ink);font-weight:600;}
 .supplier-card-rating{display:flex;align-items:center;gap:4px;font-weight:600;color:var(--gold);font-size:13px;flex-shrink:0;}
 
-/* SUPPLIER PROFILE PAGE */
+/* SUPPLIER PROFILE */
 .profile-hero{background:linear-gradient(150deg,#16293A 0%, #0E1A24 100%);color:#fff;border-radius:16px;padding:20px;margin-bottom:14px;position:relative;overflow:hidden;animation:riseIn .5s var(--ease-out) both;}
 .profile-hero::before{content:"";position:absolute;top:-80px;right:-80px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle, rgba(189,131,41,.28), transparent 65%);pointer-events:none;}
 .profile-hero-top{display:flex;align-items:flex-start;gap:14px;position:relative;z-index:1;}
@@ -409,7 +415,6 @@ main{max-width:520px;margin:0 auto;padding:20px 16px 110px;}
 .rate-field input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 2.5px rgba(189,131,41,.12);}
 .autosuggest-note{font-size:10.5px;color:var(--teal);font-style:italic;margin-top:3px;}
 
-/* Unit mini-flow */
 .unit-block{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:14px;}
 .unit-block-title{font-size:12.5px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;}
 .unit-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
@@ -493,6 +498,104 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
 .matrix-cell input{width:100%;padding:4px;text-align:center;font-size:12px;border:none;background:transparent;outline:none;font-weight:600;color:var(--ink);font-family:var(--font-body);}
 .matrix-hint{font-size:11px;color:var(--ink-soft);margin-top:10px;line-height:1.5;}
 
+/* ORDERS */
+.order-row{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px;animation:riseIn .4s var(--ease-out) both;}
+.order-row-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px;}
+.order-row-title{font-weight:600;font-size:14px;color:var(--ink);line-height:1.25;}
+.order-row-supplier{font-size:12px;color:var(--ink-soft);margin-top:2px;}
+.order-row-cost{font-family:var(--font-head);font-weight:600;font-size:15px;color:var(--ink);white-space:nowrap;}
+.order-track{display:flex;align-items:center;gap:4px;margin-top:10px;}
+.order-step{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.03em;font-weight:600;position:relative;}
+.order-step .dot{width:14px;height:14px;border-radius:50%;background:var(--paper);border:2px solid var(--line);transition:all .4s var(--ease);}
+.order-step.done .dot{background:var(--teal);border-color:var(--teal);}
+.order-step.done{color:var(--teal);}
+.order-step.active .dot{background:var(--gold);border-color:var(--gold);animation:pulseDot 1.6s ease-in-out infinite;}
+@keyframes pulseDot{0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}
+.order-step.active{color:var(--gold);}
+.order-step:not(:last-child)::after{content:"";position:absolute;top:6px;left:calc(50% + 9px);right:calc(-50% + 9px);height:2px;background:var(--line);z-index:0;}
+.order-step.done:not(:last-child)::after{background:var(--teal);}
+.order-step.active:not(:last-child)::after{background:linear-gradient(90deg,var(--teal) 50%,var(--line) 50%);}
+.order-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;}
+.order-actions button{padding:10px;border-radius:9px;font-size:13px;font-weight:600;border:1px solid var(--line);background:var(--panel);color:var(--ink-soft);cursor:pointer;transition:background .15s, border-color .15s, color .15s;}
+.order-actions button:hover{background:var(--paper);color:var(--ink);}
+.order-actions button.primary{background:linear-gradient(150deg,var(--teal-2),var(--teal));border-color:var(--teal);color:#fff;}
+
+/* REVIEW SUBMIT */
+.review-stars-input{display:flex;gap:6px;margin:8px 0 12px;justify-content:center;}
+.review-star-btn{background:none;border:none;font-size:32px;color:var(--line);cursor:pointer;transition:transform .15s, color .2s;padding:0 2px;}
+.review-star-btn:hover{transform:scale(1.1);}
+.review-star-btn.on{color:var(--gold);}
+
+/* BOTTOM SHEET */
+.sheet-bg{position:fixed;inset:0;background:rgba(10,20,27,.6);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:110;display:none;animation:fadeIn .25s var(--ease-out);}
+.sheet-bg.show{display:block;}
+.sheet{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:560px;background:var(--panel);border-radius:22px 22px 0 0;padding:10px 20px 24px;padding-bottom:calc(24px + env(safe-area-inset-bottom,0px));z-index:111;box-shadow:0 -12px 48px rgba(0,0,0,.24);max-height:88vh;overflow-y:auto;animation:slideUpSheet .35s var(--ease-out);}
+.sheet-handle{width:36px;height:4px;background:var(--line);border-radius:4px;margin:0 auto 16px;}
+.sheet h3{font-family:var(--font-head);font-size:19px;margin:0 0 6px;letter-spacing:-.015em;}
+.sheet p.sheet-sub{font-size:12.5px;color:var(--ink-soft);margin:0 0 16px;line-height:1.5;}
+.sheet-supplier{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--line);border-radius:12px;margin-bottom:8px;cursor:pointer;background:var(--panel);transition:border-color .18s, background .18s, transform .1s;-webkit-tap-highlight-color:transparent;}
+.sheet-supplier:hover{border-color:var(--gold);}
+.sheet-supplier:active{transform:scale(.99);}
+.sheet-supplier.best{border-color:var(--gold);background:linear-gradient(140deg, rgba(245,231,200,.35), var(--panel) 70%);}
+.sheet-avatar{width:42px;height:42px;border-radius:11px;background:linear-gradient(140deg,var(--gold-2),#8F5E1D);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:15px;color:#1B140A;flex-shrink:0;}
+.sheet-info{flex:1;min-width:0;}
+.sheet-name{font-weight:600;font-size:14px;color:var(--ink);line-height:1.25;}
+.sheet-meta{font-size:11.5px;color:var(--ink-soft);margin-top:2px;}
+.sheet-price{text-align:right;flex-shrink:0;}
+.sheet-price .amt{font-family:var(--font-head);font-weight:600;font-size:15px;color:var(--ink);}
+.sheet-price .vi{font-size:10.5px;color:var(--ink-soft);margin-top:2px;}
+
+/* CHAT */
+#chat-screen{position:fixed;inset:0;background:var(--paper);z-index:120;display:none;flex-direction:column;max-width:560px;left:50%;transform:translateX(-50%);}
+#chat-screen.show{display:flex;}
+.chat-header{background:linear-gradient(178deg,#16293A 0%, #0E1A24 100%);color:#fff;padding:12px 16px;display:flex;align-items:center;gap:12px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.05);}
+.chat-back{background:none;border:none;color:#C3CDD6;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;border-radius:9px;transition:background .15s;}
+.chat-back:hover{background:rgba(255,255,255,.10);color:#fff;}
+.chat-back svg{width:18px;height:18px;}
+.chat-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(140deg,var(--gold-2),#8F5E1D);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:14px;color:#1B140A;flex-shrink:0;}
+.chat-info{flex:1;min-width:0;}
+.chat-name{font-family:var(--font-head);font-size:15px;font-weight:600;line-height:1.2;}
+.chat-status{font-size:11px;color:#84C9A8;margin-top:1px;}
+.chat-call{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);color:#fff;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:background .15s;}
+.chat-call:hover{background:rgba(255,255,255,.18);}
+.chat-call svg{width:16px;height:16px;}
+
+.chat-body{flex:1;overflow-y:auto;padding:20px 16px 20px;display:flex;flex-direction:column;gap:10px;}
+.chat-day{text-align:center;font-size:11px;color:var(--ink-soft);margin:14px 0 6px;}
+.chat-msg{max-width:80%;padding:10px 14px;border-radius:18px;font-size:13.5px;line-height:1.5;word-wrap:break-word;animation:messageIn .3s var(--ease-out);}
+.chat-msg.them{align-self:flex-start;background:var(--panel);border:1px solid var(--line);color:var(--ink);border-bottom-left-radius:6px;}
+.chat-msg.me{align-self:flex-end;background:linear-gradient(150deg,var(--teal-2),var(--teal));color:#fff;border-bottom-right-radius:6px;}
+.chat-msg.system{align-self:center;background:var(--paper-2);color:var(--ink-soft);font-size:11.5px;border-radius:20px;padding:6px 14px;max-width:90%;text-align:center;}
+.chat-msg-time{font-size:10.5px;margin-top:4px;opacity:.7;}
+.chat-msg.them .chat-msg-time{color:var(--ink-soft);}
+.chat-msg.me .chat-msg-time{color:rgba(255,255,255,.75);text-align:right;}
+
+.voice-note{display:flex;align-items:center;gap:10px;min-width:180px;}
+.voice-play{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.voice-play svg{width:10px;height:10px;color:var(--teal);}
+.voice-wave{flex:1;height:20px;display:flex;align-items:center;gap:2px;}
+.voice-wave span{flex:1;border-radius:1px;background:rgba(255,255,255,.65);}
+.chat-msg.them .voice-play{background:var(--teal);}
+.chat-msg.them .voice-play svg{color:#fff;}
+.chat-msg.them .voice-wave span{background:var(--line);}
+
+.chat-typing{align-self:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:18px;border-bottom-left-radius:6px;padding:12px 16px;display:flex;gap:4px;animation:messageIn .3s var(--ease-out);}
+.chat-typing span{width:6px;height:6px;border-radius:50%;background:var(--ink-soft);animation:typingDot 1.2s infinite;}
+.chat-typing span:nth-child(2){animation-delay:.15s;}
+.chat-typing span:nth-child(3){animation-delay:.3s;}
+
+.chat-quick{display:flex;gap:6px;padding:10px 16px 8px;overflow-x:auto;flex-shrink:0;border-top:1px solid var(--line-soft);background:var(--paper);}
+.chat-quick::-webkit-scrollbar{display:none;}
+.chat-quick button{padding:8px 14px;border-radius:20px;border:1px solid var(--line);background:var(--panel);color:var(--ink-soft);font-size:12.5px;font-weight:600;white-space:nowrap;cursor:pointer;transition:background .15s, border-color .15s, color .15s;font-family:var(--font-body);}
+.chat-quick button:hover{background:var(--gold-soft);border-color:var(--gold);color:var(--gold);}
+
+.chat-input-row{display:flex;gap:8px;padding:12px 16px;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px));background:var(--panel);border-top:1px solid var(--line);align-items:center;flex-shrink:0;}
+.chat-input{flex:1;padding:11px 14px;border:1px solid var(--line);border-radius:22px;font-size:14.5px;background:#fff;font-family:var(--font-body);}
+.chat-input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(189,131,41,.12);}
+.chat-send{width:42px;height:42px;border-radius:50%;background:linear-gradient(150deg,var(--teal-2),var(--teal));border:none;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:transform .15s, filter .2s;}
+.chat-send:active{transform:scale(.94);}
+.chat-send svg{width:18px;height:18px;}
+
 /* ACTIVITY */
 .activity-item{padding:10px 0;border-bottom:1px solid var(--line-soft);font-size:13px;animation:fadeIn .35s var(--ease-out);}
 .activity-item:last-child{border-bottom:none;}
@@ -501,7 +604,7 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
 .empty{text-align:center;padding:30px 14px;color:var(--ink-soft);font-size:13px;}
 .empty strong{display:block;color:var(--ink);font-size:14px;margin-bottom:4px;font-weight:600;}
 
-.toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:10px;font-size:13.5px;box-shadow:0 12px 36px rgba(14,26,36,.35);opacity:0;transition:opacity .3s, transform .35s var(--ease-out);z-index:99;max-width:88vw;text-align:center;pointer-events:none;}
+.toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:10px;font-size:13.5px;box-shadow:0 12px 36px rgba(14,26,36,.35);opacity:0;transition:opacity .3s, transform .35s var(--ease-out);z-index:200;max-width:88vw;text-align:center;pointer-events:none;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
 .modal-bg{position:fixed;inset:0;background:rgba(10,20,27,.68);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:24px;z-index:100;animation:fadeIn .25s var(--ease-out);}
@@ -511,7 +614,7 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
 .modal h3{font-family:var(--font-head);font-size:18px;margin:0 0 8px;}
 .modal p{font-size:13px;color:var(--ink-soft);margin:0 0 16px;line-height:1.55;}
 .modal-btns{display:flex;gap:8px;margin-top:14px;}
-.modal-btns button{flex:1;padding:12px;border-radius:9px;font-weight:600;font-size:13.5px;transition:transform .12s, filter .15s;}
+.modal-btns button{flex:1;padding:12px;border-radius:9px;font-weight:600;font-size:13.5px;transition:transform .12s, filter .15s;font-family:var(--font-body);}
 .modal-btns button:active{transform:scale(.97);}
 .modal-btns .cancel{background:var(--paper);border:1px solid var(--line);color:var(--ink);}
 .modal-btns .cancel:hover{background:#E8E3D4;}
@@ -665,6 +768,7 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
         <span data-step="3"></span>
         <span data-step="4"></span>
         <span data-step="5"></span>
+        <span data-step="6"></span>
       </div>
 
       <div class="onb-step active" id="onb-name">
@@ -684,14 +788,47 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
         <div class="card">
           <p class="muted" style="margin:0 0 4px;">One more thing</p>
           <h2 style="font-size:22px;margin-bottom:20px;">What does your business do?</h2>
-          <button class="btn-secondary" style="padding:16px;text-align:left;font-size:15px;display:flex;gap:12px;align-items:center;" onclick="chooseType('reseller')">
+          <button class="btn-secondary" style="padding:16px;text-align:left;font-size:15px;display:flex;gap:12px;align-items:center;" onclick="onbChooseType('reseller')">
             <span style="font-size:22px;">🛍️</span>
             <span><strong>I buy and sell</strong><br><span style="color:var(--ink-soft);font-size:12.5px;font-weight:400;">Like a shop or trader</span></span>
           </button>
-          <button class="btn-secondary" style="padding:16px;text-align:left;font-size:15px;display:flex;gap:12px;align-items:center;" onclick="chooseType('manufacturer')">
+          <button class="btn-secondary" style="padding:16px;text-align:left;font-size:15px;display:flex;gap:12px;align-items:center;" onclick="onbChooseType('manufacturer')">
             <span style="font-size:22px;">🥐</span>
             <span><strong>I make what I sell</strong><br><span style="color:var(--ink-soft);font-size:12.5px;font-weight:400;">Like baking or cooking</span></span>
           </button>
+        </div>
+      </div>
+
+      <div class="onb-step" id="onb-category">
+        <div class="card">
+          <p class="muted" style="margin:0 0 4px;">Good</p>
+          <h2 style="font-size:22px;margin-bottom:8px;">Which best describes your business?</h2>
+          <p class="muted" style="margin-bottom:14px;">This loads the right starter items.</p>
+          <div class="cat-grid" id="onb-cat-grid"></div>
+        </div>
+      </div>
+
+      <div class="onb-step" id="onb-items">
+        <div class="card">
+          <p class="muted" style="margin:0 0 4px;">Almost there</p>
+          <h2 style="font-size:22px;margin-bottom:8px;">What do you actually stock?</h2>
+          <p class="muted" style="margin-bottom:14px;">Tap what you carry. Skip anything you don't.</p>
+          <div class="chip-grid" id="onb-chip-grid"></div>
+          <p class="chip-count" id="onb-chip-count">0 items selected</p>
+          <button class="btn-primary" style="margin-top:16px;" onclick="onbItemsNext()">Continue</button>
+          <button class="btn-secondary" onclick="onbItemsSkip()">Skip, add my own later</button>
+        </div>
+      </div>
+
+      <div class="onb-step" id="onb-products">
+        <div class="card">
+          <p class="muted" style="margin:0 0 4px;">One last thing</p>
+          <h2 style="font-size:22px;margin-bottom:8px;">What do you make?</h2>
+          <p class="muted" style="margin-bottom:14px;">We use this for your daily batch-size suggestion.</p>
+          <div id="onb-products-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;"></div>
+          <button class="btn-secondary" onclick="onbAddCustomProduct()">+ Add a custom product</button>
+          <button class="btn-primary" style="margin-top:12px;" onclick="onbProductsDone()">Continue</button>
+          <button class="btn-secondary" onclick="onbProductsSkip()">Skip</button>
         </div>
       </div>
 
@@ -704,7 +841,7 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
           <p style="font-size:14px;color:var(--ink-soft);line-height:1.65;margin:0 0 24px;max-width:320px;margin-left:auto;margin-right:auto;">
             Walk your storeroom, tap what you see. When you tap Done, DPMS tells you what needs restocking.
           </p>
-          <button class="btn-primary" onclick="advanceOnboarding(4)">Next</button>
+          <button class="btn-primary" onclick="advanceOnboarding(5)">Next</button>
           <button class="btn-secondary" onclick="skipTour()" style="background:transparent;border:none;color:var(--ink-soft);">Skip the tour</button>
         </div>
       </div>
@@ -718,7 +855,7 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
           <p style="font-size:14px;color:var(--ink-soft);line-height:1.65;margin:0 0 24px;max-width:320px;margin-left:auto;margin-right:auto;">
             Rate each supplier. DPMS compares them on cost and quality, so the best value wins, not just the cheapest.
           </p>
-          <button class="btn-primary" onclick="advanceOnboarding(5)">Next</button>
+          <button class="btn-primary" onclick="advanceOnboarding(6)">Next</button>
           <button class="btn-secondary" onclick="skipTour()" style="background:transparent;border:none;color:var(--ink-soft);">Skip the tour</button>
         </div>
       </div>
@@ -747,6 +884,7 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
           <div class="skeleton skeleton-stat"></div>
         </div>
       </div>
+      <div id="market-nudge"></div>
       <div id="production-nudge"></div>
       <div id="restock-nudges"></div>
       <div id="check-progress-slot"></div>
@@ -848,7 +986,7 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
           </button>
           <button class="menu-item-new teal" onclick="showMoreSub('orders')">
             <span class="mi-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
-            <span class="mi-body"><span class="mi-title">Orders and approvals</span><span class="mi-sub">History of everything you ordered</span></span>
+            <span class="mi-body"><span class="mi-title">Orders and approvals</span><span class="mi-sub">Track your order status</span></span>
             <span class="mi-chev">›</span>
           </button>
         </div>
@@ -1037,6 +1175,64 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
   </nav>
 </div>
 
+<!-- Chat screen (full-screen) -->
+<div id="chat-screen">
+  <div class="chat-header">
+    <button class="chat-back" onclick="closeChat()" aria-label="Back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="chat-avatar" id="chat-avatar">AS</div>
+    <div class="chat-info">
+      <div class="chat-name" id="chat-name">Supplier</div>
+      <div class="chat-status" id="chat-status">Usually replies in a few minutes</div>
+    </div>
+    <button class="chat-call" id="chat-call-btn" aria-label="Call">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    </button>
+  </div>
+  <div class="chat-body" id="chat-body"></div>
+  <div class="chat-quick" id="chat-quick"></div>
+  <div class="chat-input-row">
+    <input type="text" class="chat-input" id="chat-input" placeholder="Type a message..." onkeydown="if(event.key==='Enter'){sendChatMessage()}">
+    <button class="chat-send" onclick="sendChatMessage()" aria-label="Send">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- Order supplier choice sheet -->
+<div class="sheet-bg" id="sheet-bg" onclick="closeOrderSheet()"></div>
+<div class="sheet" id="order-sheet" style="display:none;">
+  <div class="sheet-handle"></div>
+  <h3>Order <span id="sheet-item-name">item</span></h3>
+  <p class="sheet-sub">Choose a supplier. Any of them will work — the top one is our best-value recommendation.</p>
+  <div id="sheet-suppliers"></div>
+  <button class="btn-secondary" onclick="closeOrderSheet()">Cancel</button>
+</div>
+
+<!-- Review modal -->
+<div class="modal-bg" id="review-modal">
+  <div class="modal">
+    <h3>How did it go?</h3>
+    <p id="review-modal-sub">Rate your experience with this supplier.</p>
+    <div class="review-stars-input" id="review-stars">
+      <button class="review-star-btn" onclick="setReviewStar(1)" data-star="1">★</button>
+      <button class="review-star-btn" onclick="setReviewStar(2)" data-star="2">★</button>
+      <button class="review-star-btn" onclick="setReviewStar(3)" data-star="3">★</button>
+      <button class="review-star-btn" onclick="setReviewStar(4)" data-star="4">★</button>
+      <button class="review-star-btn" onclick="setReviewStar(5)" data-star="5">★</button>
+    </div>
+    <div class="field" style="margin-top:8px;">
+      <label>Short comment (optional)</label>
+      <input type="text" id="review-comment" placeholder="e.g. Fast delivery, good quality">
+    </div>
+    <div class="modal-btns">
+      <button class="cancel" onclick="closeReview()">Skip</button>
+      <button class="confirm safe" onclick="submitReview()">Submit</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <div class="modal-bg" id="confirm-modal">
@@ -1076,7 +1272,7 @@ th{color:var(--ink-soft);font-size:11px;text-transform:uppercase;letter-spacing:
 
 <script>
 /* =================================================================
-   DPMS v7 - Pass 1: categories, units, 15 suppliers, supplier profile
+   DPMS v8 - Pass 2: onboarding revamp, order flow, chat, reviews
    ================================================================= */
 
 const STATE_KEY = 'dpms-state-v4';
@@ -1091,7 +1287,6 @@ const SERVICE_LEVELS = {
   '0.99': { z: 2.326, label: '99%' }
 };
 
-/* ---------- UNITS ---------- */
 const STOCK_UNITS = ['bag','sack','carton','crate','keg','drum','packet','tin','bundle','roll','piece','bottle','litre-bottle','custom'];
 const USAGE_UNITS = ['cup','spoon','sachet','kilo','gram','litre','millilitre','piece','bag','carton','bottle','custom'];
 
@@ -1111,565 +1306,190 @@ function unitLabel(u, n) {
   return base + 's';
 }
 
-/* ---------- CATEGORIES ---------- */
 const CATEGORIES = {
   reseller: {
-    provisions: {
-      label: 'Food and provisions',
-      icon: '🍚',
-      items: [
-        { name:'Rice, 50kg bags',         stockUnit:'bag',     usageUnit:'cup',    conversion:96, leadTime:3, safetyDays:2, levels:{full:32,half:20,low:10,out:0}, history:[20,16,12,8] },
-        { name:'Beans, 50kg bags',        stockUnit:'bag',     usageUnit:'cup',    conversion:120,leadTime:3, safetyDays:2, levels:{full:24,half:14,low:6, out:0}, history:[14,11,8,5] },
-        { name:'Garri, 50kg bags',        stockUnit:'bag',     usageUnit:'cup',    conversion:110,leadTime:4, safetyDays:2, levels:{full:20,half:12,low:5, out:0}, history:[10,8,5,3] },
-        { name:'Groundnut oil, 25L kegs', stockUnit:'keg',     usageUnit:'litre',  conversion:25, leadTime:4, safetyDays:2, levels:{full:15,half:9, low:4, out:0}, history:[12,10,7,5] },
-        { name:'Palm oil, 25L kegs',      stockUnit:'keg',     usageUnit:'litre',  conversion:25, leadTime:4, safetyDays:2, levels:{full:10,half:6, low:3, out:0}, history:[7,5,3,2] },
-        { name:'Sugar, 50kg bags',        stockUnit:'bag',     usageUnit:'cup',    conversion:200,leadTime:4, safetyDays:2, levels:{full:20,half:12,low:5, out:0}, history:[8,6,4,2] },
-        { name:'Salt, 25kg bags',         stockUnit:'bag',     usageUnit:'cup',    conversion:100,leadTime:5, safetyDays:3, levels:{full:12,half:8, low:3, out:0}, history:[5,4,3,2] },
-        { name:'Tinned tomatoes, cartons',stockUnit:'carton',  usageUnit:'piece',  conversion:24, leadTime:5, safetyDays:2, levels:{full:24,half:14,low:6, out:0}, history:[10,8,5,3] },
-        { name:'Tomato paste, sachets',   stockUnit:'carton',  usageUnit:'sachet', conversion:70, leadTime:4, safetyDays:2, levels:{full:15,half:9, low:4, out:0}, history:[8,6,4,3] },
-        { name:'Maggi cubes, cartons',    stockUnit:'carton',  usageUnit:'piece',  conversion:100,leadTime:5, safetyDays:2, levels:{full:10,half:6, low:3, out:0}, history:[5,4,3,2] }
-      ]
-    },
-    beverages: {
-      label: 'Beverages and drinks',
-      icon: '🥤',
-      items: [
-        { name:'Bottled water, packs',       stockUnit:'packet', usageUnit:'bottle', conversion:12, leadTime:2, safetyDays:1, levels:{full:30,half:18,low:8,out:0}, history:[20,16,13,9] },
-        { name:'Soft drinks, crates',        stockUnit:'crate',  usageUnit:'bottle', conversion:12, leadTime:2, safetyDays:1, levels:{full:24,half:14,low:6,out:0}, history:[15,12,9,6] },
-        { name:'Malt drinks, crates',        stockUnit:'crate',  usageUnit:'bottle', conversion:12, leadTime:3, safetyDays:1, levels:{full:18,half:10,low:5,out:0}, history:[11,9,7,5] },
-        { name:'Sachet water, bags',         stockUnit:'bag',    usageUnit:'sachet', conversion:20, leadTime:2, safetyDays:1, levels:{full:40,half:24,low:10,out:0}, history:[25,20,15,10] },
-        { name:'Juice packs, cartons',       stockUnit:'carton', usageUnit:'packet', conversion:24, leadTime:4, safetyDays:2, levels:{full:15,half:9, low:4,out:0}, history:[7,5,4,3] }
-      ]
-    },
-    clothing: {
-      label: 'Clothing and textiles',
-      icon: '👕',
-      items: [
-        { name:'Ankara fabric, yards',       stockUnit:'bundle',  usageUnit:'piece', conversion:6,  leadTime:7, safetyDays:3, levels:{full:20,half:12,low:5,out:0}, history:[8,6,4,3] },
-        { name:'Lace fabric, yards',         stockUnit:'bundle',  usageUnit:'piece', conversion:5,  leadTime:10,safetyDays:4, levels:{full:15,half:9, low:4,out:0}, history:[6,5,3,2] },
-        { name:'Mens shirts, packs',         stockUnit:'carton',  usageUnit:'piece', conversion:24, leadTime:14,safetyDays:5, levels:{full:8, half:5, low:2,out:0}, history:[4,3,2,2] },
-        { name:'Ladies blouses, packs',      stockUnit:'carton',  usageUnit:'piece', conversion:20, leadTime:14,safetyDays:5, levels:{full:10,half:6, low:3,out:0}, history:[5,4,3,2] },
-        { name:'Children wear, packs',       stockUnit:'carton',  usageUnit:'piece', conversion:30, leadTime:10,safetyDays:4, levels:{full:8, half:5, low:2,out:0}, history:[4,3,3,2] }
-      ]
-    },
-    electronics: {
-      label: 'Electronics and phone accessories',
-      icon: '🔌',
-      items: [
-        { name:'Phone chargers, cartons',   stockUnit:'carton', usageUnit:'piece', conversion:50, leadTime:14, safetyDays:5, levels:{full:6, half:4, low:2,out:0}, history:[3,2,2,1] },
-        { name:'Earphones, cartons',        stockUnit:'carton', usageUnit:'piece', conversion:100,leadTime:14, safetyDays:5, levels:{full:5, half:3, low:1,out:0}, history:[2,2,1,1] },
-        { name:'Power banks, cartons',      stockUnit:'carton', usageUnit:'piece', conversion:40, leadTime:21, safetyDays:7, levels:{full:4, half:2, low:1,out:0}, history:[2,1,1,1] },
-        { name:'Memory cards, cartons',     stockUnit:'carton', usageUnit:'piece', conversion:100,leadTime:21, safetyDays:7, levels:{full:3, half:2, low:1,out:0}, history:[1,1,1,1] },
-        { name:'Phone cases, cartons',      stockUnit:'carton', usageUnit:'piece', conversion:80, leadTime:14, safetyDays:5, levels:{full:5, half:3, low:1,out:0}, history:[3,2,2,1] }
-      ]
-    },
-    hardware: {
-      label: 'Hardware and building materials',
-      icon: '🔨',
-      items: [
-        { name:'Cement, 50kg bags',      stockUnit:'bag',    usageUnit:'bag',  conversion:1,  leadTime:3, safetyDays:2, levels:{full:100,half:60,low:25,out:0}, history:[40,32,25,18] },
-        { name:'Iron rods, bundles',     stockUnit:'bundle', usageUnit:'piece',conversion:10, leadTime:7, safetyDays:3, levels:{full:20, half:12, low:5, out:0}, history:[8,6,4,3] },
-        { name:'Roofing sheets, bundles',stockUnit:'bundle', usageUnit:'piece',conversion:12, leadTime:10,safetyDays:4, levels:{full:15, half:9,  low:4, out:0}, history:[6,5,3,2] },
-        { name:'Nails, cartons',         stockUnit:'carton', usageUnit:'kilo', conversion:25, leadTime:5, safetyDays:2, levels:{full:10, half:6,  low:3, out:0}, history:[4,3,2,2] },
-        { name:'Paint, 20L drums',       stockUnit:'drum',   usageUnit:'litre',conversion:20, leadTime:7, safetyDays:3, levels:{full:12, half:7,  low:3, out:0}, history:[5,4,3,2] }
-      ]
-    },
-    cosmetics: {
-      label: 'Cosmetics and personal care',
-      icon: '💄',
-      items: [
-        { name:'Body cream, cartons',     stockUnit:'carton', usageUnit:'piece', conversion:24, leadTime:10, safetyDays:4, levels:{full:8, half:5, low:2,out:0}, history:[4,3,2,2] },
-        { name:'Soap bars, cartons',      stockUnit:'carton', usageUnit:'piece', conversion:48, leadTime:7,  safetyDays:3, levels:{full:12,half:7, low:3,out:0}, history:[6,5,4,3] },
-        { name:'Hair relaxer, cartons',   stockUnit:'carton', usageUnit:'piece', conversion:36, leadTime:14, safetyDays:5, levels:{full:6, half:4, low:2,out:0}, history:[3,2,2,1] },
-        { name:'Perfume, cartons',        stockUnit:'carton', usageUnit:'piece', conversion:48, leadTime:21, safetyDays:7, levels:{full:4, half:2, low:1,out:0}, history:[2,2,1,1] },
-        { name:'Lipstick, cartons',       stockUnit:'carton', usageUnit:'piece', conversion:72, leadTime:14, safetyDays:5, levels:{full:5, half:3, low:1,out:0}, history:[2,2,1,1] }
-      ]
-    },
-    agro: {
-      label: 'Agro and farm supplies',
-      icon: '🌾',
-      items: [
-        { name:'Fertiliser, 50kg bags',   stockUnit:'bag',    usageUnit:'bag',  conversion:1,  leadTime:7, safetyDays:3, levels:{full:50, half:30, low:12,out:0}, history:[18,14,10,7] },
-        { name:'Poultry feed, 25kg bags', stockUnit:'bag',    usageUnit:'bag',  conversion:1,  leadTime:4, safetyDays:2, levels:{full:40, half:24, low:10,out:0}, history:[15,12,9,6] },
-        { name:'Seeds, 1kg packs',        stockUnit:'packet', usageUnit:'kilo', conversion:1,  leadTime:14,safetyDays:5, levels:{full:30, half:18, low:8, out:0}, history:[8,6,5,4] },
-        { name:'Herbicides, 1L bottles',  stockUnit:'bottle', usageUnit:'litre',conversion:1,  leadTime:7, safetyDays:3, levels:{full:24, half:14, low:6, out:0}, history:[8,6,4,3] },
-        { name:'Veterinary drugs, packs', stockUnit:'packet', usageUnit:'piece',conversion:10, leadTime:14,safetyDays:5, levels:{full:15, half:9,  low:4, out:0}, history:[5,4,3,2] }
-      ]
-    },
-    general: {
-      label: 'General store',
-      icon: '🏪',
-      items: [
-        { name:'Bread, loaves',           stockUnit:'packet', usageUnit:'piece', conversion:1,  leadTime:1, safetyDays:0, levels:{full:60, half:36, low:15,out:0}, history:[40,32,25,18] },
-        { name:'Eggs, crates',            stockUnit:'crate',  usageUnit:'piece', conversion:30, leadTime:2, safetyDays:1, levels:{full:15, half:9,  low:4, out:0}, history:[8,6,5,3] },
-        { name:'Milk, cartons',           stockUnit:'carton', usageUnit:'packet',conversion:24, leadTime:4, safetyDays:2, levels:{full:10, half:6,  low:3, out:0}, history:[5,4,3,2] },
-        { name:'Matches, cartons',        stockUnit:'carton', usageUnit:'piece', conversion:100,leadTime:7, safetyDays:3, levels:{full:8,  half:5,  low:2, out:0}, history:[3,3,2,2] },
-        { name:'Candles, cartons',        stockUnit:'carton', usageUnit:'piece', conversion:50, leadTime:7, safetyDays:3, levels:{full:6,  half:4,  low:2, out:0}, history:[2,2,2,1] }
-      ]
-    }
+    provisions: { label: 'Food and provisions', icon: '🍚', items: [
+      { name:'Rice, 50kg bags', stockUnit:'bag', usageUnit:'cup', conversion:96, leadTime:3, safetyDays:2, levels:{full:32,half:20,low:10,out:0}, history:[20,16,12,8] },
+      { name:'Beans, 50kg bags', stockUnit:'bag', usageUnit:'cup', conversion:120, leadTime:3, safetyDays:2, levels:{full:24,half:14,low:6,out:0}, history:[14,11,8,5] },
+      { name:'Garri, 50kg bags', stockUnit:'bag', usageUnit:'cup', conversion:110, leadTime:4, safetyDays:2, levels:{full:20,half:12,low:5,out:0}, history:[10,8,5,3] },
+      { name:'Groundnut oil, 25L kegs', stockUnit:'keg', usageUnit:'litre', conversion:25, leadTime:4, safetyDays:2, levels:{full:15,half:9,low:4,out:0}, history:[12,10,7,5] },
+      { name:'Palm oil, 25L kegs', stockUnit:'keg', usageUnit:'litre', conversion:25, leadTime:4, safetyDays:2, levels:{full:10,half:6,low:3,out:0}, history:[7,5,3,2] },
+      { name:'Sugar, 50kg bags', stockUnit:'bag', usageUnit:'cup', conversion:200, leadTime:4, safetyDays:2, levels:{full:20,half:12,low:5,out:0}, history:[8,6,4,2] },
+      { name:'Salt, 25kg bags', stockUnit:'bag', usageUnit:'cup', conversion:100, leadTime:5, safetyDays:3, levels:{full:12,half:8,low:3,out:0}, history:[5,4,3,2] },
+      { name:'Tinned tomatoes, cartons', stockUnit:'carton', usageUnit:'piece', conversion:24, leadTime:5, safetyDays:2, levels:{full:24,half:14,low:6,out:0}, history:[10,8,5,3] },
+      { name:'Tomato paste, sachets', stockUnit:'carton', usageUnit:'sachet', conversion:70, leadTime:4, safetyDays:2, levels:{full:15,half:9,low:4,out:0}, history:[8,6,4,3] }
+    ]},
+    beverages: { label: 'Beverages and drinks', icon: '🥤', items: [
+      { name:'Bottled water, packs', stockUnit:'packet', usageUnit:'bottle', conversion:12, leadTime:2, safetyDays:1, levels:{full:30,half:18,low:8,out:0}, history:[20,16,13,9] },
+      { name:'Soft drinks, crates', stockUnit:'crate', usageUnit:'bottle', conversion:12, leadTime:2, safetyDays:1, levels:{full:24,half:14,low:6,out:0}, history:[15,12,9,6] },
+      { name:'Malt drinks, crates', stockUnit:'crate', usageUnit:'bottle', conversion:12, leadTime:3, safetyDays:1, levels:{full:18,half:10,low:5,out:0}, history:[11,9,7,5] },
+      { name:'Sachet water, bags', stockUnit:'bag', usageUnit:'sachet', conversion:20, leadTime:2, safetyDays:1, levels:{full:40,half:24,low:10,out:0}, history:[25,20,15,10] },
+      { name:'Juice packs, cartons', stockUnit:'carton', usageUnit:'packet', conversion:24, leadTime:4, safetyDays:2, levels:{full:15,half:9,low:4,out:0}, history:[7,5,4,3] }
+    ]},
+    clothing: { label: 'Clothing and textiles', icon: '👕', items: [
+      { name:'Ankara fabric, yards', stockUnit:'bundle', usageUnit:'piece', conversion:6, leadTime:7, safetyDays:3, levels:{full:20,half:12,low:5,out:0}, history:[8,6,4,3] },
+      { name:'Lace fabric, yards', stockUnit:'bundle', usageUnit:'piece', conversion:5, leadTime:10, safetyDays:4, levels:{full:15,half:9,low:4,out:0}, history:[6,5,3,2] },
+      { name:'Mens shirts, packs', stockUnit:'carton', usageUnit:'piece', conversion:24, leadTime:14, safetyDays:5, levels:{full:8,half:5,low:2,out:0}, history:[4,3,2,2] },
+      { name:'Ladies blouses, packs', stockUnit:'carton', usageUnit:'piece', conversion:20, leadTime:14, safetyDays:5, levels:{full:10,half:6,low:3,out:0}, history:[5,4,3,2] },
+      { name:'Children wear, packs', stockUnit:'carton', usageUnit:'piece', conversion:30, leadTime:10, safetyDays:4, levels:{full:8,half:5,low:2,out:0}, history:[4,3,3,2] }
+    ]},
+    electronics: { label: 'Electronics and phone accessories', icon: '🔌', items: [
+      { name:'Phone chargers, cartons', stockUnit:'carton', usageUnit:'piece', conversion:50, leadTime:14, safetyDays:5, levels:{full:6,half:4,low:2,out:0}, history:[3,2,2,1] },
+      { name:'Earphones, cartons', stockUnit:'carton', usageUnit:'piece', conversion:100, leadTime:14, safetyDays:5, levels:{full:5,half:3,low:1,out:0}, history:[2,2,1,1] },
+      { name:'Power banks, cartons', stockUnit:'carton', usageUnit:'piece', conversion:40, leadTime:21, safetyDays:7, levels:{full:4,half:2,low:1,out:0}, history:[2,1,1,1] },
+      { name:'Memory cards, cartons', stockUnit:'carton', usageUnit:'piece', conversion:100, leadTime:21, safetyDays:7, levels:{full:3,half:2,low:1,out:0}, history:[1,1,1,1] },
+      { name:'Phone cases, cartons', stockUnit:'carton', usageUnit:'piece', conversion:80, leadTime:14, safetyDays:5, levels:{full:5,half:3,low:1,out:0}, history:[3,2,2,1] }
+    ]},
+    hardware: { label: 'Hardware and building materials', icon: '🔨', items: [
+      { name:'Cement, 50kg bags', stockUnit:'bag', usageUnit:'bag', conversion:1, leadTime:3, safetyDays:2, levels:{full:100,half:60,low:25,out:0}, history:[40,32,25,18] },
+      { name:'Iron rods, bundles', stockUnit:'bundle', usageUnit:'piece', conversion:10, leadTime:7, safetyDays:3, levels:{full:20,half:12,low:5,out:0}, history:[8,6,4,3] },
+      { name:'Roofing sheets, bundles', stockUnit:'bundle', usageUnit:'piece', conversion:12, leadTime:10, safetyDays:4, levels:{full:15,half:9,low:4,out:0}, history:[6,5,3,2] },
+      { name:'Nails, cartons', stockUnit:'carton', usageUnit:'kilo', conversion:25, leadTime:5, safetyDays:2, levels:{full:10,half:6,low:3,out:0}, history:[4,3,2,2] },
+      { name:'Paint, 20L drums', stockUnit:'drum', usageUnit:'litre', conversion:20, leadTime:7, safetyDays:3, levels:{full:12,half:7,low:3,out:0}, history:[5,4,3,2] }
+    ]},
+    cosmetics: { label: 'Cosmetics and personal care', icon: '💄', items: [
+      { name:'Body cream, cartons', stockUnit:'carton', usageUnit:'piece', conversion:24, leadTime:10, safetyDays:4, levels:{full:8,half:5,low:2,out:0}, history:[4,3,2,2] },
+      { name:'Soap bars, cartons', stockUnit:'carton', usageUnit:'piece', conversion:48, leadTime:7, safetyDays:3, levels:{full:12,half:7,low:3,out:0}, history:[6,5,4,3] },
+      { name:'Hair relaxer, cartons', stockUnit:'carton', usageUnit:'piece', conversion:36, leadTime:14, safetyDays:5, levels:{full:6,half:4,low:2,out:0}, history:[3,2,2,1] },
+      { name:'Perfume, cartons', stockUnit:'carton', usageUnit:'piece', conversion:48, leadTime:21, safetyDays:7, levels:{full:4,half:2,low:1,out:0}, history:[2,2,1,1] },
+      { name:'Lipstick, cartons', stockUnit:'carton', usageUnit:'piece', conversion:72, leadTime:14, safetyDays:5, levels:{full:5,half:3,low:1,out:0}, history:[2,2,1,1] }
+    ]},
+    agro: { label: 'Agro and farm supplies', icon: '🌾', items: [
+      { name:'Fertiliser, 50kg bags', stockUnit:'bag', usageUnit:'bag', conversion:1, leadTime:7, safetyDays:3, levels:{full:50,half:30,low:12,out:0}, history:[18,14,10,7] },
+      { name:'Poultry feed, 25kg bags', stockUnit:'bag', usageUnit:'bag', conversion:1, leadTime:4, safetyDays:2, levels:{full:40,half:24,low:10,out:0}, history:[15,12,9,6] },
+      { name:'Seeds, 1kg packs', stockUnit:'packet', usageUnit:'kilo', conversion:1, leadTime:14, safetyDays:5, levels:{full:30,half:18,low:8,out:0}, history:[8,6,5,4] },
+      { name:'Herbicides, 1L bottles', stockUnit:'bottle', usageUnit:'litre', conversion:1, leadTime:7, safetyDays:3, levels:{full:24,half:14,low:6,out:0}, history:[8,6,4,3] },
+      { name:'Veterinary drugs, packs', stockUnit:'packet', usageUnit:'piece', conversion:10, leadTime:14, safetyDays:5, levels:{full:15,half:9,low:4,out:0}, history:[5,4,3,2] }
+    ]},
+    general: { label: 'General store', icon: '🏪', items: [
+      { name:'Bread, loaves', stockUnit:'packet', usageUnit:'piece', conversion:1, leadTime:1, safetyDays:0, levels:{full:60,half:36,low:15,out:0}, history:[40,32,25,18] },
+      { name:'Eggs, crates', stockUnit:'crate', usageUnit:'piece', conversion:30, leadTime:2, safetyDays:1, levels:{full:15,half:9,low:4,out:0}, history:[8,6,5,3] },
+      { name:'Milk, cartons', stockUnit:'carton', usageUnit:'packet', conversion:24, leadTime:4, safetyDays:2, levels:{full:10,half:6,low:3,out:0}, history:[5,4,3,2] },
+      { name:'Matches, cartons', stockUnit:'carton', usageUnit:'piece', conversion:100, leadTime:7, safetyDays:3, levels:{full:8,half:5,low:2,out:0}, history:[3,3,2,2] },
+      { name:'Candles, cartons', stockUnit:'carton', usageUnit:'piece', conversion:50, leadTime:7, safetyDays:3, levels:{full:6,half:4,low:2,out:0}, history:[2,2,2,1] }
+    ]}
   },
   manufacturer: {
-    bakery: {
-      label: 'Bakery',
-      icon: '🥐',
-      items: [
-        { name:'Bread flour, 50kg bags',  stockUnit:'bag',    usageUnit:'kilo',  conversion:50, leadTime:4, safetyDays:2, levels:{full:25,half:12,low:6, out:0}, history:[15,12,9,6] },
-        { name:'Sugar, 50kg bags',        stockUnit:'bag',    usageUnit:'kilo',  conversion:50, leadTime:4, safetyDays:2, levels:{full:12,half:7, low:3, out:0}, history:[6,5,3,2] },
-        { name:'Butter, 25kg cartons',    stockUnit:'carton', usageUnit:'kilo',  conversion:25, leadTime:6, safetyDays:2, levels:{full:8, half:5, low:2, out:0}, history:[4,3,2,1] },
-        { name:'Yeast, 1kg packs',        stockUnit:'packet', usageUnit:'gram',  conversion:1000,leadTime:7,safetyDays:3, levels:{full:20,half:12,low:5, out:0}, history:[8,7,5,3] },
-        { name:'Milk powder, 25kg bags',  stockUnit:'bag',    usageUnit:'kilo',  conversion:25, leadTime:7, safetyDays:3, levels:{full:6, half:4, low:2, out:0}, history:[3,2,2,1] },
-        { name:'Eggs, crates',            stockUnit:'crate',  usageUnit:'piece', conversion:30, leadTime:2, safetyDays:1, levels:{full:10,half:6, low:3, out:0}, history:[6,5,3,2] }
-      ],
-      products: [
-        { name:'Bread, loaves', cost:400, price:700, salvage:100, demandHistory:[40,45,42,48,50,44,46,52,47,45] },
-        { name:'Agege bread, loaves', cost:350, price:600, salvage:80, demandHistory:[30,32,28,35,33,31,34,29,32,30] }
-      ]
-    },
-    food: {
-      label: 'Food processing',
-      icon: '🍲',
-      items: [
-        { name:'Rice, 50kg bags',         stockUnit:'bag',    usageUnit:'kilo', conversion:50, leadTime:4, safetyDays:2, levels:{full:40,half:24,low:10,out:0}, history:[18,15,12,9] },
-        { name:'Vegetable oil, 25L kegs', stockUnit:'keg',    usageUnit:'litre',conversion:25, leadTime:5, safetyDays:2, levels:{full:15,half:9, low:4, out:0}, history:[7,6,4,3] },
-        { name:'Tomatoes, baskets',       stockUnit:'crate',  usageUnit:'kilo', conversion:50, leadTime:2, safetyDays:1, levels:{full:12,half:7, low:3, out:0}, history:[8,6,5,3] },
-        { name:'Pepper, baskets',         stockUnit:'crate',  usageUnit:'kilo', conversion:40, leadTime:2, safetyDays:1, levels:{full:10,half:6, low:2, out:0}, history:[6,5,4,3] },
-        { name:'Onions, 50kg bags',       stockUnit:'bag',    usageUnit:'kilo', conversion:50, leadTime:5, safetyDays:2, levels:{full:8, half:5, low:2, out:0}, history:[4,3,2,2] },
-        { name:'Salt, 25kg bags',         stockUnit:'bag',    usageUnit:'kilo', conversion:25, leadTime:5, safetyDays:2, levels:{full:6, half:4, low:2, out:0}, history:[2,2,2,1] }
-      ],
-      products: [
-        { name:'Jollof sauce, litres', cost:800, price:1500, salvage:200, demandHistory:[20,22,25,19,24,21,23,20,22,21] },
-        { name:'Pepper soup mix, packs', cost:250, price:500, salvage:60, demandHistory:[15,18,14,20,17,16,19,15,17,18] }
-      ]
-    },
-    tailoring: {
-      label: 'Tailoring and fashion',
-      icon: '✂️',
-      items: [
-        { name:'Ankara fabric, yards',   stockUnit:'bundle', usageUnit:'piece', conversion:6,  leadTime:7, safetyDays:3, levels:{full:20,half:12,low:5,out:0}, history:[8,6,4,3] },
-        { name:'Lining fabric, rolls',   stockUnit:'roll',   usageUnit:'piece', conversion:1,  leadTime:7, safetyDays:3, levels:{full:10,half:6, low:3,out:0}, history:[4,3,2,2] },
-        { name:'Thread, cartons',        stockUnit:'carton', usageUnit:'piece', conversion:50, leadTime:10,safetyDays:4, levels:{full:6, half:4, low:2,out:0}, history:[3,2,2,1] },
-        { name:'Buttons, packets',       stockUnit:'packet', usageUnit:'piece', conversion:100,leadTime:10,safetyDays:4, levels:{full:8, half:5, low:2,out:0}, history:[3,3,2,2] },
-        { name:'Zips, packets',          stockUnit:'packet', usageUnit:'piece', conversion:50, leadTime:10,safetyDays:4, levels:{full:6, half:4, low:2,out:0}, history:[2,2,2,1] }
-      ],
-      products: [
-        { name:'Ankara dresses', cost:3500, price:7000, salvage:1500, demandHistory:[8,10,12,9,11,10,13,9,11,10] },
-        { name:'Custom shirts', cost:2000, price:4500, salvage:800, demandHistory:[12,14,11,13,15,12,14,13,12,13] }
-      ]
-    },
-    soap: {
-      label: 'Soap and detergent',
-      icon: '🧼',
-      items: [
-        { name:'Palm kernel oil, 25L kegs', stockUnit:'keg',    usageUnit:'litre', conversion:25, leadTime:5, safetyDays:2, levels:{full:10,half:6,low:3,out:0}, history:[5,4,3,2] },
-        { name:'Caustic soda, 50kg bags',   stockUnit:'bag',    usageUnit:'kilo',  conversion:50, leadTime:7, safetyDays:3, levels:{full:6, half:4,low:2,out:0}, history:[2,2,1,1] },
-        { name:'Fragrance, 1L bottles',     stockUnit:'bottle', usageUnit:'litre', conversion:1,  leadTime:10,safetyDays:4, levels:{full:20,half:12,low:5,out:0}, history:[5,4,3,2] },
-        { name:'Packaging film, rolls',     stockUnit:'roll',   usageUnit:'piece', conversion:1,  leadTime:7, safetyDays:3, levels:{full:15,half:9, low:4,out:0}, history:[5,4,3,2] },
-        { name:'Labels, packets',           stockUnit:'packet', usageUnit:'piece', conversion:500,leadTime:7, safetyDays:3, levels:{full:10,half:6, low:3,out:0}, history:[4,3,2,2] }
-      ],
-      products: [
-        { name:'Bar soap, units', cost:120, price:250, salvage:40, demandHistory:[80,90,85,95,100,88,92,96,90,88] },
-        { name:'Liquid soap, 1L bottles', cost:300, price:650, salvage:80, demandHistory:[40,45,42,48,50,44,46,47,45,44] }
-      ]
-    },
-    furniture: {
-      label: 'Furniture',
-      icon: '🪑',
-      items: [
-        { name:'Plywood, sheets',       stockUnit:'piece',  usageUnit:'piece', conversion:1,  leadTime:7, safetyDays:3, levels:{full:50,half:30,low:12,out:0}, history:[15,12,10,7] },
-        { name:'Timber, bundles',       stockUnit:'bundle', usageUnit:'piece', conversion:10, leadTime:10,safetyDays:4, levels:{full:20,half:12,low:5, out:0}, history:[6,5,4,3] },
-        { name:'Wood screws, cartons',  stockUnit:'carton', usageUnit:'piece', conversion:1000,leadTime:14,safetyDays:5, levels:{full:8, half:5, low:2, out:0}, history:[3,3,2,2] },
-        { name:'Varnish, 5L tins',      stockUnit:'tin',    usageUnit:'litre', conversion:5,  leadTime:7, safetyDays:3, levels:{full:15,half:9, low:4, out:0}, history:[5,4,3,2] },
-        { name:'Foam, rolls',           stockUnit:'roll',   usageUnit:'piece', conversion:1,  leadTime:14,safetyDays:5, levels:{full:10,half:6, low:3, out:0}, history:[3,3,2,2] }
-      ],
-      products: [
-        { name:'Dining chairs, units',  cost:8000, price:15000, salvage:3000, demandHistory:[3,4,5,3,4,5,4,3,4,4] },
-        { name:'Coffee tables, units',  cost:12000, price:22000, salvage:4000, demandHistory:[2,2,3,2,3,2,3,2,2,2] }
-      ]
-    },
-    printing: {
-      label: 'Printing and stationery',
-      icon: '🖨️',
-      items: [
-        { name:'A4 paper, reams',       stockUnit:'packet', usageUnit:'piece', conversion:1,  leadTime:7, safetyDays:3, levels:{full:50,half:30,low:12,out:0}, history:[15,12,10,7] },
-        { name:'Toner, cartridges',     stockUnit:'piece',  usageUnit:'piece', conversion:1,  leadTime:14,safetyDays:5, levels:{full:10,half:6, low:3,out:0}, history:[3,2,2,2] },
-        { name:'Ink, bottles',          stockUnit:'bottle', usageUnit:'millilitre',conversion:100,leadTime:10,safetyDays:4, levels:{full:20,half:12,low:5,out:0}, history:[6,5,4,3] },
-        { name:'Card stock, reams',     stockUnit:'packet', usageUnit:'piece', conversion:1,  leadTime:10,safetyDays:4, levels:{full:15,half:9, low:4,out:0}, history:[4,3,3,2] },
-        { name:'Binding coils, packets',stockUnit:'packet', usageUnit:'piece', conversion:100,leadTime:14,safetyDays:5, levels:{full:8, half:5, low:2,out:0}, history:[2,2,2,1] }
-      ],
-      products: [
-        { name:'Business cards, packs', cost:500, price:1500, salvage:0, demandHistory:[15,18,20,17,19,16,18,17,16,17] },
-        { name:'Letterheads, packs', cost:800, price:1800, salvage:0, demandHistory:[10,12,11,13,12,11,12,10,11,11] }
-      ]
-    },
-    cosmeticsMfg: {
-      label: 'Cosmetics manufacturing',
-      icon: '🧴',
-      items: [
-        { name:'Shea butter, 25kg bags',  stockUnit:'bag',    usageUnit:'kilo',conversion:25, leadTime:10,safetyDays:4, levels:{full:8, half:5, low:2,out:0}, history:[3,2,2,2] },
-        { name:'Coconut oil, 25L kegs',   stockUnit:'keg',    usageUnit:'litre',conversion:25, leadTime:7, safetyDays:3, levels:{full:10,half:6, low:3,out:0}, history:[4,3,2,2] },
-        { name:'Fragrance oils, 1L',      stockUnit:'bottle', usageUnit:'millilitre',conversion:1000,leadTime:14,safetyDays:5, levels:{full:15,half:9,low:4,out:0}, history:[4,3,3,2] },
-        { name:'Emulsifier, 5kg bags',    stockUnit:'bag',    usageUnit:'kilo',conversion:5,  leadTime:14,safetyDays:5, levels:{full:6, half:4, low:2,out:0}, history:[2,1,1,1] },
-        { name:'Containers, cartons',     stockUnit:'carton', usageUnit:'piece',conversion:100,leadTime:10,safetyDays:4, levels:{full:12,half:7, low:3,out:0}, history:[5,4,3,2] }
-      ],
-      products: [
-        { name:'Body lotion, 250ml', cost:400, price:1200, salvage:100, demandHistory:[30,35,32,38,36,33,35,37,34,35] },
-        { name:'Hair cream, 500ml',  cost:600, price:1500, salvage:150, demandHistory:[20,22,25,21,23,22,24,21,22,22] }
-      ]
-    },
-    water: {
-      label: 'Water and beverages',
-      icon: '💧',
-      items: [
-        { name:'PET preforms, cartons',  stockUnit:'carton', usageUnit:'piece', conversion:500,leadTime:7, safetyDays:3, levels:{full:8, half:5, low:2,out:0}, history:[3,2,2,2] },
-        { name:'Bottle caps, cartons',   stockUnit:'carton', usageUnit:'piece', conversion:2000,leadTime:7,safetyDays:3, levels:{full:6, half:4, low:2,out:0}, history:[2,2,1,1] },
-        { name:'Labels, rolls',          stockUnit:'roll',   usageUnit:'piece', conversion:1,  leadTime:10,safetyDays:4, levels:{full:20,half:12,low:5,out:0}, history:[5,4,3,2] },
-        { name:'Shrink film, rolls',     stockUnit:'roll',   usageUnit:'piece', conversion:1,  leadTime:7, safetyDays:3, levels:{full:15,half:9, low:4,out:0}, history:[4,3,3,2] },
-        { name:'Water treatment, 5L',    stockUnit:'tin',    usageUnit:'litre', conversion:5,  leadTime:10,safetyDays:4, levels:{full:10,half:6, low:3,out:0}, history:[3,3,2,2] }
-      ],
-      products: [
-        { name:'Sachet water, bags', cost:50, price:100, salvage:10, demandHistory:[200,220,210,240,230,215,225,235,220,225] },
-        { name:'Bottled water, packs', cost:150, price:300, salvage:50, demandHistory:[80,90,85,95,100,88,92,96,90,88] }
-      ]
-    }
+    bakery: { label: 'Bakery', icon: '🥐', items: [
+      { name:'Bread flour, 50kg bags', stockUnit:'bag', usageUnit:'kilo', conversion:50, leadTime:4, safetyDays:2, levels:{full:25,half:12,low:6,out:0}, history:[15,12,9,6] },
+      { name:'Sugar, 50kg bags', stockUnit:'bag', usageUnit:'kilo', conversion:50, leadTime:4, safetyDays:2, levels:{full:12,half:7,low:3,out:0}, history:[6,5,3,2] },
+      { name:'Butter, 25kg cartons', stockUnit:'carton', usageUnit:'kilo', conversion:25, leadTime:6, safetyDays:2, levels:{full:8,half:5,low:2,out:0}, history:[4,3,2,1] },
+      { name:'Yeast, 1kg packs', stockUnit:'packet', usageUnit:'gram', conversion:1000, leadTime:7, safetyDays:3, levels:{full:20,half:12,low:5,out:0}, history:[8,7,5,3] },
+      { name:'Milk powder, 25kg bags', stockUnit:'bag', usageUnit:'kilo', conversion:25, leadTime:7, safetyDays:3, levels:{full:6,half:4,low:2,out:0}, history:[3,2,2,1] },
+      { name:'Eggs, crates', stockUnit:'crate', usageUnit:'piece', conversion:30, leadTime:2, safetyDays:1, levels:{full:10,half:6,low:3,out:0}, history:[6,5,3,2] }
+    ], products: [
+      { name:'Bread, loaves', cost:400, price:700, salvage:100, demandHistory:[40,45,42,48,50,44,46,52,47,45] },
+      { name:'Agege bread, loaves', cost:350, price:600, salvage:80, demandHistory:[30,32,28,35,33,31,34,29,32,30] }
+    ]},
+    food: { label: 'Food processing', icon: '🍲', items: [
+      { name:'Rice, 50kg bags', stockUnit:'bag', usageUnit:'kilo', conversion:50, leadTime:4, safetyDays:2, levels:{full:40,half:24,low:10,out:0}, history:[18,15,12,9] },
+      { name:'Vegetable oil, 25L kegs', stockUnit:'keg', usageUnit:'litre', conversion:25, leadTime:5, safetyDays:2, levels:{full:15,half:9,low:4,out:0}, history:[7,6,4,3] },
+      { name:'Tomatoes, baskets', stockUnit:'crate', usageUnit:'kilo', conversion:50, leadTime:2, safetyDays:1, levels:{full:12,half:7,low:3,out:0}, history:[8,6,5,3] },
+      { name:'Pepper, baskets', stockUnit:'crate', usageUnit:'kilo', conversion:40, leadTime:2, safetyDays:1, levels:{full:10,half:6,low:2,out:0}, history:[6,5,4,3] },
+      { name:'Onions, 50kg bags', stockUnit:'bag', usageUnit:'kilo', conversion:50, leadTime:5, safetyDays:2, levels:{full:8,half:5,low:2,out:0}, history:[4,3,2,2] }
+    ], products: [
+      { name:'Jollof sauce, litres', cost:800, price:1500, salvage:200, demandHistory:[20,22,25,19,24,21,23,20,22,21] },
+      { name:'Pepper soup mix, packs', cost:250, price:500, salvage:60, demandHistory:[15,18,14,20,17,16,19,15,17,18] }
+    ]},
+    tailoring: { label: 'Tailoring and fashion', icon: '✂️', items: [
+      { name:'Ankara fabric, yards', stockUnit:'bundle', usageUnit:'piece', conversion:6, leadTime:7, safetyDays:3, levels:{full:20,half:12,low:5,out:0}, history:[8,6,4,3] },
+      { name:'Lining fabric, rolls', stockUnit:'roll', usageUnit:'piece', conversion:1, leadTime:7, safetyDays:3, levels:{full:10,half:6,low:3,out:0}, history:[4,3,2,2] },
+      { name:'Thread, cartons', stockUnit:'carton', usageUnit:'piece', conversion:50, leadTime:10, safetyDays:4, levels:{full:6,half:4,low:2,out:0}, history:[3,2,2,1] },
+      { name:'Buttons, packets', stockUnit:'packet', usageUnit:'piece', conversion:100, leadTime:10, safetyDays:4, levels:{full:8,half:5,low:2,out:0}, history:[3,3,2,2] }
+    ], products: [
+      { name:'Ankara dresses', cost:3500, price:7000, salvage:1500, demandHistory:[8,10,12,9,11,10,13,9,11,10] }
+    ]},
+    soap: { label: 'Soap and detergent', icon: '🧼', items: [
+      { name:'Palm kernel oil, 25L kegs', stockUnit:'keg', usageUnit:'litre', conversion:25, leadTime:5, safetyDays:2, levels:{full:10,half:6,low:3,out:0}, history:[5,4,3,2] },
+      { name:'Caustic soda, 50kg bags', stockUnit:'bag', usageUnit:'kilo', conversion:50, leadTime:7, safetyDays:3, levels:{full:6,half:4,low:2,out:0}, history:[2,2,1,1] },
+      { name:'Fragrance, 1L bottles', stockUnit:'bottle', usageUnit:'litre', conversion:1, leadTime:10, safetyDays:4, levels:{full:20,half:12,low:5,out:0}, history:[5,4,3,2] },
+      { name:'Packaging film, rolls', stockUnit:'roll', usageUnit:'piece', conversion:1, leadTime:7, safetyDays:3, levels:{full:15,half:9,low:4,out:0}, history:[5,4,3,2] }
+    ], products: [
+      { name:'Bar soap, units', cost:120, price:250, salvage:40, demandHistory:[80,90,85,95,100,88,92,96,90,88] }
+    ]},
+    furniture: { label: 'Furniture', icon: '🪑', items: [
+      { name:'Plywood, sheets', stockUnit:'piece', usageUnit:'piece', conversion:1, leadTime:7, safetyDays:3, levels:{full:50,half:30,low:12,out:0}, history:[15,12,10,7] },
+      { name:'Timber, bundles', stockUnit:'bundle', usageUnit:'piece', conversion:10, leadTime:10, safetyDays:4, levels:{full:20,half:12,low:5,out:0}, history:[6,5,4,3] },
+      { name:'Wood screws, cartons', stockUnit:'carton', usageUnit:'piece', conversion:1000, leadTime:14, safetyDays:5, levels:{full:8,half:5,low:2,out:0}, history:[3,3,2,2] },
+      { name:'Varnish, 5L tins', stockUnit:'tin', usageUnit:'litre', conversion:5, leadTime:7, safetyDays:3, levels:{full:15,half:9,low:4,out:0}, history:[5,4,3,2] }
+    ], products: [
+      { name:'Dining chairs, units', cost:8000, price:15000, salvage:3000, demandHistory:[3,4,5,3,4,5,4,3,4,4] }
+    ]},
+    printing: { label: 'Printing and stationery', icon: '🖨️', items: [
+      { name:'A4 paper, reams', stockUnit:'packet', usageUnit:'piece', conversion:1, leadTime:7, safetyDays:3, levels:{full:50,half:30,low:12,out:0}, history:[15,12,10,7] },
+      { name:'Toner, cartridges', stockUnit:'piece', usageUnit:'piece', conversion:1, leadTime:14, safetyDays:5, levels:{full:10,half:6,low:3,out:0}, history:[3,2,2,2] },
+      { name:'Ink, bottles', stockUnit:'bottle', usageUnit:'millilitre', conversion:100, leadTime:10, safetyDays:4, levels:{full:20,half:12,low:5,out:0}, history:[6,5,4,3] },
+      { name:'Card stock, reams', stockUnit:'packet', usageUnit:'piece', conversion:1, leadTime:10, safetyDays:4, levels:{full:15,half:9,low:4,out:0}, history:[4,3,3,2] }
+    ], products: [
+      { name:'Business cards, packs', cost:500, price:1500, salvage:0, demandHistory:[15,18,20,17,19,16,18,17,16,17] }
+    ]},
+    cosmeticsMfg: { label: 'Cosmetics manufacturing', icon: '🧴', items: [
+      { name:'Shea butter, 25kg bags', stockUnit:'bag', usageUnit:'kilo', conversion:25, leadTime:10, safetyDays:4, levels:{full:8,half:5,low:2,out:0}, history:[3,2,2,2] },
+      { name:'Coconut oil, 25L kegs', stockUnit:'keg', usageUnit:'litre', conversion:25, leadTime:7, safetyDays:3, levels:{full:10,half:6,low:3,out:0}, history:[4,3,2,2] },
+      { name:'Fragrance oils, 1L', stockUnit:'bottle', usageUnit:'millilitre', conversion:1000, leadTime:14, safetyDays:5, levels:{full:15,half:9,low:4,out:0}, history:[4,3,3,2] },
+      { name:'Containers, cartons', stockUnit:'carton', usageUnit:'piece', conversion:100, leadTime:10, safetyDays:4, levels:{full:12,half:7,low:3,out:0}, history:[5,4,3,2] }
+    ], products: [
+      { name:'Body lotion, 250ml', cost:400, price:1200, salvage:100, demandHistory:[30,35,32,38,36,33,35,37,34,35] }
+    ]},
+    water: { label: 'Water and beverages', icon: '💧', items: [
+      { name:'PET preforms, cartons', stockUnit:'carton', usageUnit:'piece', conversion:500, leadTime:7, safetyDays:3, levels:{full:8,half:5,low:2,out:0}, history:[3,2,2,2] },
+      { name:'Bottle caps, cartons', stockUnit:'carton', usageUnit:'piece', conversion:2000, leadTime:7, safetyDays:3, levels:{full:6,half:4,low:2,out:0}, history:[2,2,1,1] },
+      { name:'Labels, rolls', stockUnit:'roll', usageUnit:'piece', conversion:1, leadTime:10, safetyDays:4, levels:{full:20,half:12,low:5,out:0}, history:[5,4,3,2] },
+      { name:'Shrink film, rolls', stockUnit:'roll', usageUnit:'piece', conversion:1, leadTime:7, safetyDays:3, levels:{full:15,half:9,low:4,out:0}, history:[4,3,3,2] }
+    ], products: [
+      { name:'Sachet water, bags', cost:50, price:100, salvage:10, demandHistory:[200,220,210,240,230,215,225,235,220,225] }
+    ]}
   }
 };
 
-/* ---------- 15 SUPPLIERS ---------- */
 const SEED_SUPPLIERS = [
-  {
-    name: 'Adewale Stores', category: 'Food and provisions',
-    initials: 'AS', verified: true,
-    address: 'Bodija Market, Stall 42, Ibadan, Oyo State',
-    marketDays: 'Monday, Thursday',
-    phone: '+234 803 421 7788',
-    leadTime: 3, fn: 8, cost: 210000,
-    note: 'Fast delivery, good reviews',
-    bestFor: ['fast delivery', 'reliable'],
-    deliveryWindow: '3 to 5 days',
-    reviewCount: 32, rating: 4.7,
-    reviews: [
-      { name: 'Tunde A.', stars: 5, text: 'Always delivers on time. Rice quality is consistent.', time: '3 weeks ago' },
-      { name: 'Ngozi K.', stars: 5, text: 'Best prices on bags of rice in Bodija. Recommended.', time: '1 month ago' },
-      { name: 'Segun O.', stars: 4, text: 'Good stock, but sometimes runs out of beans.', time: '2 months ago' }
-    ],
-    items: [
-      { match: 'rice',  price: 62000, unit: 'bag',  leadTime: 3, fn: 9 },
-      { match: 'beans', price: 74000, unit: 'bag',  leadTime: 3, fn: 8 },
-      { match: 'garri', price: 38000, unit: 'bag',  leadTime: 3, fn: 8 },
-      { match: 'oil',   price: 42500, unit: 'keg',  leadTime: 4, fn: 8 },
-      { match: 'sugar', price: 48000, unit: 'bag',  leadTime: 4, fn: 7 }
-    ]
-  },
-  {
-    name: 'Blessing Ventures', category: 'Food and provisions',
-    initials: 'BV', verified: true,
-    address: 'Mile 12 Market, Block C, Lagos State',
-    marketDays: 'Daily',
-    phone: '+234 806 552 9911',
-    leadTime: 6, fn: 6, cost: 180000,
-    note: 'Cheapest overall, slower on delivery',
-    bestFor: ['cheapest', 'bulk orders'],
-    deliveryWindow: '5 to 8 days',
-    reviewCount: 18, rating: 4.1,
-    reviews: [
-      { name: 'Chika E.', stars: 4, text: 'Prices are unbeatable but you must plan ahead.', time: '2 weeks ago' },
-      { name: 'Bola M.', stars: 4, text: 'Good for bulk rice orders. Delivery took a week.', time: '1 month ago' },
-      { name: 'Ifeoma N.', stars: 4, text: 'Owner is polite, always gives small discount.', time: '2 months ago' }
-    ],
-    items: [
-      { match: 'rice',  price: 58500, unit: 'bag',  leadTime: 6, fn: 7 },
-      { match: 'beans', price: 71000, unit: 'bag',  leadTime: 6, fn: 6 },
-      { match: 'garri', price: 36000, unit: 'bag',  leadTime: 5, fn: 7 },
-      { match: 'sugar', price: 45500, unit: 'bag',  leadTime: 5, fn: 6 },
-      { match: 'salt',  price: 12500, unit: 'bag',  leadTime: 5, fn: 7 }
-    ]
-  },
-  {
-    name: 'Chidi and Sons', category: 'Food and provisions',
-    initials: 'CS', verified: false,
-    address: 'Ogbete Main Market, Shop 118, Enugu State',
-    marketDays: 'Tuesday, Friday',
-    phone: '+234 812 774 3320',
-    leadTime: 4, fn: 5, cost: 200000,
-    note: 'Good on dry goods, occasional delays',
-    bestFor: ['dry goods'],
-    deliveryWindow: '4 to 7 days',
-    reviewCount: 12, rating: 3.9,
-    reviews: [
-      { name: 'Emeka O.', stars: 4, text: 'Good prices on sugar and salt.', time: '1 month ago' },
-      { name: 'Ada C.', stars: 3, text: 'Delivery was late twice. Products are okay.', time: '6 weeks ago' },
-      { name: 'Uche N.', stars: 4, text: 'Reliable for bulk orders of garri.', time: '2 months ago' }
-    ],
-    items: [
-      { match: 'rice',  price: 61500, unit: 'bag',  leadTime: 4, fn: 6 },
-      { match: 'sugar', price: 46500, unit: 'bag',  leadTime: 4, fn: 5 },
-      { match: 'salt',  price: 13000, unit: 'bag',  leadTime: 4, fn: 6 },
-      { match: 'garri', price: 37500, unit: 'bag',  leadTime: 4, fn: 5 }
-    ]
-  },
-  {
-    name: 'Mama Ngozi Wholesale', category: 'Food and provisions',
-    initials: 'MN', verified: true,
-    address: 'Onitsha Main Market, Line 3, Anambra State',
-    marketDays: 'Monday, Wednesday, Saturday',
-    phone: '+234 809 663 2200',
-    leadTime: 5, fn: 8, cost: 195000,
-    note: 'Trusted for palm oil and groundnut oil',
-    bestFor: ['oils', 'trusted'],
-    deliveryWindow: '5 to 7 days',
-    reviewCount: 41, rating: 4.6,
-    reviews: [
-      { name: 'Chidinma O.', stars: 5, text: 'Best palm oil in Onitsha. Consistent quality.', time: '2 weeks ago' },
-      { name: 'Kelechi A.', stars: 5, text: 'Never had a bad batch. Highly recommend.', time: '1 month ago' },
-      { name: 'Amaka N.', stars: 4, text: 'Slightly expensive but worth it for the quality.', time: '3 months ago' }
-    ],
-    items: [
-      { match: 'palm oil',      price: 44000, unit: 'keg', leadTime: 5, fn: 9 },
-      { match: 'groundnut oil', price: 46000, unit: 'keg', leadTime: 5, fn: 8 },
-      { match: 'tomato paste',  price: 8500,  unit: 'carton', leadTime: 5, fn: 7 },
-      { match: 'maggi',         price: 12000, unit: 'carton', leadTime: 5, fn: 8 }
-    ]
-  },
-  {
-    name: 'Delta Millers Ltd.', category: 'Bakery supply',
-    initials: 'DM', verified: true,
-    address: 'Sapele Road, Warri, Delta State',
-    marketDays: 'Daily',
-    phone: '+234 803 887 6655',
-    leadTime: 4, fn: 9, cost: 235000,
-    note: 'Best for flour in large quantities',
-    bestFor: ['flour', 'fast delivery'],
-    deliveryWindow: '4 to 5 days',
-    reviewCount: 55, rating: 4.8,
-    reviews: [
-      { name: 'Pastor David', stars: 5, text: 'Our bakery runs on their flour. Never disappoints.', time: '1 week ago' },
-      { name: 'Blessing B.', stars: 5, text: 'Fast delivery, consistent quality.', time: '3 weeks ago' },
-      { name: 'Emeka U.', stars: 5, text: 'Owner is very professional.', time: '2 months ago' }
-    ],
-    items: [
-      { match: 'bread flour',   price: 48000, unit: 'bag',    leadTime: 4, fn: 9 },
-      { match: 'sugar',         price: 46000, unit: 'bag',    leadTime: 4, fn: 8 },
-      { match: 'yeast',         price: 3500,  unit: 'packet', leadTime: 5, fn: 8 },
-      { match: 'milk powder',   price: 22000, unit: 'bag',    leadTime: 5, fn: 8 },
-      { match: 'butter',        price: 38000, unit: 'carton', leadTime: 6, fn: 7 }
-    ]
-  },
-  {
-    name: 'Golden Grain Suppliers', category: 'Bakery supply',
-    initials: 'GG', verified: true,
-    address: 'Kantin Kwari Market, Kano State',
-    marketDays: 'Daily',
-    phone: '+234 807 552 4411',
-    leadTime: 8, fn: 8, cost: 220000,
-    note: 'Northern supplier, good bulk rates',
-    bestFor: ['bulk rates', 'flour'],
-    deliveryWindow: '7 to 10 days',
-    reviewCount: 28, rating: 4.5,
-    reviews: [
-      { name: 'Alhaji Musa', stars: 5, text: 'Best flour prices from the North. Worth the wait.', time: '2 weeks ago' },
-      { name: 'Hauwa I.', stars: 4, text: 'Good quality but delivery is slow.', time: '1 month ago' },
-      { name: 'Yusuf K.', stars: 5, text: 'Excellent for large orders.', time: '2 months ago' }
-    ],
-    items: [
-      { match: 'bread flour', price: 46000, unit: 'bag',    leadTime: 8, fn: 8 },
-      { match: 'yeast',       price: 3200,  unit: 'packet', leadTime: 8, fn: 7 },
-      { match: 'sugar',       price: 45000, unit: 'bag',    leadTime: 8, fn: 7 }
-    ]
-  },
-  {
-    name: 'Grand Oils Nigeria', category: 'Oils and liquids',
-    initials: 'GO', verified: true,
-    address: 'Apapa Wharf, Lagos State',
-    marketDays: 'Monday to Friday',
-    phone: '+234 802 441 3300',
-    leadTime: 5, fn: 7, cost: 175000,
-    note: 'Best for bulk vegetable oil',
-    bestFor: ['bulk oil', 'industrial'],
-    deliveryWindow: '5 to 7 days',
-    reviewCount: 22, rating: 4.3,
-    reviews: [
-      { name: 'Kunle A.', stars: 5, text: 'Bulk oil prices are excellent.', time: '1 month ago' },
-      { name: 'Ada N.', stars: 4, text: 'Quality is consistent.', time: '6 weeks ago' },
-      { name: 'Hassan M.', stars: 4, text: 'Good for larger food processors.', time: '3 months ago' }
-    ],
-    items: [
-      { match: 'vegetable oil', price: 40000, unit: 'keg', leadTime: 5, fn: 8 },
-      { match: 'groundnut oil', price: 44500, unit: 'keg', leadTime: 5, fn: 7 }
-    ]
-  },
-  {
-    name: 'Ibadan Packaging Co.', category: 'Packaging',
-    initials: 'IP', verified: true,
-    address: 'Ojoo Industrial Layout, Ibadan, Oyo State',
-    marketDays: 'Monday to Saturday',
-    phone: '+234 805 774 1122',
-    leadTime: 5, fn: 8, cost: 210000,
-    note: 'Reliable for cartons and packaging',
-    bestFor: ['packaging', 'reliable'],
-    deliveryWindow: '5 to 7 days',
-    reviewCount: 35, rating: 4.5,
-    reviews: [
-      { name: 'Ade O.', stars: 5, text: 'Cartons are strong and well made.', time: '2 weeks ago' },
-      { name: 'Folake B.', stars: 4, text: 'Good quality but a bit pricier than others.', time: '1 month ago' },
-      { name: 'Bola K.', stars: 5, text: 'Always on time.', time: '2 months ago' }
-    ],
-    items: [
-      { match: 'carton',   price: 8500, unit: 'bundle', leadTime: 5, fn: 8 },
-      { match: 'sachet',   price: 6500, unit: 'carton', leadTime: 5, fn: 8 }
-    ]
-  },
-  {
-    name: 'GreenWrap Recyclers', category: 'Packaging',
-    initials: 'GR', verified: true,
-    address: 'Ikeja Along, Lagos State',
-    marketDays: 'Monday to Friday',
-    phone: '+234 806 663 5544',
-    leadTime: 6, fn: 9, cost: 195000,
-    note: 'Recycled stock, eco-friendly, good rates',
-    bestFor: ['eco-friendly', 'savings'],
-    deliveryWindow: '6 to 8 days',
-    reviewCount: 27, rating: 4.6,
-    reviews: [
-      { name: 'Chioma N.', stars: 5, text: 'Great for sustainability. Prices are competitive.', time: '3 weeks ago' },
-      { name: 'Segun O.', stars: 5, text: 'Best value for recycled packaging.', time: '1 month ago' },
-      { name: 'Amaka E.', stars: 4, text: 'Quality is good for the price.', time: '2 months ago' }
-    ],
-    items: [
-      { match: 'carton',   price: 7200, unit: 'bundle', leadTime: 6, fn: 9 },
-      { match: 'sachet',   price: 5800, unit: 'carton', leadTime: 6, fn: 8 },
-      { match: 'label',    price: 4500, unit: 'roll',   leadTime: 6, fn: 8 }
-    ]
-  },
-  {
-    name: 'NigerPack Industries', category: 'Packaging',
-    initials: 'NP', verified: true,
-    address: 'Nnewi Industrial Area, Anambra State',
-    marketDays: 'Monday to Saturday',
-    phone: '+234 812 335 8899',
-    leadTime: 7, fn: 7, cost: 205000,
-    note: 'Full range of packaging supplies',
-    bestFor: ['range', 'industrial'],
-    deliveryWindow: '7 to 9 days',
-    reviewCount: 19, rating: 4.2,
-    reviews: [
-      { name: 'Chukwudi A.', stars: 4, text: 'Good range but slow on some items.', time: '1 month ago' },
-      { name: 'Ngozi O.', stars: 4, text: 'Reliable for PET bottles.', time: '2 months ago' },
-      { name: 'Emeka I.', stars: 5, text: 'Best range of packaging in the East.', time: '3 months ago' }
-    ],
-    items: [
-      { match: 'PET preform', price: 8500, unit: 'carton', leadTime: 7, fn: 7 },
-      { match: 'bottle cap',  price: 5500, unit: 'carton', leadTime: 7, fn: 7 },
-      { match: 'label',       price: 4800, unit: 'roll',   leadTime: 7, fn: 7 }
-    ]
-  },
-  {
-    name: 'Oyo Logistics Partners', category: 'Logistics',
-    initials: 'OL', verified: true,
-    address: 'Iwo Road, Ibadan, Oyo State',
-    marketDays: 'Daily',
-    phone: '+234 807 442 1177',
-    leadTime: 1, fn: 8, cost: 95000,
-    note: 'Same-day pickup within Ibadan',
-    bestFor: ['speed', 'local'],
-    deliveryWindow: 'Same day to 2 days',
-    reviewCount: 44, rating: 4.6,
-    reviews: [
-      { name: 'Tunde B.', stars: 5, text: 'Fastest delivery in Ibadan.', time: '1 week ago' },
-      { name: 'Ronke O.', stars: 4, text: 'Reliable for local deliveries.', time: '3 weeks ago' },
-      { name: 'Akeem I.', stars: 5, text: 'Best for urgent dispatches.', time: '2 months ago' }
-    ],
-    items: [
-      { match: 'diesel', price: 95000, unit: 'drum', leadTime: 1, fn: 8 }
-    ]
-  },
-  {
-    name: 'SwiftMove Logistics', category: 'Logistics',
-    initials: 'SM', verified: false,
-    address: 'Wuse Zone 4, Abuja FCT',
-    marketDays: 'Monday to Saturday',
-    phone: '+234 809 663 7711',
-    leadTime: 2, fn: 7, cost: 120000,
-    note: 'Covers Abuja and North-Central',
-    bestFor: ['coverage', 'abuja'],
-    deliveryWindow: '2 to 4 days',
-    reviewCount: 16, rating: 4.0,
-    reviews: [
-      { name: 'Ibrahim S.', stars: 4, text: 'Good coverage in the North.', time: '1 month ago' },
-      { name: 'Grace A.', stars: 4, text: 'Reliable for inter-state deliveries.', time: '6 weeks ago' },
-      { name: 'Ahmed K.', stars: 4, text: 'Fair pricing for the distance covered.', time: '3 months ago' }
-    ],
-    items: [
-      { match: 'diesel', price: 115000, unit: 'drum', leadTime: 2, fn: 7 }
-    ]
-  },
-  {
-    name: 'Lagos Beauty Supply', category: 'Cosmetics',
-    initials: 'LB', verified: true,
-    address: 'Balogun Market, Lagos Island, Lagos State',
-    marketDays: 'Daily',
-    phone: '+234 803 221 4466',
-    leadTime: 4, fn: 7, cost: 145000,
-    note: 'Wide range of cosmetics',
-    bestFor: ['range', 'cosmetics'],
-    deliveryWindow: '4 to 6 days',
-    reviewCount: 30, rating: 4.4,
-    reviews: [
-      { name: 'Bimpe O.', stars: 5, text: 'Best range of body cream in Balogun.', time: '2 weeks ago' },
-      { name: 'Yemi A.', stars: 4, text: 'Prices are competitive but watch the expiry dates.', time: '1 month ago' },
-      { name: 'Chioma N.', stars: 5, text: 'Good for bulk cosmetics.', time: '2 months ago' }
-    ],
-    items: [
-      { match: 'body cream', price: 22000, unit: 'carton', leadTime: 4, fn: 7 },
-      { match: 'perfume',    price: 38000, unit: 'carton', leadTime: 5, fn: 7 },
-      { match: 'lipstick',   price: 28000, unit: 'carton', leadTime: 5, fn: 7 }
-    ]
-  },
-  {
-    name: 'Radiant Cosmetics', category: 'Cosmetics',
-    initials: 'RC', verified: true,
-    address: 'Trade Fair Complex, Lagos State',
-    marketDays: 'Monday to Saturday',
-    phone: '+234 802 556 9933',
-    leadTime: 5, fn: 8, cost: 155000,
-    note: 'Premium cosmetics, good quality',
-    bestFor: ['quality', 'premium'],
-    deliveryWindow: '5 to 7 days',
-    reviewCount: 24, rating: 4.5,
-    reviews: [
-      { name: 'Tope A.', stars: 5, text: 'Better quality than most suppliers.', time: '3 weeks ago' },
-      { name: 'Fatima I.', stars: 5, text: 'My customers prefer these products.', time: '1 month ago' },
-      { name: 'Ngozi E.', stars: 4, text: 'Slightly more expensive but worth it.', time: '2 months ago' }
-    ],
-    items: [
-      { match: 'body cream', price: 24000, unit: 'carton', leadTime: 5, fn: 9 },
-      { match: 'soap',       price: 18000, unit: 'carton', leadTime: 5, fn: 8 },
-      { match: 'hair relaxer', price: 32000, unit: 'carton', leadTime: 6, fn: 8 }
-    ]
-  },
-  {
-    name: 'TechFix Industrial', category: 'Equipment maintenance',
-    initials: 'TF', verified: true,
-    address: 'Ikeja Computer Village, Lagos State',
-    marketDays: 'Monday to Saturday',
-    phone: '+234 805 998 2244',
-    leadTime: 7, fn: 8, cost: 165000,
-    note: 'Specialists in industrial spare parts',
-    bestFor: ['spare parts', 'technical'],
-    deliveryWindow: '7 to 10 days',
-    reviewCount: 12, rating: 4.1,
-    reviews: [
-      { name: 'Femi O.', stars: 5, text: 'Only place I trust for bearings.', time: '1 month ago' },
-      { name: 'Amina S.', stars: 4, text: 'Good technical knowledge.', time: '6 weeks ago' },
-      { name: 'Kunle A.', stars: 4, text: 'Prices are fair for specialist parts.', time: '3 months ago' }
-    ],
-    items: [
-      { match: 'bearing',  price: 15000, unit: 'piece', leadTime: 7, fn: 8 },
-      { match: 'conveyor', price: 45000, unit: 'piece', leadTime: 10, fn: 7 }
-    ]
-  }
+  { name:'Adewale Stores', category:'Food and provisions', initials:'AS', verified:true, address:'Bodija Market, Stall 42, Ibadan, Oyo State', marketDays:'Monday, Thursday', phone:'+234 803 421 7788', leadTime:3, fn:8, cost:210000, note:'Fast delivery, good reviews', bestFor:['fast delivery','reliable'], deliveryWindow:'3 to 5 days', reviewCount:32, rating:4.7,
+    reviews:[{name:'Tunde A.',stars:5,text:'Always delivers on time. Rice quality is consistent.',time:'3 weeks ago'},{name:'Ngozi K.',stars:5,text:'Best prices on bags of rice in Bodija.',time:'1 month ago'},{name:'Segun O.',stars:4,text:'Good stock, but sometimes runs out of beans.',time:'2 months ago'}],
+    items:[{match:'rice',price:62000,unit:'bag',leadTime:3,fn:9},{match:'beans',price:74000,unit:'bag',leadTime:3,fn:8},{match:'garri',price:38000,unit:'bag',leadTime:3,fn:8},{match:'oil',price:42500,unit:'keg',leadTime:4,fn:8},{match:'sugar',price:48000,unit:'bag',leadTime:4,fn:7}] },
+  { name:'Blessing Ventures', category:'Food and provisions', initials:'BV', verified:true, address:'Mile 12 Market, Block C, Lagos State', marketDays:'Daily', phone:'+234 806 552 9911', leadTime:6, fn:6, cost:180000, note:'Cheapest overall, slower on delivery', bestFor:['cheapest','bulk orders'], deliveryWindow:'5 to 8 days', reviewCount:18, rating:4.1,
+    reviews:[{name:'Chika E.',stars:4,text:'Prices are unbeatable but you must plan ahead.',time:'2 weeks ago'},{name:'Bola M.',stars:4,text:'Good for bulk rice orders.',time:'1 month ago'},{name:'Ifeoma N.',stars:4,text:'Owner gives small discounts.',time:'2 months ago'}],
+    items:[{match:'rice',price:58500,unit:'bag',leadTime:6,fn:7},{match:'beans',price:71000,unit:'bag',leadTime:6,fn:6},{match:'garri',price:36000,unit:'bag',leadTime:5,fn:7},{match:'sugar',price:45500,unit:'bag',leadTime:5,fn:6},{match:'salt',price:12500,unit:'bag',leadTime:5,fn:7}] },
+  { name:'Chidi and Sons', category:'Food and provisions', initials:'CS', verified:false, address:'Ogbete Main Market, Shop 118, Enugu State', marketDays:'Tuesday, Friday', phone:'+234 812 774 3320', leadTime:4, fn:5, cost:200000, note:'Good on dry goods', bestFor:['dry goods'], deliveryWindow:'4 to 7 days', reviewCount:12, rating:3.9,
+    reviews:[{name:'Emeka O.',stars:4,text:'Good prices on sugar and salt.',time:'1 month ago'},{name:'Ada C.',stars:3,text:'Delivery was late twice.',time:'6 weeks ago'},{name:'Uche N.',stars:4,text:'Reliable for bulk garri.',time:'2 months ago'}],
+    items:[{match:'rice',price:61500,unit:'bag',leadTime:4,fn:6},{match:'sugar',price:46500,unit:'bag',leadTime:4,fn:5},{match:'salt',price:13000,unit:'bag',leadTime:4,fn:6},{match:'garri',price:37500,unit:'bag',leadTime:4,fn:5}] },
+  { name:'Mama Ngozi Wholesale', category:'Food and provisions', initials:'MN', verified:true, address:'Onitsha Main Market, Line 3, Anambra State', marketDays:'Monday, Wednesday, Saturday', phone:'+234 809 663 2200', leadTime:5, fn:8, cost:195000, note:'Trusted for palm oil and groundnut oil', bestFor:['oils','trusted'], deliveryWindow:'5 to 7 days', reviewCount:41, rating:4.6,
+    reviews:[{name:'Chidinma O.',stars:5,text:'Best palm oil in Onitsha.',time:'2 weeks ago'},{name:'Kelechi A.',stars:5,text:'Never had a bad batch.',time:'1 month ago'},{name:'Amaka N.',stars:4,text:'Slightly expensive but worth it.',time:'3 months ago'}],
+    items:[{match:'palm oil',price:44000,unit:'keg',leadTime:5,fn:9},{match:'groundnut oil',price:46000,unit:'keg',leadTime:5,fn:8},{match:'tomato paste',price:8500,unit:'carton',leadTime:5,fn:7}] },
+  { name:'Delta Millers Ltd.', category:'Bakery supply', initials:'DM', verified:true, address:'Sapele Road, Warri, Delta State', marketDays:'Daily', phone:'+234 803 887 6655', leadTime:4, fn:9, cost:235000, note:'Best for flour in large quantities', bestFor:['flour','fast delivery'], deliveryWindow:'4 to 5 days', reviewCount:55, rating:4.8,
+    reviews:[{name:'Pastor David',stars:5,text:'Our bakery runs on their flour.',time:'1 week ago'},{name:'Blessing B.',stars:5,text:'Fast, consistent.',time:'3 weeks ago'},{name:'Emeka U.',stars:5,text:'Very professional.',time:'2 months ago'}],
+    items:[{match:'bread flour',price:48000,unit:'bag',leadTime:4,fn:9},{match:'sugar',price:46000,unit:'bag',leadTime:4,fn:8},{match:'yeast',price:3500,unit:'packet',leadTime:5,fn:8},{match:'milk powder',price:22000,unit:'bag',leadTime:5,fn:8},{match:'butter',price:38000,unit:'carton',leadTime:6,fn:7}] },
+  { name:'Golden Grain Suppliers', category:'Bakery supply', initials:'GG', verified:true, address:'Kantin Kwari Market, Kano State', marketDays:'Daily', phone:'+234 807 552 4411', leadTime:8, fn:8, cost:220000, note:'Northern supplier, good bulk rates', bestFor:['bulk rates','flour'], deliveryWindow:'7 to 10 days', reviewCount:28, rating:4.5,
+    reviews:[{name:'Alhaji Musa',stars:5,text:'Best flour prices from the North.',time:'2 weeks ago'},{name:'Hauwa I.',stars:4,text:'Good quality, slow delivery.',time:'1 month ago'},{name:'Yusuf K.',stars:5,text:'Excellent for large orders.',time:'2 months ago'}],
+    items:[{match:'bread flour',price:46000,unit:'bag',leadTime:8,fn:8},{match:'yeast',price:3200,unit:'packet',leadTime:8,fn:7},{match:'sugar',price:45000,unit:'bag',leadTime:8,fn:7}] },
+  { name:'Grand Oils Nigeria', category:'Oils and liquids', initials:'GO', verified:true, address:'Apapa Wharf, Lagos State', marketDays:'Monday to Friday', phone:'+234 802 441 3300', leadTime:5, fn:7, cost:175000, note:'Best for bulk vegetable oil', bestFor:['bulk oil','industrial'], deliveryWindow:'5 to 7 days', reviewCount:22, rating:4.3,
+    reviews:[{name:'Kunle A.',stars:5,text:'Bulk oil prices are excellent.',time:'1 month ago'},{name:'Ada N.',stars:4,text:'Quality is consistent.',time:'6 weeks ago'},{name:'Hassan M.',stars:4,text:'Good for larger food processors.',time:'3 months ago'}],
+    items:[{match:'vegetable oil',price:40000,unit:'keg',leadTime:5,fn:8},{match:'groundnut oil',price:44500,unit:'keg',leadTime:5,fn:7}] },
+  { name:'Ibadan Packaging Co.', category:'Packaging', initials:'IP', verified:true, address:'Ojoo Industrial Layout, Ibadan, Oyo State', marketDays:'Monday to Saturday', phone:'+234 805 774 1122', leadTime:5, fn:8, cost:210000, note:'Reliable for cartons and packaging', bestFor:['packaging','reliable'], deliveryWindow:'5 to 7 days', reviewCount:35, rating:4.5,
+    reviews:[{name:'Ade O.',stars:5,text:'Cartons are strong and well made.',time:'2 weeks ago'},{name:'Folake B.',stars:4,text:'Good quality, pricier than others.',time:'1 month ago'},{name:'Bola K.',stars:5,text:'Always on time.',time:'2 months ago'}],
+    items:[{match:'carton',price:8500,unit:'bundle',leadTime:5,fn:8},{match:'sachet',price:6500,unit:'carton',leadTime:5,fn:8}] },
+  { name:'GreenWrap Recyclers', category:'Packaging', initials:'GR', verified:true, address:'Ikeja Along, Lagos State', marketDays:'Monday to Friday', phone:'+234 806 663 5544', leadTime:6, fn:9, cost:195000, note:'Recycled stock, eco-friendly, good rates', bestFor:['eco-friendly','savings'], deliveryWindow:'6 to 8 days', reviewCount:27, rating:4.6,
+    reviews:[{name:'Chioma N.',stars:5,text:'Great for sustainability.',time:'3 weeks ago'},{name:'Segun O.',stars:5,text:'Best value for recycled packaging.',time:'1 month ago'},{name:'Amaka E.',stars:4,text:'Quality is good.',time:'2 months ago'}],
+    items:[{match:'carton',price:7200,unit:'bundle',leadTime:6,fn:9},{match:'sachet',price:5800,unit:'carton',leadTime:6,fn:8},{match:'label',price:4500,unit:'roll',leadTime:6,fn:8}] },
+  { name:'NigerPack Industries', category:'Packaging', initials:'NP', verified:true, address:'Nnewi Industrial Area, Anambra State', marketDays:'Monday to Saturday', phone:'+234 812 335 8899', leadTime:7, fn:7, cost:205000, note:'Full range of packaging supplies', bestFor:['range','industrial'], deliveryWindow:'7 to 9 days', reviewCount:19, rating:4.2,
+    reviews:[{name:'Chukwudi A.',stars:4,text:'Good range, slow on some items.',time:'1 month ago'},{name:'Ngozi O.',stars:4,text:'Reliable for PET bottles.',time:'2 months ago'},{name:'Emeka I.',stars:5,text:'Best range of packaging in the East.',time:'3 months ago'}],
+    items:[{match:'PET preform',price:8500,unit:'carton',leadTime:7,fn:7},{match:'bottle cap',price:5500,unit:'carton',leadTime:7,fn:7},{match:'label',price:4800,unit:'roll',leadTime:7,fn:7}] },
+  { name:'Oyo Logistics Partners', category:'Logistics', initials:'OL', verified:true, address:'Iwo Road, Ibadan, Oyo State', marketDays:'Daily', phone:'+234 807 442 1177', leadTime:1, fn:8, cost:95000, note:'Same-day pickup within Ibadan', bestFor:['speed','local'], deliveryWindow:'Same day to 2 days', reviewCount:44, rating:4.6,
+    reviews:[{name:'Tunde B.',stars:5,text:'Fastest delivery in Ibadan.',time:'1 week ago'},{name:'Ronke O.',stars:4,text:'Reliable for local deliveries.',time:'3 weeks ago'},{name:'Akeem I.',stars:5,text:'Best for urgent dispatches.',time:'2 months ago'}],
+    items:[{match:'diesel',price:95000,unit:'drum',leadTime:1,fn:8}] },
+  { name:'SwiftMove Logistics', category:'Logistics', initials:'SM', verified:false, address:'Wuse Zone 4, Abuja FCT', marketDays:'Monday to Saturday', phone:'+234 809 663 7711', leadTime:2, fn:7, cost:120000, note:'Covers Abuja and North-Central', bestFor:['coverage','abuja'], deliveryWindow:'2 to 4 days', reviewCount:16, rating:4.0,
+    reviews:[{name:'Ibrahim S.',stars:4,text:'Good coverage in the North.',time:'1 month ago'},{name:'Grace A.',stars:4,text:'Reliable for inter-state.',time:'6 weeks ago'},{name:'Ahmed K.',stars:4,text:'Fair pricing.',time:'3 months ago'}],
+    items:[{match:'diesel',price:115000,unit:'drum',leadTime:2,fn:7}] },
+  { name:'Lagos Beauty Supply', category:'Cosmetics', initials:'LB', verified:true, address:'Balogun Market, Lagos Island, Lagos State', marketDays:'Daily', phone:'+234 803 221 4466', leadTime:4, fn:7, cost:145000, note:'Wide range of cosmetics', bestFor:['range','cosmetics'], deliveryWindow:'4 to 6 days', reviewCount:30, rating:4.4,
+    reviews:[{name:'Bimpe O.',stars:5,text:'Best range in Balogun.',time:'2 weeks ago'},{name:'Yemi A.',stars:4,text:'Watch the expiry dates.',time:'1 month ago'},{name:'Chioma N.',stars:5,text:'Good for bulk cosmetics.',time:'2 months ago'}],
+    items:[{match:'body cream',price:22000,unit:'carton',leadTime:4,fn:7},{match:'perfume',price:38000,unit:'carton',leadTime:5,fn:7},{match:'lipstick',price:28000,unit:'carton',leadTime:5,fn:7}] },
+  { name:'Radiant Cosmetics', category:'Cosmetics', initials:'RC', verified:true, address:'Trade Fair Complex, Lagos State', marketDays:'Monday to Saturday', phone:'+234 802 556 9933', leadTime:5, fn:8, cost:155000, note:'Premium cosmetics, good quality', bestFor:['quality','premium'], deliveryWindow:'5 to 7 days', reviewCount:24, rating:4.5,
+    reviews:[{name:'Tope A.',stars:5,text:'Better quality than most.',time:'3 weeks ago'},{name:'Fatima I.',stars:5,text:'Customers prefer these.',time:'1 month ago'},{name:'Ngozi E.',stars:4,text:'Slightly more expensive.',time:'2 months ago'}],
+    items:[{match:'body cream',price:24000,unit:'carton',leadTime:5,fn:9},{match:'soap',price:18000,unit:'carton',leadTime:5,fn:8},{match:'hair relaxer',price:32000,unit:'carton',leadTime:6,fn:8}] },
+  { name:'TechFix Industrial', category:'Equipment maintenance', initials:'TF', verified:true, address:'Ikeja Computer Village, Lagos State', marketDays:'Monday to Saturday', phone:'+234 805 998 2244', leadTime:7, fn:8, cost:165000, note:'Specialists in industrial spare parts', bestFor:['spare parts','technical'], deliveryWindow:'7 to 10 days', reviewCount:12, rating:4.1,
+    reviews:[{name:'Femi O.',stars:5,text:'Only place I trust for bearings.',time:'1 month ago'},{name:'Amina S.',stars:4,text:'Good technical knowledge.',time:'6 weeks ago'},{name:'Kunle A.',stars:4,text:'Fair for specialist parts.',time:'3 months ago'}],
+    items:[{match:'bearing',price:15000,unit:'piece',leadTime:7,fn:8},{match:'conveyor',price:45000,unit:'piece',leadTime:10,fn:7}] }
 ];
 
-/* ---------- Helpers to build state from category ---------- */
 function categoryItems(businessType, categoryKey) {
   const cats = CATEGORIES[businessType] || {};
   const cat = cats[categoryKey];
@@ -1685,88 +1505,54 @@ function categoryLabel(businessType, categoryKey) {
   const cat = cats[categoryKey];
   return cat ? cat.label : '';
 }
-
 function seedHistory(quantities, gapDays = 1) {
   const now = Date.now();
   const ms = gapDays * 86400000;
   return quantities.map((q, i) => ({ t: now - (quantities.length - 1 - i) * ms, q }));
 }
-
 function buildItemsFromCategory(businessType, categoryKey) {
   const list = categoryItems(businessType, categoryKey);
   return list.map(item => ({
-    id: uid(),
-    name: item.name,
-    status: null,
-    leadTime: item.leadTime,
-    safetyDays: item.safetyDays,
-    levels: { ...item.levels },
-    history: seedHistory(item.history || []),
+    id: uid(), name: item.name, status: null,
+    leadTime: item.leadTime, safetyDays: item.safetyDays,
+    levels: { ...item.levels }, history: seedHistory(item.history || []),
     stockUnit: item.stockUnit || 'bag',
     usageUnit: item.usageUnit || item.stockUnit || 'bag',
     conversion: item.conversion || 1,
-    lastTapDate: null,
-    isSeed: true
+    lastTapDate: null, isSeed: true
   }));
 }
-
 function buildSuppliersFromSeed() {
-  const now = Date.now();
   return SEED_SUPPLIERS.map(s => {
     const id = uid();
     const itemRates = {};
     s.items.forEach(entry => {
       itemRates['seed:' + entry.match] = {
-        cost: entry.price,
-        unit: entry.unit,
-        leadTime: entry.leadTime,
-        fn: entry.fn
+        cost: entry.price, unit: entry.unit, leadTime: entry.leadTime, fn: entry.fn
       };
     });
     return {
-      id,
-      name: s.name,
-      category: s.category,
-      initials: s.initials,
-      verified: s.verified,
-      address: s.address,
-      marketDays: s.marketDays,
-      phone: s.phone,
-      leadTime: s.leadTime,
-      fn: s.fn,
-      cost: s.cost,
-      note: s.note,
-      bestFor: s.bestFor || [],
-      deliveryWindow: s.deliveryWindow,
-      rating: s.rating,
-      reviewCount: s.reviewCount,
-      reviews: s.reviews || [],
+      id, name: s.name, category: s.category, initials: s.initials, verified: s.verified,
+      address: s.address, marketDays: s.marketDays, phone: s.phone,
+      leadTime: s.leadTime, fn: s.fn, cost: s.cost, note: s.note,
+      bestFor: s.bestFor || [], deliveryWindow: s.deliveryWindow,
+      rating: s.rating, reviewCount: s.reviewCount, reviews: s.reviews || [],
       itemRates
     };
   });
 }
 
 function freshState(type = null, categoryKey = null) {
-  const suppliers = buildSuppliersFromSeed();
   return {
-    v: SCHEMA,
-    businessType: type,
-    category: categoryKey,
-    createdAt: Date.now(),
-    lastSaved: null,
-    orgName: '',
-    onboardingComplete: false,
-    ropMode: 'simple',
-    serviceLevel: '0.95',
+    v: SCHEMA, businessType: type, category: categoryKey,
+    createdAt: Date.now(), lastSaved: null, orgName: '',
+    onboardingComplete: false, ropMode: 'simple', serviceLevel: '0.95',
     stockItems: type && categoryKey ? buildItemsFromCategory(type, categoryKey) : [],
-    suppliers,
+    suppliers: buildSuppliersFromSeed(),
     products: type && categoryKey ? categoryProducts(type, categoryKey).map(p => ({
-      id: uid(),
-      name: p.name, cost: p.cost, price: p.price, salvage: p.salvage,
-      demandHistory: p.demandHistory
+      id: uid(), name: p.name, cost: p.cost, price: p.price, salvage: p.salvage, demandHistory: p.demandHistory
     })) : [],
-    orders: [],
-    activity: [],
+    orders: [], activity: [], chats: {},
     dailyCheck: { date: null, completedAt: null }
   };
 }
@@ -1774,32 +1560,29 @@ function freshState(type = null, categoryKey = null) {
 let STATE = null;
 let _saveTimer = null;
 function todayKey(){ return new Date().toISOString().slice(0,10); }
+function todayLabel(){
+  return new Date().toLocaleDateString('en-NG', { weekday:'long', day:'numeric', month:'short' });
+}
 
 function migrate(raw) {
   if (!raw || typeof raw !== 'object') return null;
-  if (raw.v === 3 || raw.v === 4) {
+  if (raw.v === 3 || raw.v === 4 || raw.v === 5) {
     raw.v = SCHEMA;
     raw.ropMode = raw.ropMode || 'simple';
     raw.serviceLevel = raw.serviceLevel || '0.95';
-    raw.suppliers = (raw.suppliers || []).map(s => ({ ...s, itemRates: s.itemRates || {} }));
+    raw.suppliers = (raw.suppliers || []).map(s => ({ ...s, itemRates: s.itemRates || {}, reviews: s.reviews || [], bestFor: s.bestFor || [] }));
     if (raw.onboardingComplete === undefined) raw.onboardingComplete = !!raw.businessType;
-    // Add category field if missing (leave null; user will pick in settings)
     if (raw.category === undefined) raw.category = null;
-    // Add unit fields to existing stock items
     (raw.stockItems || []).forEach(it => {
       if (!it.stockUnit) it.stockUnit = 'bag';
       if (!it.usageUnit) it.usageUnit = it.stockUnit;
       if (!it.conversion) it.conversion = 1;
     });
-    return raw;
-  }
-  if (raw.v === SCHEMA) {
-    raw.suppliers = (raw.suppliers || []).map(s => ({
-      ...s,
-      itemRates: s.itemRates || {},
-      reviews: s.reviews || [],
-      bestFor: s.bestFor || []
-    }));
+    if (!raw.chats) raw.chats = {};
+    (raw.orders || []).forEach(o => {
+      if (!o.status) o.status = 'Ordered';
+      if (!o.statusHistory) o.statusHistory = [{ status: o.status, at: o.placedAt || Date.now() }];
+    });
     return raw;
   }
   return null;
@@ -1841,7 +1624,6 @@ function flashSaveIndicator() {
   }, 320);
 }
 
-/* ---------- Math ---------- */
 function mean(a){ return a.reduce((x,y)=>x+y,0)/a.length; }
 function stdev(a){ if(a.length < 2) return 0; const m=mean(a); return Math.sqrt(a.reduce((s,x)=>s+(x-m)**2,0)/(a.length-1)); }
 function invNorm(p){
@@ -1942,7 +1724,6 @@ function initialsOf(name){
   return (parts[0][0] + parts[parts.length-1][0]).toUpperCase();
 }
 
-/* ---------- Sparkline ---------- */
 function renderSparkline(item) {
   const h = (item.history || []).slice(-10);
   if (h.length < 2) return '';
@@ -1971,16 +1752,8 @@ function renderSparkline(item) {
   </svg>`;
 }
 
-/* ---------- Screen routing ---------- */
-function isLoggedIn(){
-  try { return localStorage.getItem(SESSION_KEY) === 'active'; } catch(e){ return false; }
-}
-function setSession(on){
-  try {
-    if(on) localStorage.setItem(SESSION_KEY, 'active');
-    else localStorage.removeItem(SESSION_KEY);
-  } catch(e){}
-}
+function isLoggedIn(){ try { return localStorage.getItem(SESSION_KEY) === 'active'; } catch(e){ return false; } }
+function setSession(on){ try { if(on) localStorage.setItem(SESSION_KEY, 'active'); else localStorage.removeItem(SESSION_KEY); } catch(e){} }
 function showLanding(){
   document.getElementById('landing-screen').classList.add('active');
   document.getElementById('login-screen').classList.remove('active');
@@ -2000,8 +1773,11 @@ function showApp(){
   document.getElementById('login-screen').classList.remove('active');
   document.getElementById('app').classList.add('active');
   if(!STATE.onboardingComplete){
-    showOnboardingStep(STATE.businessType ? 'tour-1' : (STATE.orgName ? 'type' : 'name'));
-    if(!STATE.businessType) showOnboardingStep(STATE.orgName ? 'type' : 'name');
+    if (!STATE.orgName) showOnboardingStep('name');
+    else if (!STATE.businessType) showOnboardingStep('type');
+    else if (!STATE.category) showOnboardingStep('category');
+    else if (!STATE.stockItems.length) showOnboardingStep('items');
+    else showOnboardingStep('tour-1');
   } else {
     renderAll();
     showTab('today');
@@ -2017,8 +1793,11 @@ function revealSkeleton(){
   }, 40);
 }
 
-/* ---------- Onboarding ---------- */
-const ONB_STEPS = ['name','type','tour-1','tour-2','tour-3'];
+/* ---------- ONBOARDING ---------- */
+const ONB_STEPS = ['name','type','category','items','products','tour-1','tour-2','tour-3'];
+let _onbSelectedItems = new Set();
+let _onbSelectedProducts = new Set();
+
 function updateOnbProgress(stepKey){
   const idx = ONB_STEPS.indexOf(stepKey);
   document.querySelectorAll('.onb-progress span').forEach((el, i) => {
@@ -2040,8 +1819,10 @@ function showOnboardingStep(stepKey){
       if (inp) { inp.value = STATE.orgName || ''; inp.focus(); }
     }, 200);
   }
+  if (stepKey === 'category') renderOnbCategories();
+  if (stepKey === 'items') renderOnbItemChips();
+  if (stepKey === 'products') renderOnbProducts();
 }
-function advanceOnboarding(n){ const key = ONB_STEPS[n - 1]; if (key) showOnboardingStep(key); }
 document.getElementById('onb-name-next').addEventListener('click', () => {
   const v = document.getElementById('onb-name-input').value.trim();
   if (!v) { toast('Please enter a name'); return; }
@@ -2052,6 +1833,134 @@ document.getElementById('onb-name-next').addEventListener('click', () => {
 document.getElementById('onb-name-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') document.getElementById('onb-name-next').click();
 });
+
+function onbChooseType(type){
+  STATE.businessType = type;
+  saveState();
+  showOnboardingStep('category');
+}
+function renderOnbCategories(){
+  const type = STATE.businessType;
+  const cats = CATEGORIES[type] || {};
+  const el = document.getElementById('onb-cat-grid');
+  el.innerHTML = Object.keys(cats).map(k => {
+    const c = cats[k];
+    const sel = STATE.category === k;
+    return `<div class="cat-card ${sel?'sel':''}" onclick="onbChooseCategory('${k}')">
+      <div class="cat-icon">${c.icon}</div>
+      <div class="cat-name">${c.label}</div>
+    </div>`;
+  }).join('');
+}
+function onbChooseCategory(key){
+  STATE.category = key;
+  _onbSelectedItems = new Set();
+  saveState();
+  renderOnbCategories();
+  showOnboardingStep('items');
+}
+function renderOnbItemChips(){
+  const type = STATE.businessType;
+  const catKey = STATE.category;
+  const items = categoryItems(type, catKey);
+  const el = document.getElementById('onb-chip-grid');
+  el.innerHTML = items.map((it, i) => {
+    const sel = _onbSelectedItems.has(i);
+    return `<div class="chip-opt ${sel?'sel':''}" onclick="onbToggleItem(${i})">${it.name.replace(/,.*$/,'')}</div>`;
+  }).join('');
+  updateOnbChipCount();
+}
+function onbToggleItem(i){
+  if (_onbSelectedItems.has(i)) _onbSelectedItems.delete(i);
+  else _onbSelectedItems.add(i);
+  renderOnbItemChips();
+}
+function updateOnbChipCount(){
+  document.getElementById('onb-chip-count').textContent = _onbSelectedItems.size + ' item' + (_onbSelectedItems.size === 1 ? '' : 's') + ' selected';
+}
+function onbItemsNext(){
+  if (_onbSelectedItems.size === 0) { toast('Pick at least one item'); return; }
+  const type = STATE.businessType, catKey = STATE.category;
+  const allItems = categoryItems(type, catKey);
+  STATE.stockItems = [];
+  _onbSelectedItems.forEach(i => {
+    const item = allItems[i];
+    if (!item) return;
+    STATE.stockItems.push({
+      id: uid(), name: item.name, status: null,
+      leadTime: item.leadTime, safetyDays: item.safetyDays,
+      levels: { ...item.levels },
+      history: seedHistory(item.history || []),
+      stockUnit: item.stockUnit || 'bag',
+      usageUnit: item.usageUnit || item.stockUnit || 'bag',
+      conversion: item.conversion || 1,
+      lastTapDate: null, isSeed: true
+    });
+  });
+  saveState();
+  if (type === 'manufacturer') showOnboardingStep('products');
+  else showOnboardingStep('tour-1');
+}
+function onbItemsSkip(){
+  _onbSelectedItems = new Set();
+  if (STATE.businessType === 'manufacturer') showOnboardingStep('products');
+  else showOnboardingStep('tour-1');
+}
+function renderOnbProducts(){
+  const products = categoryProducts(STATE.businessType, STATE.category);
+  const el = document.getElementById('onb-products-list');
+  if (!products.length) {
+    el.innerHTML = '<p class="muted" style="text-align:center;margin:14px 0;">No standard products for this category. Add your own below.</p>';
+    return;
+  }
+  _onbSelectedProducts = new Set();
+  el.innerHTML = products.map((p, i) => {
+    const sel = _onbSelectedProducts.has(i);
+    return `<div class="chip-opt ${sel?'sel':''}" style="text-align:left;padding:12px 14px;border-radius:10px;width:100%;" onclick="onbToggleProduct(${i})">
+      <strong>${p.name}</strong><br>
+      <span style="font-size:11.5px;color:inherit;opacity:.75;">Cost ${fmtN(p.cost)} · sells ${fmtN(p.price)}</span>
+    </div>`;
+  }).join('');
+}
+function onbToggleProduct(i){
+  if (_onbSelectedProducts.has(i)) _onbSelectedProducts.delete(i);
+  else _onbSelectedProducts.add(i);
+  renderOnbProducts();
+}
+function onbAddCustomProduct(){
+  const name = prompt('Product name?');
+  if (!name) return;
+  const cost = parseFloat(prompt('Cost to make one (₦)?'));
+  const price = parseFloat(prompt('Selling price (₦)?'));
+  if (!cost || !price || price <= cost) { toast('Invalid numbers'); return; }
+  const salvage = parseFloat(prompt('Unsold value (₦)? 0 if thrown away')) || 0;
+  if (!STATE.products) STATE.products = [];
+  const seed = Math.max(10, Math.round((price / (cost || 1)) * 20));
+  const hist = [seed-8,seed+5,seed+12,seed-3,seed+4,seed-6,seed+15,seed-2,seed+1,seed+7].map(v => Math.max(1, v));
+  STATE.products.push({ id: uid(), name, cost, price, salvage, demandHistory: hist });
+  saveState();
+  toast('Product added');
+}
+function onbProductsDone(){
+  const products = categoryProducts(STATE.businessType, STATE.category);
+  STATE.products = [];
+  _onbSelectedProducts.forEach(i => {
+    const p = products[i];
+    if (!p) return;
+    STATE.products.push({ id: uid(), name: p.name, cost: p.cost, price: p.price, salvage: p.salvage, demandHistory: p.demandHistory });
+  });
+  saveState();
+  showOnboardingStep('tour-1');
+}
+function onbProductsSkip(){
+  showOnboardingStep('tour-1');
+}
+function advanceOnboarding(stepOrNum){
+  if (typeof stepOrNum === 'number') {
+    const key = ONB_STEPS[stepOrNum - 1];
+    if (key) showOnboardingStep(key);
+  }
+}
 function skipTour(){
   STATE.onboardingComplete = true;
   saveState();
@@ -2068,7 +1977,7 @@ function finishOnboarding(){
   toast('Welcome to DPMS');
 }
 
-/* ---------- Login ---------- */
+/* ---------- LOGIN ---------- */
 document.getElementById('login-form').addEventListener('submit', function(e){
   e.preventDefault();
   const user = document.getElementById('l-user').value.trim();
@@ -2105,33 +2014,7 @@ function signOut(){
   setTimeout(() => showLogin(), 100);
 }
 
-/* ---------- Flow ---------- */
-function chooseType(type){
-  STATE.businessType = type;
-  // Pick default category if none chosen
-  if (!STATE.category) {
-    const cats = Object.keys(CATEGORIES[type] || {});
-    STATE.category = cats[0] || null;
-  }
-  if (!STATE.stockItems.length && STATE.category) {
-    STATE.stockItems = buildItemsFromCategory(type, STATE.category);
-    STATE.products = categoryProducts(type, STATE.category).map(p => ({
-      id: uid(), name: p.name, cost: p.cost, price: p.price, salvage: p.salvage, demandHistory: p.demandHistory
-    }));
-  }
-  localStorage.setItem(LEGACY_TYPE_KEY, type);
-  saveState();
-  if (!STATE.onboardingComplete) showOnboardingStep('tour-1');
-  else finishEnterApp();
-}
-function finishEnterApp(){
-  document.getElementById('s-org').value = STATE.orgName || '';
-  document.getElementById('s-type').value = STATE.businessType || 'reseller';
-  renderCategoryDropdowns();
-  document.getElementById('products-card').style.display = STATE.businessType === 'manufacturer' ? 'block' : 'none';
-  renderAll();
-  showTab('today');
-}
+/* ---------- FLOW ---------- */
 function requestTypeChange(newType){
   if(newType === STATE.businessType) return;
   const hasOnlySeeds = STATE.stockItems.every(i => i.isSeed);
@@ -2139,6 +2022,7 @@ function requestTypeChange(newType){
     ? 'You are switching to "' + (newType === 'manufacturer' ? 'I make what I sell' : 'I buy and sell') + '". We will swap your starter items to match.'
     : 'You are switching to "' + (newType === 'manufacturer' ? 'I make what I sell' : 'I buy and sell') + '". You have custom items. Keep them, or replace with a starter list?';
   document.getElementById('type-modal-msg').textContent = msg;
+  document.getElementById('type-swap-btn').textContent = 'Swap to starter items';
   document.getElementById('type-swap-btn').onclick = () => applyTypeChange(newType, true);
   document.getElementById('type-keep-btn').onclick = () => applyTypeChange(newType, false);
   document.getElementById('type-modal').classList.add('show');
@@ -2150,7 +2034,6 @@ function closeTypeModal(){
 function applyTypeChange(newType, swapItems){
   STATE.businessType = newType;
   localStorage.setItem(LEGACY_TYPE_KEY, newType);
-  // Set a sensible default category
   const cats = Object.keys(CATEGORIES[newType] || {});
   STATE.category = cats[0] || null;
   if(swapItems){
@@ -2187,7 +2070,7 @@ function requestCategoryChange(newKey){
   const hasCustomItems = STATE.stockItems.some(i => !i.isSeed);
   const label = categoryLabel(STATE.businessType, newKey);
   const msg = hasCustomItems
-    ? 'Switch to ' + label + '? You have custom items. You can keep them or swap to the ' + label + ' starter list.'
+    ? 'Switch to ' + label + '? You have custom items. Keep them or swap to the ' + label + ' starter list.'
     : 'Switch to ' + label + '? We will load the starter items for this category.';
   document.getElementById('type-modal-msg').textContent = msg;
   document.getElementById('type-swap-btn').textContent = 'Swap to ' + label + ' items';
@@ -2203,21 +2086,15 @@ function applyCategoryChange(newKey, swapItems){
       id: uid(), name: p.name, cost: p.cost, price: p.price, salvage: p.salvage, demandHistory: p.demandHistory
     }));
     STATE.dailyCheck = { date: null, completedAt: null };
-    logActivity('Switched to category ' + categoryLabel(STATE.businessType, newKey) + ', items swapped');
-  } else {
-    logActivity('Switched to category ' + categoryLabel(STATE.businessType, newKey) + ', kept items');
+    logActivity('Switched to category ' + categoryLabel(STATE.businessType, newKey));
   }
   renderCategoryDropdowns();
   saveState();
   document.getElementById('type-modal').classList.remove('show');
-  // Reset button text back to type-switch default
   document.getElementById('type-swap-btn').textContent = 'Swap to starter items';
-  document.getElementById('type-swap-btn').onclick = null;
-  document.getElementById('type-keep-btn').onclick = null;
   renderAll();
   toast('Category updated');
 }
-
 function setRopMode(mode){
   if(mode === STATE.ropMode) return;
   STATE.ropMode = mode;
@@ -2232,7 +2109,6 @@ function setServiceLevel(val){
   renderStock(); renderNudges(); renderVE();
 }
 
-/* ---------- Tabs ---------- */
 const TAB_TO_VIEW = {
   today:'view-today', suppliers:'view-suppliers', more:'view-more',
   'add-item':'view-add-item', 'supplier-profile':'view-supplier-profile'
@@ -2271,7 +2147,6 @@ function showMoreSub(name){
   if(name === 'matrix')   renderMatrix();
 }
 
-/* ---------- Greeting / Stats ---------- */
 function renderGreeting(){
   const el = document.getElementById('greeting-slot');
   if(!el) return;
@@ -2306,22 +2181,13 @@ function renderStats(){
   const restockClass = restockCount === 0 ? 't--teal' : 't--gold';
   el.innerHTML = `
     <div class="stats-row">
-      <div class="stat-card t--ink">
-        <div class="stat-num">${items}</div>
-        <div class="stat-lbl">Items tracked</div>
-      </div>
-      <div class="stat-card ${restockClass}">
-        <div class="stat-num">${restockCount}</div>
-        <div class="stat-lbl">To restock</div>
-      </div>
-      <div class="stat-card t--teal">
-        <div class="stat-num">${suppliers}</div>
-        <div class="stat-lbl">Suppliers</div>
-      </div>
+      <div class="stat-card t--ink"><div class="stat-num">${items}</div><div class="stat-lbl">Items tracked</div></div>
+      <div class="stat-card ${restockClass}"><div class="stat-num">${restockCount}</div><div class="stat-lbl">To restock</div></div>
+      <div class="stat-card t--teal"><div class="stat-num">${suppliers}</div><div class="stat-lbl">Suppliers</div></div>
     </div>`;
 }
 
-/* ---------- Tap loop ---------- */
+/* ---------- TAP LOOP ---------- */
 function recordTap(itemId, level){
   const item = STATE.stockItems.find(i => i.id === itemId);
   if(!item) return;
@@ -2339,7 +2205,6 @@ function recordTap(itemId, level){
 }
 function isCheckedToday(){ return STATE.dailyCheck.date === todayKey(); }
 
-/* ---------- Stock ---------- */
 function renderStock(){
   const el = document.getElementById('stock-items');
   if(!STATE.stockItems.length){
@@ -2441,8 +2306,36 @@ function completeCheck(){
   if(el && el.firstElementChild) el.scrollIntoView({behavior:'smooth', block:'start'});
 }
 
-/* ---------- Nudges ---------- */
+/* ---------- MARKET DAY NUDGE ---------- */
+function renderMarketNudge(){
+  const el = document.getElementById('market-nudge');
+  if (!el) return;
+  const todayName = new Date().toLocaleDateString('en-NG', { weekday:'long' });
+  const tomorrowName = new Date(Date.now() + 86400000).toLocaleDateString('en-NG', { weekday:'long' });
+  // Look for a supplier whose market is tomorrow
+  const match = STATE.suppliers.find(s =>
+    s.marketDays &&
+    s.marketDays.toLowerCase().includes(tomorrowName.toLowerCase())
+  );
+  if (!match) { el.innerHTML = ''; return; }
+  el.innerHTML = `
+    <div class="nudge market">
+      <p class="tag">Market tomorrow</p>
+      <h2>${match.name} is at the market tomorrow</h2>
+      <p class="muted" style="margin-bottom:10px;">${match.marketDays}. If you want to collect in person, order now.</p>
+      <div style="display:grid;grid-template-columns:1fr auto;gap:8px;">
+        <button class="btn-primary" onclick="openSupplierProfile('${match.id}')">View profile</button>
+        <button class="nudge-share" onclick="openChat('${match.id}')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          Chat
+        </button>
+      </div>
+    </div>`;
+}
+
+/* ---------- NUDGES ---------- */
 function renderNudges(){
+  renderMarketNudge();
   renderRestockNudges();
   renderProductionNudge();
 }
@@ -2467,7 +2360,6 @@ function renderOneRestockNudge(item){
   const daysLeft = avg > 0 ? Math.max(0, Math.floor(qty/avg)) : null;
   const stockUnitLbl = unitLabel(item.stockUnit, 2);
   const usageUnitLbl = unitLabel(item.usageUnit, 2);
-
   const ranked = STATE.suppliers.map(s => {
     const r = resolveSupplierRate(s, item.id);
     return { ...s, resolved: r, vi: valueIndex(s, item.id) };
@@ -2487,14 +2379,13 @@ function renderOneRestockNudge(item){
         <span class="vi">VI ${s.vi.toFixed(2)}</span>
       </div>
     </div>`).join('');
-
   let whyHtml;
   if(mode === 'advanced'){
     whyHtml = '<strong>Advanced mode</strong>, safety stock from daily use variability.<br><br>' +
       'Average daily use: <strong>' + avg + ' ' + usageUnitLbl + '/day</strong> (±' + sd + ')<br>' +
-      'Delivery takes ' + item.leadTime + ' days, so lead-time demand is ' + avg + ' × ' + item.leadTime + ' = ' + Math.round(avg*item.leadTime) + ' ' + usageUnitLbl + '.<br>' +
+      'Delivery takes ' + item.leadTime + ' days.<br>' +
       'Safety stock = z × σ × √lead = ' + z + ' × ' + sd + ' × √' + item.leadTime + ' = <strong>' + safetyStock + ' ' + usageUnitLbl + '</strong><br>' +
-      'Reorder point = <strong>' + rop + ' ' + stockUnitLbl + '</strong> (at ' + serviceLabel + ' service level)';
+      'Reorder point = <strong>' + rop + ' ' + stockUnitLbl + '</strong> (at ' + serviceLabel + ')';
   } else {
     whyHtml = 'Reorder point = (daily use × delivery days) + (daily use × safety days)<br>' +
       'For this item: (' + avg + ' × ' + item.leadTime + ') + (' + avg + ' × ' + item.safetyDays + ') = <strong>' + rop + ' ' + stockUnitLbl + '</strong>.<br>' +
@@ -2512,7 +2403,7 @@ function renderOneRestockNudge(item){
       <div style="margin-top:12px;">${suppHtml}</div>
       ${best ? `
         <div class="nudge-actions">
-          <button class="btn-primary" onclick="confirmOrder('${item.id}')">Order from ${best.name} · ${fmtN(best.resolved.cost)}</button>
+          <button class="btn-primary" onclick="openOrderSheet('${item.id}')">Order · from ${fmtN(best.resolved.cost)}</button>
           <button class="nudge-share" onclick="shareNudge('${item.id}')" title="Share on WhatsApp" aria-label="Share on WhatsApp">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
             Share
@@ -2564,29 +2455,98 @@ function confirmBatch(){
   logActivity('Confirmed batch of ' + n + ' ' + (STATE.products[0]?.name?.toLowerCase() || 'units'));
   toast('Batch confirmed: ' + n);
 }
-function confirmOrder(itemId){
+
+/* ---------- ORDER SHEET ---------- */
+let _orderSheetItemId = null;
+function openOrderSheet(itemId){
   const item = STATE.stockItems.find(i => i.id === itemId);
-  if(!item) return;
+  if(!item){ toast('Item not found'); return; }
+  _orderSheetItemId = itemId;
   const ranked = STATE.suppliers.map(s => {
-    const r = resolveSupplierRate(s, item.id);
-    return { ...s, resolved: r, vi: valueIndex(s, item.id) };
+    const r = resolveSupplierRate(s, itemId);
+    return { ...s, resolved: r, vi: valueIndex(s, itemId) };
   }).sort((a,b) => b.vi - a.vi);
-  const best = ranked[0];
-  if(!best){ toast('Add a supplier first'); return; }
+  document.getElementById('sheet-item-name').textContent = item.name;
+  document.getElementById('sheet-suppliers').innerHTML = ranked.map((s, i) => `
+    <div class="sheet-supplier ${i===0?'best':''}" onclick="placeOrderFromSheet('${s.id}')">
+      <div class="sheet-avatar">${s.initials || initialsOf(s.name)}</div>
+      <div class="sheet-info">
+        <div class="sheet-name">${s.name}${i===0?' <span class="badge" style="font-size:9px;padding:1px 6px;">Best value</span>':''}</div>
+        <div class="sheet-meta">~${s.resolved.leadTime}d · rated ${s.resolved.fn}/10${s.resolved.isOverride?' · special rate':''}</div>
+      </div>
+      <div class="sheet-price">
+        <div class="amt">${fmtN(s.resolved.cost)}</div>
+        <div class="vi">VI ${s.vi.toFixed(2)}</div>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('sheet-bg').classList.add('show');
+  document.getElementById('order-sheet').style.display = 'block';
+}
+function closeOrderSheet(){
+  document.getElementById('sheet-bg').classList.remove('show');
+  document.getElementById('order-sheet').style.display = 'none';
+  _orderSheetItemId = null;
+}
+function placeOrderFromSheet(supplierId){
+  const itemId = _orderSheetItemId;
+  const item = STATE.stockItems.find(i => i.id === itemId);
+  const supplier = STATE.suppliers.find(s => s.id === supplierId);
+  if (!item || !supplier) { closeOrderSheet(); return; }
+  const r = resolveSupplierRate(supplier, itemId);
   STATE.orders.unshift({
-    id: uid(), item: item.name, supplier: best.name, supplierId: best.id,
-    cost: best.resolved.cost, status: 'Ordered', placedAt: Date.now(),
-    valueIndex: Math.round(best.vi*100)/100, usedSpecialRate: best.resolved.isOverride
+    id: uid(),
+    item: item.name,
+    itemId: item.id,
+    supplier: supplier.name,
+    supplierId: supplier.id,
+    cost: r.cost,
+    status: 'Requested',
+    statusHistory: [{ status:'Requested', at: Date.now() }],
+    placedAt: Date.now(),
+    valueIndex: Math.round(valueIndex(supplier, itemId) * 100) / 100,
+    usedSpecialRate: r.isOverride
   });
   if(STATE.orders.length > 200) STATE.orders = STATE.orders.slice(0, 200);
   item.status = 'full';
   item.history.push({ t: Date.now(), q: item.levels.full });
   if(item.history.length > 30) item.history = item.history.slice(-30);
-  logActivity('Ordered ' + item.name + ' from ' + best.name + ' at ' + fmtN(best.resolved.cost));
+  logActivity('Ordered ' + item.name + ' from ' + supplier.name + ' at ' + fmtN(r.cost));
+  // Auto-message the supplier in chat
+  pushChatMessage(supplier.id, {
+    from: 'system',
+    text: 'New order: ' + item.name + ' for ' + fmtN(r.cost) + '. Awaiting your confirmation.',
+    at: Date.now()
+  });
+  pushChatMessage(supplier.id, {
+    from: 'them',
+    text: 'Thank you. Order received. I will confirm shortly.',
+    at: Date.now()
+  });
   saveState();
-  renderStock(); renderNudges(); renderStats();
-  toast('Order placed with ' + best.name);
+  closeOrderSheet();
+  renderStock(); renderNudges(); renderStats(); renderOrders();
+  toast('Order placed with ' + supplier.name);
 }
+function advanceOrder(orderId){
+  const o = STATE.orders.find(x => x.id === orderId);
+  if (!o) return;
+  const seq = ['Requested','Confirmed','Dispatched','Delivered'];
+  const idx = seq.indexOf(o.status);
+  if (idx < 0 || idx >= seq.length - 1) return;
+  o.status = seq[idx + 1];
+  o.statusHistory = o.statusHistory || [];
+  o.statusHistory.push({ status: o.status, at: Date.now() });
+  logActivity('Order ' + o.item + ' now ' + o.status);
+  saveState();
+  renderOrders();
+  toast('Order updated: ' + o.status);
+  if (o.status === 'Delivered') {
+    setTimeout(() => openReviewModal(o.supplierId), 400);
+  }
+}
+
+/* ---------- SHARE NUDGE ---------- */
 function shareNudge(itemId){
   const item = STATE.stockItems.find(i => i.id === itemId);
   if(!item) return;
@@ -2603,19 +2563,384 @@ function shareNudge(itemId){
   logActivity('Shared reorder message for ' + item.name + (best ? ' with ' + best.name : ''));
 }
 
-/* ---------- Auto-suggest rates ---------- */
+/* ---------- CHAT ---------- */
+let _activeChatSupplierId = null;
+
+function pushChatMessage(supplierId, msg) {
+  if (!STATE.chats) STATE.chats = {};
+  if (!STATE.chats[supplierId]) STATE.chats[supplierId] = [];
+  STATE.chats[supplierId].push({ ...msg, at: msg.at || Date.now() });
+  saveState();
+}
+function getChatMessages(supplierId) {
+  if (!STATE.chats) STATE.chats = {};
+  return STATE.chats[supplierId] || [];
+}
+function openChat(supplierId) {
+  const s = STATE.suppliers.find(x => x.id === supplierId);
+  if (!s) { toast('Supplier not found'); return; }
+  _activeChatSupplierId = supplierId;
+
+  // Seed a friendly first message if empty
+  const existing = getChatMessages(supplierId);
+  if (!existing.length) {
+    pushChatMessage(supplierId, { from: 'them', text: 'Hello, thanks for reaching out. How can I help?', at: Date.now() });
+  }
+
+  document.getElementById('chat-avatar').textContent = s.initials || initialsOf(s.name);
+  document.getElementById('chat-name').textContent = s.name;
+  document.getElementById('chat-status').textContent = 'Usually replies in a few minutes';
+  document.getElementById('chat-call-btn').onclick = () => {
+    window.location.href = 'tel:' + s.phone.replace(/\s+/g, '');
+  };
+  renderChatQuickReplies(s);
+  renderChatBody();
+  document.getElementById('chat-screen').classList.add('show');
+}
+function closeChat() {
+  document.getElementById('chat-screen').classList.remove('show');
+  _activeChatSupplierId = null;
+}
+function renderChatQuickReplies(s) {
+  const replies = [
+    { label: 'Hello', text: 'Hello, how are you?' },
+    { label: 'How much?', text: 'How much is this going for?' },
+    { label: 'Place order', text: 'I want to place an order' },
+    { label: 'Delivery time?', text: 'How long will delivery take?' },
+    { label: 'Thanks', text: 'Thank you' }
+  ];
+  const el = document.getElementById('chat-quick');
+  el.innerHTML = replies.map(r =>
+    `<button onclick="sendQuickReply('${r.text.replace(/'/g,'&#39;')}')">${r.label}</button>`
+  ).join('');
+}
+function sendQuickReply(text) {
+  document.getElementById('chat-input').value = text;
+  sendChatMessage();
+}
+function renderChatBody() {
+  const el = document.getElementById('chat-body');
+  const msgs = getChatMessages(_activeChatSupplierId);
+  if (!msgs.length) { el.innerHTML = ''; return; }
+  let html = `<div class="chat-day">${todayLabel()}</div>`;
+  msgs.forEach(m => {
+    if (m.from === 'system') {
+      html += `<div class="chat-msg system">${m.text}</div>`;
+      return;
+    }
+    const cls = m.from === 'me' ? 'me' : 'them';
+    const time = new Date(m.at).toLocaleTimeString('en-NG', { hour:'2-digit', minute:'2-digit' });
+    let body = m.text;
+    if (m.voice) {
+      const bars = [3,5,4,7,6,8,5,6,4,7,5,3].map(h => `<span style="height:${h}px;"></span>`).join('');
+      body = `<div class="voice-note">
+        <div class="voice-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        <div class="voice-wave">${bars}</div>
+      </div>`;
+    }
+    html += `<div class="chat-msg ${cls}">${body}<div class="chat-msg-time">${time}</div></div>`;
+  });
+  el.innerHTML = html;
+  el.scrollTop = el.scrollHeight;
+}
+function showTypingIndicator() {
+  const el = document.getElementById('chat-body');
+  const div = document.createElement('div');
+  div.className = 'chat-typing';
+  div.id = 'chat-typing';
+  div.innerHTML = '<span></span><span></span><span></span>';
+  el.appendChild(div);
+  el.scrollTop = el.scrollHeight;
+}
+function hideTypingIndicator() {
+  const el = document.getElementById('chat-typing');
+  if (el) el.remove();
+}
+function sendChatMessage() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text || !_activeChatSupplierId) return;
+  pushChatMessage(_activeChatSupplierId, { from: 'me', text, at: Date.now() });
+  input.value = '';
+  renderChatBody();
+  scheduleSupplierReply(_activeChatSupplierId, text);
+}
+function scheduleSupplierReply(supplierId, userText) {
+  showTypingIndicator();
+  const delay = 1400 + Math.random() * 1200;
+  setTimeout(() => {
+    hideTypingIndicator();
+    const supplier = STATE.suppliers.find(s => s.id === supplierId);
+    const reply = generateSupplierReply(userText, supplier);
+    pushChatMessage(supplierId, { from: 'them', text: reply.text, voice: reply.voice, at: Date.now() });
+    if (_activeChatSupplierId === supplierId) renderChatBody();
+  }, delay);
+}
+function generateSupplierReply(text, supplier) {
+  const t = text.toLowerCase().trim();
+  const name = supplier ? supplier.name : 'the supplier';
+
+  // Greeting
+  if (/^(hi|hello|hey|good morning|good afternoon|good evening|how are you)/.test(t)) {
+    return { text: 'Hello. I am well, thank you. What do you need today?' };
+  }
+  // Thanks
+  if (/(thanks|thank you|appreciate|god bless)/.test(t)) {
+    return { text: 'You are welcome. Let me know if you need anything else.' };
+  }
+  // Delivery time
+  if (/(deliver|delivery|how long|when will|arrive)/.test(t)) {
+    const days = supplier ? supplier.leadTime : 3;
+    return { text: 'Delivery usually takes about ' + days + ' working day' + (days === 1 ? '' : 's') + '. If you need it sooner, we can arrange express for a small extra charge.' };
+  }
+  // Price
+  if (/(price|how much|cost|rate)/.test(t)) {
+    const item = STATE.stockItems.find(i => t.includes(i.name.toLowerCase().split(',')[0]));
+    if (item && supplier) {
+      const r = resolveSupplierRate(supplier, item.id);
+      return { text: 'For ' + item.name + ', current price is ' + fmtN(r.cost) + ' per ' + (item.stockUnit || 'unit') + '.' };
+    }
+    return { text: 'Prices depend on the item and quantity. Let me know what you need and I will send you a quote.' };
+  }
+  // Order
+  if (/(order|buy|purchase|reorder|want to order)/.test(t)) {
+    return { text: 'Noted. Please share the item, quantity and your delivery address and I will confirm right away.' };
+  }
+  // Discount
+  if (/(discount|reduce|negotiate|last price|cheaper)/.test(t)) {
+    return { text: 'For bulk orders I can give a small discount. How many units are you looking at?' };
+  }
+  // Delivery location
+  if (/(where|address|location|stall|market)/.test(t)) {
+    return { text: supplier ? 'We are at ' + supplier.address + '. Market days: ' + supplier.marketDays + '.' : 'Let me share my location.' };
+  }
+  // Quality
+  if (/(quality|good|original|genuine|authentic)/.test(t)) {
+    return { text: 'All our products are top quality. You can also check our reviews on the profile page.' };
+  }
+  // Refund / issue
+  if (/(refund|problem|issue|wrong|damaged|bad)/.test(t)) {
+    return { text: 'I am sorry to hear that. Send me a picture and I will sort it out immediately.' };
+  }
+  // Bulk
+  if (/(bulk|carton|bag|many|large|wholesale)/.test(t)) {
+    return { text: 'Yes, we handle bulk orders. Tell me the exact quantity and I will give you our best price.' };
+  }
+  // Default
+  const defaults = [
+    'Noted. Let me check and get back to you in a moment.',
+    'Understood. Give me a minute to confirm with my stock.',
+    'Okay. Can you send me the specific items you need?',
+    'Alright. I will prepare it and update you shortly.'
+  ];
+  const voice = Math.random() < 0.25;
+  if (voice) {
+    return { text: '(Voice note from ' + name + ')', voice: true };
+  }
+  return { text: defaults[Math.floor(Math.random() * defaults.length)] };
+}
+
+/* ---------- REVIEWS ---------- */
+let _reviewSupplierId = null;
+let _reviewStars = 0;
+function openReviewModal(supplierId) {
+  const s = STATE.suppliers.find(x => x.id === supplierId);
+  if (!s) return;
+  _reviewSupplierId = supplierId;
+  _reviewStars = 0;
+  document.getElementById('review-modal-sub').textContent = 'Rate your experience with ' + s.name + '.';
+  document.getElementById('review-comment').value = '';
+  updateReviewStars();
+  document.getElementById('review-modal').classList.add('show');
+}
+function closeReview() {
+  document.getElementById('review-modal').classList.remove('show');
+  _reviewSupplierId = null;
+  _reviewStars = 0;
+}
+function setReviewStar(n) {
+  _reviewStars = n;
+  updateReviewStars();
+}
+function updateReviewStars() {
+  document.querySelectorAll('#review-stars .review-star-btn').forEach(btn => {
+    const n = Number(btn.dataset.star);
+    btn.classList.toggle('on', n <= _reviewStars);
+  });
+}
+function submitReview() {
+  if (!_reviewSupplierId || _reviewStars < 1) { toast('Tap a star first'); return; }
+  const s = STATE.suppliers.find(x => x.id === _reviewSupplierId);
+  if (!s) { closeReview(); return; }
+  const comment = document.getElementById('review-comment').value.trim() || 'No comment.';
+  s.reviews = s.reviews || [];
+  s.reviews.unshift({
+    name: (STATE.orgName || 'You').slice(0, 20),
+    stars: _reviewStars,
+    text: comment,
+    time: 'just now'
+  });
+  // Update aggregate rating
+  const all = s.reviews;
+  const avg = all.reduce((acc, r) => acc + r.stars, 0) / all.length;
+  s.rating = Math.round(avg * 10) / 10;
+  s.reviewCount = (s.reviewCount || 0) + 1;
+  logActivity('Reviewed ' + s.name + ' (' + _reviewStars + '★)');
+  saveState();
+  closeReview();
+  renderSuppliers();
+  toast('Thanks for the review');
+}
+
+/* ---------- SUPPLIERS ---------- */
+function renderSuppliers(){
+  const el = document.getElementById('supplier-list');
+  if(!STATE.suppliers.length){
+    el.innerHTML = '<div class="empty"><strong>No suppliers yet</strong></div>';
+    return;
+  }
+  const bestOverallId = (() => {
+    const scores = STATE.suppliers.map(s => {
+      let total = 0;
+      STATE.stockItems.forEach(it => { total += valueIndex(s, it.id); });
+      return { id: s.id, total };
+    }).sort((a,b) => b.total - a.total);
+    return scores[0] ? scores[0].id : null;
+  })();
+
+  el.innerHTML = STATE.suppliers.map(s => {
+    const isTop = s.id === bestOverallId;
+    const bestForTags = (s.bestFor || []).slice(0, 3).map(t => '<span class="tag teal">' + t + '</span>').join('');
+    return `
+      <div class="supplier-card ${isTop ? 'top' : ''}" onclick="openSupplierProfile('${s.id}')">
+        <div class="supplier-card-head">
+          <div style="flex:1;min-width:0;">
+            <div class="supplier-card-name">${s.name}${s.verified ? ' <span class="badge verified" style="font-size:9px;padding:1px 6px;">✓</span>' : ''}</div>
+            <div class="supplier-card-cat">${s.category} · ${s.address.split(',')[0]}</div>
+          </div>
+          <div class="supplier-card-rating">★ ${s.rating.toFixed(1)}<small style="color:var(--ink-soft);font-weight:500;font-size:10px;margin-left:2px;">(${s.reviewCount})</small></div>
+        </div>
+        <div class="supplier-card-meta">
+          <span>~<strong>${s.leadTime}d</strong> delivery</span>
+          <span>Window: ${s.deliveryWindow}</span>
+        </div>
+        ${bestForTags ? '<div class="supplier-card-tags">' + bestForTags + '</div>' : ''}
+      </div>`;
+  }).join('');
+}
+
+function openSupplierProfile(id){
+  const s = STATE.suppliers.find(x => x.id === id);
+  if(!s){ toast('Supplier not found'); return; }
+  const el = document.getElementById('supplier-profile-content');
+  const initials = s.initials || initialsOf(s.name);
+
+  const rateRows = [];
+  Object.entries(s.itemRates || {}).forEach(([key, r]) => {
+    if (key.startsWith('seed:')) {
+      const label = key.slice(5);
+      rateRows.push({
+        itemName: label.charAt(0).toUpperCase() + label.slice(1),
+        cost: r.cost,
+        unit: r.unit || 'unit',
+        leadTime: r.leadTime || s.leadTime,
+        isTracked: false
+      });
+    } else {
+      const it = STATE.stockItems.find(i => i.id === key);
+      if (!it) return;
+      rateRows.push({
+        itemName: it.name,
+        cost: Number(r.cost) > 0 ? Number(r.cost) : s.cost,
+        unit: it.stockUnit || 'unit',
+        leadTime: Number(r.leadTime) > 0 ? Number(r.leadTime) : s.leadTime,
+        isTracked: true
+      });
+    }
+  });
+
+  const rateTable = rateRows.length ? `
+    <table>
+      <thead><tr><th>Item</th><th>Price</th><th>Lead time</th></tr></thead>
+      <tbody>${rateRows.map(r => `
+        <tr>
+          <td>${r.itemName}${r.isTracked ? ' <span class="badge special" style="font-size:9px;padding:1px 6px;">Tracked</span>' : ''}</td>
+          <td><strong>${fmtN(r.cost)}</strong> / ${r.unit}</td>
+          <td>~${r.leadTime}d</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>` : '<p class="muted">No rates on file yet.</p>';
+
+  const reviewsHtml = (s.reviews && s.reviews.length) ? s.reviews.map(r => `
+    <div class="review-item">
+      <div class="review-head">
+        <span class="review-name">${r.name}</span>
+        <span class="review-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5 - r.stars)}</span>
+      </div>
+      <p class="review-text">${r.text}</p>
+      <div class="review-time">${r.time}</div>
+    </div>`).join('') : '<p class="muted">No reviews yet.</p>';
+
+  el.innerHTML = `
+    <div class="profile-hero">
+      <div class="profile-hero-top">
+        <div class="profile-hero-avatar">${initials}</div>
+        <div class="profile-hero-info">
+          <div class="profile-hero-name">${s.name}</div>
+          <div class="profile-hero-cat">${s.category}</div>
+          <div class="profile-hero-rating">★ ${s.rating.toFixed(1)} <small>· ${s.reviewCount} reviews</small>${s.verified ? ' · <span style="color:#9AC7B4;">✓ Verified</span>' : ''}</div>
+        </div>
+      </div>
+      <div class="profile-actions">
+        <button class="btn-chat" onclick="openChat('${s.id}')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          Chat
+        </button>
+        <button class="btn-call" onclick="callSupplier('${s.id}')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Call
+        </button>
+      </div>
+    </div>
+    <div class="card">
+      <h2 style="font-size:16px;">About</h2>
+      <div class="profile-info-grid">
+        <div class="info-line"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span><span class="lbl">Address</span><span class="val">${s.address}</span></div>
+        <div class="info-line"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span><span class="lbl">Market days</span><span class="val">${s.marketDays}</span></div>
+        <div class="info-line"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><span class="lbl">Phone</span><span class="val">${s.phone}</span></div>
+        <div class="info-line"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><span class="lbl">Delivery window</span><span class="val">${s.deliveryWindow}</span></div>
+      </div>
+      ${(s.bestFor && s.bestFor.length) ? '<div class="supplier-card-tags" style="margin-top:12px;">' + s.bestFor.map(t => '<span class="tag teal">' + t + '</span>').join('') + '</div>' : ''}
+    </div>
+    <div class="card">
+      <h2 style="font-size:16px;">What they supply</h2>
+      <p class="muted">Full list of items this supplier sells.</p>
+      ${rateTable}
+    </div>
+    <div class="card">
+      <h2 style="font-size:16px;">Reviews (${s.reviewCount})</h2>
+      ${reviewsHtml}
+    </div>
+  `;
+
+  showTab('supplier-profile');
+}
+function callSupplier(supplierId){
+  const s = STATE.suppliers.find(x => x.id === supplierId);
+  if(!s) return;
+  window.location.href = 'tel:' + s.phone.replace(/\s+/g, '');
+}
+
+/* ---------- AUTO-SUGGEST RATES ---------- */
 function suggestRatesForNewItem(itemName, supplier) {
   if (!itemName || !supplier || !supplier.itemRates) return null;
   const newTokens = itemName.toLowerCase().split(/[\s,]+/).filter(t => t.length > 3);
   if (!newTokens.length) return null;
   const matches = [];
   Object.entries(supplier.itemRates).forEach(([key, rate]) => {
-    // If key starts with 'seed:', match on the seed string directly
     if (key.startsWith('seed:')) {
       const needle = key.slice(5);
-      if (newTokens.some(t => needle.includes(t) || t.includes(needle))) {
-        matches.push(rate);
-      }
+      if (newTokens.some(t => needle.includes(t) || t.includes(needle))) matches.push(rate);
       return;
     }
     const existing = STATE.stockItems.find(i => i.id === key);
@@ -2650,7 +2975,7 @@ function onItemNameInput(){
   }
 }
 
-/* ---------- Unit helpers ---------- */
+/* ---------- UNIT HELPERS ---------- */
 function populateUnitDropdowns(){
   const stockSel = document.getElementById('it-stock-unit');
   const usageSel = document.getElementById('it-usage-unit');
@@ -2675,13 +3000,12 @@ function onUnitChange(){
     convBlock.style.display = 'block';
     stockLbl.textContent = stock;
     usageLbl.textContent = usage;
-    const conv = parseInt(document.getElementById('it-conversion').value, 10) || 1;
     preview.textContent = 'You buy by the ' + stock + ' and use by the ' + usage + '.';
     preview.className = 'unit-preview';
   }
 }
 
-/* ---------- Item CRUD ---------- */
+/* ---------- ITEM CRUD ---------- */
 let _editingItemId = null;
 function openAddItem(){
   _editingItemId = null;
@@ -2743,12 +3067,10 @@ function saveItem(){
   const stockUnit = document.getElementById('it-stock-unit').value;
   const usageUnit = document.getElementById('it-usage-unit').value;
   const conversion = parseInt(document.getElementById('it-conversion').value, 10) || 1;
-
   if(!name){ toast('Give the item a name'); return; }
   if([full, half, low].some(v => isNaN(v))){ toast('Fill in full, half and low levels'); return; }
   if(!(full > half && half > low && low > out)){ toast('Levels must go full, then half, then low, then out'); return; }
   if(stockUnit !== usageUnit && conversion < 1){ toast('Conversion must be at least 1'); return; }
-
   let newId = null;
   if(_editingItemId){
     const it = STATE.stockItems.find(i => i.id === _editingItemId);
@@ -2797,160 +3119,7 @@ function confirmDeleteItem(){
   document.getElementById('confirm-modal').classList.add('show');
 }
 
-/* ---------- Supplier list (read-only, tap to view profile) ---------- */
-function renderSuppliers(){
-  const el = document.getElementById('supplier-list');
-  if(!STATE.suppliers.length){
-    el.innerHTML = '<div class="empty"><strong>No suppliers yet</strong></div>';
-    return;
-  }
-  // Score each supplier on tracked items only for the "best overall" pill
-  const bestOverallId = (() => {
-    const scores = STATE.suppliers.map(s => {
-      let total = 0;
-      STATE.stockItems.forEach(it => { total += valueIndex(s, it.id); });
-      return { id: s.id, total };
-    }).sort((a,b) => b.total - a.total);
-    return scores[0] ? scores[0].id : null;
-  })();
-
-  el.innerHTML = STATE.suppliers.map(s => {
-    const isTop = s.id === bestOverallId;
-    const bestForTags = (s.bestFor || []).slice(0, 3).map(t => '<span class="tag teal">' + t + '</span>').join('');
-    return `
-      <div class="supplier-card ${isTop ? 'top' : ''}" onclick="openSupplierProfile('${s.id}')">
-        <div class="supplier-card-head">
-          <div style="flex:1;min-width:0;">
-            <div class="supplier-card-name">${s.name}${s.verified ? ' <span class="badge verified" style="font-size:9px;padding:1px 6px;">✓</span>' : ''}</div>
-            <div class="supplier-card-cat">${s.category} · ${s.address.split(',')[0]}</div>
-          </div>
-          <div class="supplier-card-rating">★ ${s.rating.toFixed(1)}<small style="color:var(--ink-soft);font-weight:500;font-size:10px;margin-left:2px;">(${s.reviewCount})</small></div>
-        </div>
-        <div class="supplier-card-meta">
-          <span>~<strong>${s.leadTime}d</strong> delivery</span>
-          <span>Window: ${s.deliveryWindow}</span>
-          <span>Market: ${s.marketDays}</span>
-        </div>
-        ${bestForTags ? '<div class="supplier-card-tags">' + bestForTags + '</div>' : ''}
-      </div>`;
-  }).join('');
-}
-
-/* ---------- Supplier profile page ---------- */
-function openSupplierProfile(id){
-  const s = STATE.suppliers.find(x => x.id === id);
-  if(!s){ toast('Supplier not found'); return; }
-  const el = document.getElementById('supplier-profile-content');
-  const initials = s.initials || initialsOf(s.name);
-
-  // Build rates table: list every item the supplier sells (from seed + tracked items)
-  const rateRows = [];
-  const seedEntries = Object.entries(s.itemRates || {}).filter(([k]) => k.startsWith('seed:'));
-  seedEntries.forEach(([key, r]) => {
-    const label = key.slice(5);
-    const niceName = label.charAt(0).toUpperCase() + label.slice(1);
-    rateRows.push({
-      itemName: niceName,
-      cost: r.cost,
-      unit: r.unit || 'unit',
-      leadTime: r.leadTime || s.leadTime,
-      isTracked: false
-    });
-  });
-  // Also include per-item overrides for tracked items (non-seed keys)
-  Object.entries(s.itemRates || {}).forEach(([key, r]) => {
-    if (key.startsWith('seed:')) return;
-    const it = STATE.stockItems.find(i => i.id === key);
-    if (!it) return;
-    rateRows.push({
-      itemName: it.name,
-      cost: Number(r.cost) > 0 ? Number(r.cost) : s.cost,
-      unit: it.stockUnit || 'unit',
-      leadTime: Number(r.leadTime) > 0 ? Number(r.leadTime) : s.leadTime,
-      isTracked: true
-    });
-  });
-
-  const rateTable = rateRows.length ? `
-    <table>
-      <thead><tr><th>Item</th><th>Price</th><th>Lead time</th></tr></thead>
-      <tbody>${rateRows.map(r => `
-        <tr>
-          <td>${r.itemName}${r.isTracked ? ' <span class="badge special" style="font-size:9px;padding:1px 6px;">Tracked</span>' : ''}</td>
-          <td><strong>${fmtN(r.cost)}</strong> / ${r.unit}</td>
-          <td>~${r.leadTime}d</td>
-        </tr>`).join('')}
-      </tbody>
-    </table>` : '<p class="muted">No rates on file yet. Add them from the Rate Matrix.</p>';
-
-  const reviewsHtml = (s.reviews && s.reviews.length) ? s.reviews.map(r => `
-    <div class="review-item">
-      <div class="review-head">
-        <span class="review-name">${r.name}</span>
-        <span class="review-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5 - r.stars)}</span>
-      </div>
-      <p class="review-text">${r.text}</p>
-      <div class="review-time">${r.time}</div>
-    </div>`).join('') : '<p class="muted">No reviews yet.</p>';
-
-  el.innerHTML = `
-    <div class="profile-hero">
-      <div class="profile-hero-top">
-        <div class="profile-hero-avatar">${initials}</div>
-        <div class="profile-hero-info">
-          <div class="profile-hero-name">${s.name}</div>
-          <div class="profile-hero-cat">${s.category}</div>
-          <div class="profile-hero-rating">★ ${s.rating.toFixed(1)} <small>· ${s.reviewCount} reviews</small>${s.verified ? ' · <span style="color:#9AC7B4;">✓ Verified</span>' : ''}</div>
-        </div>
-      </div>
-      <div class="profile-actions">
-        <button class="btn-chat" onclick="openChat('${s.id}')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-          Chat
-        </button>
-        <button class="btn-call" onclick="callSupplier('${s.id}')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          Call
-        </button>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2 style="font-size:16px;">About</h2>
-      <div class="profile-info-grid">
-        <div class="info-line"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span><span class="lbl">Address</span><span class="val">${s.address}</span></div>
-        <div class="info-line"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span><span class="lbl">Market days</span><span class="val">${s.marketDays}</span></div>
-        <div class="info-line"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><span class="lbl">Phone</span><span class="val">${s.phone}</span></div>
-        <div class="info-line"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><span class="lbl">Delivery window</span><span class="val">${s.deliveryWindow}</span></div>
-        ${s.note ? `<div class="info-line"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span><span class="lbl">Note</span><span class="val">${s.note}</span></div>` : ''}
-      </div>
-      ${(s.bestFor && s.bestFor.length) ? '<div class="supplier-card-tags" style="margin-top:12px;">' + s.bestFor.map(t => '<span class="tag teal">' + t + '</span>').join('') + '</div>' : ''}
-    </div>
-
-    <div class="card">
-      <h2 style="font-size:16px;">What they supply</h2>
-      <p class="muted">Full list of items this supplier sells. Items you track are tagged.</p>
-      ${rateTable}
-    </div>
-
-    <div class="card">
-      <h2 style="font-size:16px;">Reviews (${s.reviewCount})</h2>
-      ${reviewsHtml}
-    </div>
-  `;
-
-  showTab('supplier-profile');
-}
-
-/* Stubs for Pass 2 */
-function openChat(supplierId){ toast('Chat opens in Pass 2'); }
-function callSupplier(supplierId){
-  const s = STATE.suppliers.find(x => x.id === supplierId);
-  if(!s) return;
-  window.location.href = 'tel:' + s.phone.replace(/\s+/g, '');
-}
-
-/* ---------- Rate modal ---------- */
+/* ---------- RATE MODAL ---------- */
 let _rateModalContext = null;
 let _rateModalTargetId = null;
 let _rateModalDraft = {};
@@ -3040,7 +3209,7 @@ function closeRateModal(){
   _rateModalDraft = {};
 }
 
-/* ---------- Products ---------- */
+/* ---------- PRODUCTS ---------- */
 function showAddProduct(){ document.getElementById('add-product-form').style.display = 'block'; }
 function saveProduct(){
   const name    = document.getElementById('p-name').value.trim();
@@ -3051,8 +3220,8 @@ function saveProduct(){
   if(price <= cost){ toast('Selling price must be higher than cost'); return; }
   if(salvage > cost){ toast('Salvage cannot be higher than cost'); return; }
   const seed = Math.max(10, Math.round((price / (cost || 1)) * 20));
-  const history = [seed-8, seed+5, seed+12, seed-3, seed+4, seed-6, seed+15, seed-2, seed+1, seed+7].map(v => Math.max(1, v));
-  STATE.products.push({ id: uid(), name, cost, price, salvage, demandHistory: history });
+  const hist = [seed-8,seed+5,seed+12,seed-3,seed+4,seed-6,seed+15,seed-2,seed+1,seed+7].map(v => Math.max(1, v));
+  STATE.products.push({ id: uid(), name, cost, price, salvage, demandHistory: hist });
   logActivity('Added product ' + name);
   saveState();
   renderProducts(); renderProductionNudge();
@@ -3063,7 +3232,7 @@ function saveProduct(){
 function renderProducts(){
   const el = document.getElementById('products-list');
   if(!STATE.products.length){
-    el.innerHTML = '<div class="empty"><strong>No products yet</strong>Add what you make to get a daily batch suggestion.</div>';
+    el.innerHTML = '<div class="empty"><strong>No products yet</strong></div>';
     return;
   }
   el.innerHTML = STATE.products.map(p => `
@@ -3073,7 +3242,7 @@ function renderProducts(){
     </div>`).join('');
 }
 
-/* ---------- Overview / VE / Activity / Settings ---------- */
+/* ---------- OVERVIEW / ORDERS / VE / ACTIVITY / SETTINGS ---------- */
 function renderOverview(){
   const cutoff = Date.now() - 30*86400000;
   const recent = STATE.orders.filter(o => o.placedAt >= cutoff);
@@ -3102,7 +3271,7 @@ function renderOverview(){
           <div class="bar-track"><div class="bar-fill" style="width:${(amt/max*100)}%"></div></div>
           <span>${fmtN(amt)}</span>
         </div>`).join('')
-    : '<div class="empty"><strong>No orders yet</strong>Place an order from Today to see this fill up.</div>';
+    : '<div class="empty"><strong>No orders yet</strong></div>';
 }
 function renderOrders(){
   const el = document.getElementById('orders-list');
@@ -3110,18 +3279,31 @@ function renderOrders(){
     el.innerHTML = '<div class="empty"><strong>No orders yet</strong>Orders you place will show here.</div>';
     return;
   }
-  el.innerHTML = `
-    <table>
-      <thead><tr><th>Item</th><th>Supplier</th><th>Cost</th><th>Placed</th></tr></thead>
-      <tbody>${STATE.orders.slice(0, 30).map(o => `
-        <tr>
-          <td>${o.item}</td>
-          <td>${o.supplier}</td>
-          <td>${fmtN(o.cost)}</td>
-          <td>${timeAgo(o.placedAt)}</td>
-        </tr>`).join('')}
-      </tbody>
-    </table>`;
+  const seq = ['Requested','Confirmed','Dispatched','Delivered'];
+  el.innerHTML = STATE.orders.slice(0, 20).map(o => {
+    const currentIdx = seq.indexOf(o.status);
+    const supplier = STATE.suppliers.find(s => s.id === o.supplierId);
+    const trackHtml = seq.map((st, i) => {
+      const cls = i < currentIdx ? 'done' : i === currentIdx ? 'active' : '';
+      return '<div class="order-step ' + cls + '"><span class="dot"></span>' + st + '</div>';
+    }).join('');
+    const canAdvance = currentIdx >= 0 && currentIdx < seq.length - 1;
+    return `
+      <div class="order-row">
+        <div class="order-row-head">
+          <div style="flex:1;min-width:0;">
+            <div class="order-row-title">${o.item}</div>
+            <div class="order-row-supplier">${o.supplier} · ${timeAgo(o.placedAt)}</div>
+          </div>
+          <div class="order-row-cost">${fmtN(o.cost)}</div>
+        </div>
+        <div class="order-track">${trackHtml}</div>
+        <div class="order-actions">
+          ${supplier ? `<button onclick="openChat('${supplier.id}')">Chat</button>` : '<button disabled>Chat</button>'}
+          ${canAdvance ? `<button class="primary" onclick="advanceOrder('${o.id}')">Mark ${seq[currentIdx+1]}</button>` : '<button disabled>Complete</button>'}
+        </div>
+      </div>`;
+  }).join('');
 }
 function renderVE(){
   const scopeSel = document.getElementById('ve-scope');
@@ -3145,9 +3327,7 @@ function renderVE(){
           <td><strong>${s.vi.toFixed(2)}</strong></td>
         </tr>`).join('')}
       </tbody>
-    </table>
-    <p class="hint" style="margin-top:10px;">VI = function score divided by cost in thousands.</p>
-  ` : '<div class="empty"><strong>No suppliers rated yet</strong></div>';
+    </table>` : '<div class="empty"><strong>No suppliers rated yet</strong></div>';
   renderCoverageMatrix();
   const mode = STATE.ropMode || 'simple';
   document.getElementById('rop-mode-hint').textContent =
@@ -3213,8 +3393,7 @@ function renderCoverageMatrix(){
     }).join('');
     return '<tr><td class="item-name-cell">' + it.name + '</td>' + cells + '</tr>';
   }).join('');
-  el.innerHTML = '<table class="cov-table"><thead>' + header + '</thead><tbody>' + rows + '</tbody></table>' +
-    '<p class="hint" style="margin-top:10px;">Teal = special rate. Italic = supplier default. Gold outline = current winner.</p>';
+  el.innerHTML = '<table class="cov-table"><thead>' + header + '</thead><tbody>' + rows + '</tbody></table>';
 }
 function renderMatrix(){
   const el = document.getElementById('matrix-wrap');
@@ -3281,10 +3460,7 @@ function startEditMatrixCell(btn){
       }
     }
     btn.classList.remove('editing');
-    renderMatrix();
-    renderCoverageMatrix();
-    renderVE();
-    renderStock();
+    renderMatrix(); renderCoverageMatrix(); renderVE(); renderStock();
   };
   input.addEventListener('blur', () => commit(true));
   input.addEventListener('keydown', e => {
@@ -3356,7 +3532,7 @@ function confirmReset(){
     showOnboardingStep('name');
   };
   document.getElementById('confirm-title').textContent = 'Reset all data?';
-  document.getElementById('confirm-msg').textContent = 'This deletes everything, including items, suppliers, orders and activity, from this device. It cannot be undone.';
+  document.getElementById('confirm-msg').textContent = 'This deletes everything, from this device. It cannot be undone.';
   document.getElementById('confirm-btn').textContent = 'Yes, reset';
   document.getElementById('confirm-btn').className = 'confirm';
   document.getElementById('confirm-modal').classList.add('show');
@@ -3415,7 +3591,6 @@ function refreshToday(){
   toast('Up to date');
 }
 
-/* ---------- Ripple ---------- */
 document.addEventListener('pointerdown', e => {
   const btn = e.target.closest('.btn-primary, .login-btn, .landing-cta');
   if(!btn) return;
@@ -3424,7 +3599,6 @@ document.addEventListener('pointerdown', e => {
   btn.style.setProperty('--ry', ((e.clientY - r.top)/r.height*100) + '%');
 });
 
-/* ---------- Render all / boot ---------- */
 function renderAll(){
   renderGreeting();
   renderStats();
