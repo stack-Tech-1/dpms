@@ -1,0 +1,23 @@
+{
+  "name": "DPMS: stock and buying for your shop",
+  "short_name": "DPMS",
+  "description": "Check your shelf, plan your buying around today's cash, and send orders on WhatsApp.",
+  "id": "./",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#141C58",
+  "theme_color": "#141C58",
+  "lang": "en-NG",
+  "categories": ["business", "productivity"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Walk my shelf", "url": "./index.html#/today", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Buy plan", "url": "./index.html#/buy", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] }
+  ]
+}
